@@ -2,6 +2,10 @@ import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { Linkedin, Twitter, Github } from "lucide-react";
 import { motion } from "framer-motion";
+import profileSmall from "./profile-optimized-small.jpg";
+import profileMedium from "./profile-optimized-medium.jpg";
+import profileLarge from "./profile-optimized-large.jpg";
+
 
 
 
@@ -34,10 +38,10 @@ export default function DataScienceBlog() {
         <motion.div initial={{opacity:0, x:50}} animate={{opacity:1, x:0}} transition={{duration:1}}>
           {/* Responsive Optimized Profile Image */}
           <picture>
-            <source srcSet="/profile-optimized-large.jpg" media="(min-width: 1024px)" />
-            <source srcSet="/profile-optimized-medium.jpg" media="(min-width: 768px)" />
+            <source srcSet={profileLarge} media="(min-width: 1024px)" />
+            <source srcSet={profileMedium} media="(min-width: 768px)" />
             <img 
-              src="/profile-optimized-small.jpg" 
+              src={profileSmall} 
               alt="Profile of Davis Ochieng" 
               className="rounded-full shadow-lg border-4 border-yellow-400 mx-auto object-cover w-64 h-64 md:w-72 md:h-72 lg:w-80 lg:h-80" 
             />
