@@ -1,176 +1,54 @@
-# DataScience Blog (React + TypeScript + Vite)
+# DataScience Blog
 
-Minimal project scaffold using Vite, React, and TypeScript. Includes small UI primitives (Card, Button) and Tailwind CSS integration.
+A minimal, responsive personal blog for data science content built with React, TypeScript, and Vite. Designed to showcase tutorials, project write-ups, and articles about machine learning, AI, and analytics with a clean, accessible UI and fast performance.
 
-## Prerequisites
+## What this webapp does
 
-- Node.js (>= 18 recommended)
-- npm (bundled with Node)
-- Git (optional)
+- Presents featured articles and author information in a simple, readable layout.
+- Uses responsive, optimized images for fast loading on different devices.
+- Provides a hero section, featured-articles grid, and footer with social links.
+- Includes small UI primitives (Card, Button) for consistent styling and reusability.
+- Adds subtle animations with Framer Motion for a polished user experience.
 
-If you use PowerShell and see "cannot be loaded... not digitally signed" errors for `npx`/`npm`, run PowerShell as Administrator and set:
+## Who it's for
 
-```powershell
-Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
-```
+- Data scientists, ML engineers, and educators who want a lightweight blog to publish tutorials and case studies.
+- Developers who want a starting scaffold to customize and expand into a full content site.
 
-Then restart your terminal.
+## Key features
 
-## Quick start
+- Responsive layout with Tailwind CSS
+- TypeScript+React components for predictable development
+- Small, reusable UI primitives: Card and Button
+- Iconography via lucide-react
+- Simple SEO-friendly structure (semantic HTML sections)
+- Easy to customize and extend
 
-1. Install dependencies
+## Pages / Sections
 
-```bash
-npm install
-```
+- Home / Hero — Intro and CTA
+- About — Short author bio (placeable content)
+- Articles — Grid of featured posts (static or dynamic)
+- Contact — CTA or contact link in header/footer
 
-2. Run dev server
+## How to use
 
-```bash
-npm run dev
-```
+- Read content directly in the browser or replace static examples with your own markdown/data.
+- Customize styling in Tailwind config and component classes.
+- Replace images in public/ for author/profile pictures.
 
-3. Build for production
+## Tech stack
 
-```bash
-npm run build
-```
+- Vite, React, TypeScript
+- Tailwind CSS (PostCSS)
+- Framer Motion, lucide-react
 
-4. Preview production build locally
+## Extending
 
-```bash
-npm run preview
-```
-
-## Important scripts
-
-- `dev` — start Vite dev server
-- `build` — build production assets
-- `preview` — preview built assets
-- `lint` — run ESLint (if configured)
-- `format` — run Prettier (if configured)
-
-(See `package.json` for exact commands.)
-
-## Tailwind CSS
-
-This project uses Tailwind via PostCSS. Ensure you have:
-
-- `tailwindcss`
-- `postcss`
-- `autoprefixer`
-
-postcss.config.js should include:
-
-```js
-module.exports = {
-  plugins: {
-    tailwindcss: {},
-    autoprefixer: {},
-  },
-};
-```
-
-tailwind.config.js example:
-
-```js
-module.exports = {
-  content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
-  theme: { extend: {} },
-  plugins: [],
-};
-```
-
-Do NOT try to use a non-existent plugin like `@tailwindcss/vite` in your `vite.config.js`. Keep Vite plugins minimal (e.g. `@vitejs/plugin-react`).
-
-## Project structure (relevant)
-
-- src/
-  - main.tsx
-  - App.tsx
-  - components/
-    - ui/
-      - card.tsx
-      - button.jsx (or .tsx)
-  - styles/
-    - index.css (imports Tailwind base/utilities/components)
-
-## UI Primitives
-
-- Card (src/components/ui/card.tsx)
-
-  - Example usage:
-
-  ```tsx
-  import { Card, CardContent } from "./components/ui/card";
-
-  <Card className="p-6">
-    <CardContent>Content</CardContent>
-  </Card>;
-  ```
-
-- Button (src/components/ui/button.jsx)
-  - Simple accessible button; accepts `className` and forwards props.
-
-If you created files with lowercase filenames (card.tsx), import paths must match exact case:
-
-```ts
-import { Card } from "./components/ui/card";
-```
-
-## Common issues & fixes
-
-- Module not found: Can't resolve '@/components/...'
-
-  - Vite does not enable `@` alias by default. Use relative imports (`./components/...`) or configure `resolve.alias` in `vite.config.ts`.
-
-- Module not found: Can't resolve './components/ui/card' or './components/ui/button'
-
-  - Ensure the files exist at `src/components/ui/` and filenames + import paths match (case-sensitive on some systems).
-  - Example minimal `card.tsx`:
-
-    ```tsx
-    import type { ReactNode } from "react";
-
-    interface CardProps {
-      children: ReactNode;
-      className?: string;
-    }
-
-    export function Card({ children, className = "" }: CardProps) {
-      return <div className={`rounded shadow ${className}`}>{children}</div>;
-    }
-
-    export function CardContent({ children, className = "" }: CardProps) {
-      return <div className={className}>{children}</div>;
-    }
-    ```
-
-- Windows PowerShell script execution errors
-  - See "Prerequisites" section above to set `RemoteSigned` for the current user.
-
-## TypeScript
-
-- Keep `tsconfig.json` and `tsconfig.node.json` (if present) configured for project paths.
-- If you add path aliases (like `@/`), update both `tsconfig.json` (paths) and `vite.config.ts` (resolve.alias).
-
-## Linting & Formatting
-
-- Configure ESLint + Prettier if needed. Add `eslint` and `prettier` configs to keep code consistent.
-
-## Troubleshooting
-
-- Paste the full error message into issues for faster help.
-- Check browser console and terminal logs when debugging dev server.
+- Replace static article cards with a CMS or markdown loader.
+- Add routing (React Router) for per-article pages.
+- Add search and tagging for improved navigation.
 
 ## License
 
-Add your preferred license text or keep undefined for private use.
-
----
-
-If you want, I can:
-
-- Add a sample `index.css` with Tailwind imports.
-- Add or modify `vite.config.ts` to support path aliases.
-- Create missing UI files (card, button) in your repo.
+Choose a license or keep private. Add LICENSE file as needed.
