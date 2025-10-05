@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Button } from "../components/ui/button";
+import { Button } from "../components/ui/_button";
 import { Card, CardContent } from "../components/ui/card";
 import { Link } from "react-router-dom";
 import profileLarge from "../assets/images/profile-optimized-large.jpg";
