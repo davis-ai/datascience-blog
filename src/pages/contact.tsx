@@ -6,9 +6,9 @@ export default function ContactPage() {
         Have questions or ideas? Reach out to me!
       </p>
       <ul className="text-gray-400 space-y-2">
-        <li>Email: <a href="mailto:info@dsblog.com" className="text-yellow-400 hover:underline">info@dsblog.com</a></li>
-        <li>Twitter: <a href="https://twitter.com" target="_blank" className="text-yellow-400 hover:underline">@dsblog</a></li>
-        <li>LinkedIn: <a href="https://linkedin.com" target="_blank" className="text-yellow-400 hover:underline">DS Blog</a></li>
+        <li>Email: <a href="mailto:davisochieng1@gmail.com" className="text-yellow-400 hover:underline">davisochieng81@gmail.com</a></li>
+        <li>Twitter / X: <a href="https://twitter.com" target="_blank" className="text-yellow-400 hover:underline">@davis</a></li>
+        <li>LinkedIn: <a href="https://linkedin.https://www.linkedin.com/in/davis-ochieng-621885387/" target="_blank" className="text-yellow-400 hover:underline">DS Blog</a></li>
       </ul>
     </div>
   );
