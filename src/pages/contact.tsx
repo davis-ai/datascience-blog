@@ -1,4 +1,4 @@
-import { Input } from "@/components/ui/input";
+import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/_button";
 
 export default function ContactPage() {
