@@ -10,7 +10,7 @@ export default function ArticlesListPage() {
     },
     {
       id: "visualization",
-      title: "Data Visualization with Python",
+      title: "Data viz with Python",
       excerpt: "Explore matplotlib, seaborn, and plotly for storytelling with data."
     },
     {
