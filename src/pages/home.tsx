@@ -63,7 +63,7 @@ export default function HomePage() {
               <p className="text-gray-300 mb-4">
                 Learn the basics of ML and how to apply algorithms effectively.
               </p>
-              <Link to="/articles" className="text-yellow-400 font-semibold">
+              <Link to="/articles/ml" className="text-yellow-400 font-semibold">
                 Read More →
               </Link>
             </CardContent>
@@ -78,7 +78,7 @@ export default function HomePage() {
                 Explore matplotlib, seaborn, and plotly for storytelling with
                 data.
               </p>
-              <Link to="/articles" className="text-yellow-400 font-semibold">
+              <Link to="/articles/visualization" className="text-yellow-400 font-semibold">
                 Read More →
               </Link>
             </CardContent>
@@ -92,7 +92,7 @@ export default function HomePage() {
               <p className="text-gray-300 mb-4">
                 Dive into neural networks, TensorFlow, and PyTorch applications.
               </p>
-              <Link to="/articles" className="text-yellow-400 font-semibold">
+              <Link to="/articles/deep-learning" className="text-yellow-400 font-semibold">
                 Read More →
               </Link>
             </CardContent>
