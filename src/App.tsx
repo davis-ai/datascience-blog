@@ -1,8 +1,10 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Layout from "./components/layout/";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Layout from "./components/layout";
 import HomePage from "./pages/home";
 import ArticlePage from "./pages/articles";
 import ArticlesListPage from "./pages/articles/list";
+import ProjectsPage from "./pages/projects";
+import PlaygroundPage from "./pages/playground";
 import AboutPage from "./pages/about";
 import ContactPage from "./pages/contact";
 
@@ -13,22 +15,12 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="articles" element={<ArticlesListPage />} />
+          <Route path="articles/:slug" element={<ArticlePage />} />
+          <Route path="projects" element={<ProjectsPage />} />
+          <Route path="playground" element={<PlaygroundPage />} />
           <Route path="about" element={<AboutPage />} />
           <Route path="contact" element={<ContactPage />} />
-
-          {/* individual article pages */}
-          <Route
-            path="articles/ml"
-            element={<ArticlePage title="Introduction to Machine Learning" content="Full content of ML article goes here." />}
-          />
-          <Route
-            path="articles/visualization"
-            element={<ArticlePage title="Data Visualization with Python" content="Full content of Visualization article goes here." />}
-          />
-          <Route
-            path="articles/deep-learning"
-            element={<ArticlePage title="Deep Learning Essentials" content="Full content of Deep Learning article goes here." />}
-          />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
     </Router>
