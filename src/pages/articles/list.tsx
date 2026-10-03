@@ -1,17 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { 
   BookOpen, 
   Search, 
   Clock, 
   Eye, 
   Heart, 
-  Sparkles, 
   ArrowRight,
   Bookmark
 } from 'lucide-react';
 import { ARTICLES_DATA } from '../../data/articles';
+import SpotlightCard from '../../components/ui/SpotlightCard';
 
 export default function ArticlesListPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -81,86 +80,85 @@ export default function ArticlesListPage() {
   const featuredArticle = ARTICLES_DATA.find((a) => a.featured) || ARTICLES_DATA[0];
 
   return (
-    <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+    <div className="min-h-screen py-8 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
       {/* Header */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold tracking-wide">
-          <BookOpen className="w-3.5 h-3.5" /> Technical Research & Field Guides
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/10 text-xs font-mono text-cyan-400">
+          <BookOpen className="w-3.5 h-3.5" />
+          <span>[RESEARCH_PUBLICATIONS // INDEX]</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
-          Data Science <span className="gradient-text-cyan">Articles & Insights</span>
+        <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-heading">
+          Technical Field Guides & <span className="gradient-text-cyan">Research</span>
         </h1>
-        <p className="text-slate-400 text-base sm:text-lg">
-          In-depth technical tutorials, mathematical breakdowns, and production architectures across Machine Learning, MLOps, and Deep Neural Networks.
+        <p className="text-slate-400 text-xs sm:text-base font-mono">
+          Mathematical foundations, empirical benchmarks, and production architectures across Deep Learning and MLOps.
         </p>
       </div>
 
-      {/* Featured Article Banner (if no search query active) */}
+      {/* Featured Lead Article Banner (if no search active) */}
       {!searchQuery && selectedCategory === 'All' && featuredArticle && (
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="relative rounded-3xl overflow-hidden glass-card border border-amber-500/30 p-8 sm:p-10 shadow-2xl group"
+        <SpotlightCard
+          cornerTag="FEATURED_PAPER"
+          showCrosshairs={true}
+          className="p-6 sm:p-10 border-amber-500/30"
         >
-          <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/15 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700" />
-          
-          <div className="relative z-10 max-w-3xl space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-950/70 border border-amber-500/40 px-3 py-1 rounded-full">
-                <Sparkles className="w-3.5 h-3.5" /> Featured Publication
+          <div className="max-w-3xl space-y-4 font-mono">
+            <div className="flex flex-wrap items-center gap-3 text-xs">
+              <span className="font-bold uppercase tracking-wider text-amber-400 bg-amber-950/70 border border-amber-500/40 px-2.5 py-0.5 rounded text-[10px]">
+                ✦ Primary Research Paper
               </span>
-              <span className="text-xs text-slate-400 flex items-center gap-1.5">
+              <span className="text-slate-400 flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5" /> {featuredArticle.readTime}
               </span>
-              <span className="text-xs text-slate-400">
+              <span className="text-slate-500">
                 {featuredArticle.publishedDate}
               </span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-white group-hover:text-amber-300 transition-colors">
+            <h2 className="text-2xl sm:text-3xl font-black text-white font-heading leading-snug">
               {featuredArticle.title}
             </h2>
 
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-sans">
               {featuredArticle.excerpt}
             </p>
 
-            <div className="flex flex-wrap gap-2 pt-2">
+            <div className="flex flex-wrap gap-1.5 pt-1">
               {featuredArticle.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs font-mono px-2.5 py-1 rounded-lg bg-slate-900/80 text-slate-300 border border-slate-700/60"
+                  className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5"
                 >
                   #{tag}
                 </span>
               ))}
             </div>
 
-            <div className="pt-4 flex items-center gap-4">
+            <div className="pt-3">
               <Link
                 to={`/articles/${featuredArticle.slug}`}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition shadow-lg shadow-amber-500/20"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold font-mono transition shadow-lg shadow-amber-500/20"
               >
-                Read Full Deep-Dive
-                <ArrowRight className="w-4 h-4" />
+                <span>Read Full Publication</span>
+                <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
-        </motion.div>
+        </SpotlightCard>
       )}
 
       {/* Filter, Search & Sort Bar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 glass-card p-4 rounded-2xl border border-slate-800">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-3 bg-black/40 rounded-2xl border border-white/10 backdrop-blur-md">
         {/* Category Tabs */}
-        <div className="flex flex-wrap gap-2 w-full md:w-auto">
+        <div className="flex flex-wrap gap-1.5 w-full md:w-auto font-mono text-xs">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition ${
+              className={`px-3 py-1.5 rounded-xl transition ${
                 selectedCategory === cat
-                  ? 'bg-cyan-500 text-slate-950 shadow-md shadow-cyan-500/20'
-                  : 'bg-slate-900 text-slate-400 hover:text-white hover:bg-slate-800 border border-slate-800'
+                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
+                  : 'bg-black/30 text-slate-400 hover:text-white border border-white/5'
               }`}
             >
               {cat}
@@ -169,15 +167,15 @@ export default function ArticlesListPage() {
         </div>
 
         {/* Search & Sort Controls */}
-        <div className="flex items-center gap-3 w-full md:w-auto">
+        <div className="flex items-center gap-3 w-full md:w-auto font-mono text-xs">
           <div className="relative flex-1 md:w-64">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            <Search className="w-3.5 h-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search articles, topics, tags..."
-              className="w-full bg-slate-900 border border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition"
+              placeholder="Search topics, tags..."
+              className="w-full bg-black/50 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition"
             />
           </div>
 
@@ -185,35 +183,33 @@ export default function ArticlesListPage() {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
             aria-label="Sort articles"
-            className="bg-slate-900 border border-slate-700/80 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400"
+            className="bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400"
           >
-            <option value="newest">Newest First</option>
-            <option value="popular">Most Popular</option>
-            <option value="readTime">Longest Read</option>
+            <option value="newest">Latest Date</option>
+            <option value="popular">Most Read</option>
+            <option value="readTime">In-Depth</option>
           </select>
         </div>
       </div>
 
-      {/* Articles Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredArticles.map((article) => {
+      {/* Articles Grid with SpotlightCard */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {filteredArticles.map((article, idx) => {
           const isLiked = likedArticles[article.slug];
+          const isBookmarked = bookmarkedSlugs.includes(article.slug);
           const likeCount = article.initialLikes + (isLiked ? 1 : 0);
 
           return (
-            <motion.div
+            <SpotlightCard
               key={article.slug}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="glass-card rounded-3xl border border-slate-800 p-6 flex flex-col justify-between hover:border-cyan-500/40 transition-all duration-300 relative group overflow-hidden"
+              cornerTag={`DOC_${idx + 1}`}
+              showCrosshairs={true}
+              className="p-6 flex flex-col justify-between space-y-5"
             >
-              {/* Subtle top glow */}
-              <div className={`absolute top-0 right-0 w-48 h-48 bg-gradient-to-br ${article.coverGradient} rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none`} />
-
-              <div className="space-y-4 relative z-10">
+              <div className="space-y-4">
                 {/* Meta Header */}
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded-full text-[10px]">
+                <div className="flex items-center justify-between text-xs font-mono">
+                  <span className="font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded text-[10px]">
                     {article.category}
                   </span>
                   <span className="text-slate-400 flex items-center gap-1 text-[11px]">
@@ -224,21 +220,21 @@ export default function ArticlesListPage() {
                 {/* Title */}
                 <div>
                   <Link to={`/articles/${article.slug}`}>
-                    <h3 className="text-lg font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-2">
+                    <h3 className="text-base font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-2 font-heading leading-snug">
                       {article.title}
                     </h3>
                   </Link>
-                  <p className="text-xs text-slate-400 mt-2 line-clamp-3 leading-relaxed">
+                  <p className="text-xs text-slate-400 mt-2 line-clamp-3 leading-relaxed font-sans">
                     {article.excerpt}
                   </p>
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-1.5 pt-2">
+                <div className="flex flex-wrap gap-1.5 pt-1">
                   {article.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-slate-900 text-slate-400 border border-slate-800"
+                      className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5"
                     >
                       #{tag}
                     </span>
@@ -247,7 +243,7 @@ export default function ArticlesListPage() {
               </div>
 
               {/* Bottom Footer */}
-              <div className="flex items-center justify-between pt-5 mt-5 border-t border-slate-800/80 text-xs text-slate-400 relative z-10">
+              <div className="flex items-center justify-between pt-4 border-t border-white/[0.06] text-xs font-mono text-slate-400">
                 <div className="flex items-center gap-3">
                   <span className="flex items-center gap-1 text-[11px]">
                     <Eye className="w-3.5 h-3.5 text-slate-500" />
@@ -258,40 +254,36 @@ export default function ArticlesListPage() {
                     className={`flex items-center gap-1 text-[11px] transition ${
                       isLiked ? 'text-rose-400 font-semibold' : 'text-slate-500 hover:text-rose-400'
                     }`}
-                    title="Like article"
                   >
-                    <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-rose-400 text-rose-400' : ''}`} />
+                    <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-rose-400' : ''}`} />
                     {likeCount}
-                  </button>
-                  <button
-                    onClick={(e) => toggleBookmark(e, article.slug)}
-                    className={`flex items-center gap-1 text-[11px] transition ${
-                      bookmarkedSlugs.includes(article.slug) ? 'text-amber-400 font-semibold' : 'text-slate-500 hover:text-amber-400'
-                    }`}
-                    title={bookmarkedSlugs.includes(article.slug) ? "Remove bookmark" : "Save article"}
-                  >
-                    <Bookmark className={`w-3.5 h-3.5 ${bookmarkedSlugs.includes(article.slug) ? 'fill-amber-400 text-amber-400' : ''}`} />
                   </button>
                 </div>
 
-                <Link
-                  to={`/articles/${article.slug}`}
-                  className="font-semibold text-cyan-400 hover:text-cyan-300 flex items-center gap-1 group-hover:translate-x-1 transition-transform"
-                >
-                  Read →
-                </Link>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={(e) => toggleBookmark(e, article.slug)}
+                    className={`p-1.5 rounded-lg border transition ${
+                      isBookmarked
+                        ? 'bg-amber-500/20 text-amber-400 border-amber-500/40'
+                        : 'bg-black/30 text-slate-400 border-white/5 hover:text-white'
+                    }`}
+                    title={isBookmarked ? 'Remove bookmark' : 'Bookmark publication'}
+                  >
+                    <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-amber-400' : ''}`} />
+                  </button>
+                  <Link
+                    to={`/articles/${article.slug}`}
+                    className="font-bold text-cyan-400 hover:text-cyan-300 text-xs flex items-center gap-1"
+                  >
+                    Read →
+                  </Link>
+                </div>
               </div>
-            </motion.div>
+            </SpotlightCard>
           );
         })}
       </div>
-
-      {filteredArticles.length === 0 && (
-        <div className="text-center py-16 text-slate-400 glass-card rounded-3xl p-8 border border-slate-800">
-          <p className="text-lg font-semibold text-white">No articles match your query</p>
-          <p className="text-xs text-slate-400 mt-1">Try searching for other terms like "PyTorch", "FastAPI", or "XGBoost".</p>
-        </div>
-      )}
     </div>
   );
 }

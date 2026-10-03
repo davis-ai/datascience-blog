@@ -20,6 +20,7 @@ import { FaKaggle } from "react-icons/fa";
 import { SiHuggingface } from "react-icons/si";
 import { motion, AnimatePresence } from "framer-motion";
 import CommandPalette from "../common/CommandPalette";
+import ShaderCanvas from "../common/ShaderCanvas";
 import { ToastProvider, useToast } from "../ui/toast";
 
 function LayoutContent() {
@@ -63,7 +64,7 @@ function LayoutContent() {
       showToast("Please enter a valid email address", "error");
       return;
     }
-    showToast("🎉 Thank you for subscribing to the Data Science Dispatch!", "success");
+    showToast("🎉 Subscribed to the Data Science Dispatch!", "success");
     setEmailInput("");
   };
 
@@ -77,35 +78,55 @@ function LayoutContent() {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#080c14] text-slate-100 overflow-x-hidden selection:bg-amber-500/30 selection:text-amber-200">
-      {/* Background ambient lighting */}
-      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-40 -left-40 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 -right-40 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 left-1/3 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl" />
-      </div>
+    <div className="min-h-screen flex flex-col bg-[#070b13] text-slate-100 overflow-x-hidden selection:bg-amber-500/30 selection:text-amber-200 relative">
+      {/* Tactile Noise Overlay */}
+      <div className="noise-overlay" />
+
+      {/* Dynamic Mathematical & Neural Canvas Background */}
+      <ShaderCanvas particleCount={45} />
+
+      {/* Subtle Grid Pattern Overlay */}
+      <div className="fixed inset-0 pointer-events-none z-0 bg-grid-pattern opacity-40" />
 
       {/* Global Command Palette */}
       <CommandPalette isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
       {/* Glassmorphic Navbar */}
-      <header className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl bg-[#090d16]/80 border-b border-white/5 transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          {/* Logo & Status Badge */}
+      <header className="fixed top-0 left-0 right-0 z-40 backdrop-blur-xl bg-[#080d16]/85 border-b border-white/[0.08] transition-all">
+        {/* Top telemetry ticker strip */}
+        <div className="hidden lg:flex items-center justify-between px-8 py-1 bg-black/40 border-b border-white/[0.04] text-[10px] font-mono text-slate-400">
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1.5 text-emerald-400">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              SYSTEM.STATUS: OPERATIONAL
+            </span>
+            <span>NODE: US-EAST-1 // ACCEL-A100</span>
+            <span>LATENCY: &lt;13ms</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <span className="text-amber-400/90 font-medium">LATEST PAPER: "QLoRA Rank Adaptation in MoE LLMs"</span>
+            <span>LOCATION: NAIROBI [UTC+3]</span>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between">
+          {/* Logo & Identity */}
           <Link to="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center font-black text-slate-950 text-lg shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform">
-              DO
+            <div className="relative">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 flex items-center justify-center font-black text-slate-950 text-base shadow-lg shadow-amber-500/20 group-hover:scale-105 transition-transform font-mono">
+                DO
+              </div>
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-[#080d16] animate-pulse" />
             </div>
             <div>
-              <div className="font-bold text-lg tracking-tight text-white group-hover:text-amber-400 transition-colors flex items-center gap-2">
-                Davis Ochieng
-                <span className="hidden sm:inline-block text-xs font-medium text-amber-400/90 bg-amber-950/60 border border-amber-500/30 px-2 py-0.5 rounded-full">
-                  AI / Data Science
+              <div className="font-bold text-base tracking-tight text-white group-hover:text-amber-400 transition-colors flex items-center gap-2">
+                <span>Davis Ochieng</span>
+                <span className="text-[10px] font-mono text-slate-400 border border-white/10 px-1.5 py-0.5 rounded">
+                  v2.6
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Available for high-impact projects
+              <p className="text-[11px] text-slate-400 flex items-center gap-1.5 font-mono">
+                AI / Deep Learning Systems
               </p>
             </div>
           </Link>
