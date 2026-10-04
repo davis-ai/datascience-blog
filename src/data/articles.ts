@@ -51,7 +51,7 @@ export const ARTICLES_DATA: Article[] = [
     publishedDate: '2025-02-18',
     updatedDate: '2025-03-01',
     featured: true,
-    coverGradient: 'from-amber-500/20 via-orange-500/10 to-transparent',
+    coverGradient: 'from-[#c8f135]/25 via-lime-500/10 to-transparent',
     views: 4280,
     initialLikes: 342,
     keyTakeaways: [
@@ -182,7 +182,7 @@ tokenizer.save_pretrained("./llama3_finetuned_merged")`
     readTime: '9 min read',
     publishedDate: '2025-01-25',
     featured: true,
-    coverGradient: 'from-cyan-500/20 via-blue-500/10 to-transparent',
+    coverGradient: 'from-[#c8f135]/20 via-emerald-500/10 to-transparent',
     views: 3820,
     initialLikes: 289,
     keyTakeaways: [
@@ -303,7 +303,7 @@ CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8000", "--work
     readTime: '8 min read',
     publishedDate: '2024-12-14',
     featured: false,
-    coverGradient: 'from-emerald-500/20 via-teal-500/10 to-transparent',
+    coverGradient: 'from-emerald-500/20 via-[#c8f135]/10 to-transparent',
     views: 2940,
     initialLikes: 215,
     keyTakeaways: [
@@ -387,7 +387,7 @@ print(f"ROC-AUC Score: {roc_auc_score(y_test, model.predict_proba(X_test)[:, 1])
     readTime: '7 min read',
     publishedDate: '2024-11-08',
     featured: false,
-    coverGradient: 'from-purple-500/20 via-pink-500/10 to-transparent',
+    coverGradient: 'from-[#c8f135]/20 via-teal-500/10 to-transparent',
     views: 2450,
     initialLikes: 184,
     keyTakeaways: [
@@ -466,7 +466,7 @@ fig.update_layout(
     readTime: '13 min read',
     publishedDate: '2024-10-02',
     featured: true,
-    coverGradient: 'from-amber-500/20 via-rose-500/10 to-transparent',
+    coverGradient: 'from-[#c8f135]/25 via-emerald-400/10 to-transparent',
     views: 5120,
     initialLikes: 489,
     keyTakeaways: [
@@ -557,7 +557,7 @@ class MultiHeadAttention(nn.Module):
     readTime: '10 min read',
     publishedDate: '2024-09-15',
     featured: false,
-    coverGradient: 'from-emerald-500/20 via-cyan-500/10 to-transparent',
+    coverGradient: 'from-[#c8f135]/15 via-emerald-500/10 to-transparent',
     views: 3100,
     initialLikes: 250,
     keyTakeaways: [

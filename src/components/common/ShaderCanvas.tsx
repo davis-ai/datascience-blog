@@ -2,13 +2,11 @@ import { useEffect, useRef } from "react";
 
 interface ShaderCanvasProps {
   className?: string;
-  particleCount?: number;
   interactive?: boolean;
 }
 
 export default function ShaderCanvas({
   className = "",
-  particleCount = 50,
   interactive = true,
 }: ShaderCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -16,18 +14,18 @@ export default function ShaderCanvas({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
     let animationFrameId: number;
     let width = (canvas.width = window.innerWidth);
     let height = (canvas.height = window.innerHeight);
 
-    let mouse = {
-      x: width / 2,
-      y: height / 2,
-      targetX: width / 2,
-      targetY: height / 2,
+    const mouse = {
+      x: width * 0.45,
+      y: height * 0.48,
+      targetX: width * 0.45,
+      targetY: height * 0.48,
       isHovered: false,
     };
 
@@ -45,6 +43,8 @@ export default function ShaderCanvas({
 
     const handleMouseLeave = () => {
       mouse.isHovered = false;
+      mouse.targetX = width * 0.45;
+      mouse.targetY = height * 0.48;
     };
 
     window.addEventListener("resize", handleResize);
@@ -53,122 +53,182 @@ export default function ShaderCanvas({
       document.body.addEventListener("mouseleave", handleMouseLeave);
     }
 
-    // Particles representing neural weights & gradient vectors
-    const particles = Array.from({ length: particleCount }, () => ({
+    // Energy stream filaments
+    const numRibbons = 24;
+    const ribbons = Array.from({ length: numRibbons }, (_, i) => {
+      const progress = i / numRibbons;
+      return {
+        id: i,
+        offsetPhase: progress * Math.PI * 2,
+        speedMultiplier: 0.7 + Math.random() * 0.6,
+        amplitude: 40 + Math.random() * 70,
+        thickness: 0.8 + Math.random() * 1.6,
+        alpha: 0.12 + Math.random() * 0.28,
+        colorHue: 78 + Math.random() * 18, // 78 = lime yellow, 96 = lime green
+        spreadY: (progress - 0.5) * 160,
+      };
+    });
+
+    // Luminous floating sparks/dust
+    const sparkCount = 40;
+    const sparks = Array.from({ length: sparkCount }, () => ({
       x: Math.random() * width,
       y: Math.random() * height,
-      vx: (Math.random() - 0.5) * 0.4,
+      vx: (Math.random() - 0.2) * 0.6,
       vy: (Math.random() - 0.5) * 0.4,
-      radius: Math.random() * 2 + 1,
-      color: Math.random() > 0.6 ? "rgba(245, 158, 11, " : Math.random() > 0.3 ? "rgba(6, 182, 212, " : "rgba(16, 185, 129, ",
-      alpha: Math.random() * 0.5 + 0.2,
-      baseAlpha: Math.random() * 0.5 + 0.2,
+      size: Math.random() * 2 + 0.6,
+      alpha: Math.random() * 0.6 + 0.2,
+      pulseSpeed: 0.02 + Math.random() * 0.04,
+      pulsePhase: Math.random() * Math.PI * 2,
     }));
 
     let time = 0;
 
     const render = () => {
-      time += 0.008;
+      time += 0.012;
 
       // Smooth mouse interpolation
-      mouse.x += (mouse.targetX - mouse.x) * 0.05;
-      mouse.y += (mouse.targetY - mouse.y) * 0.05;
+      mouse.x += (mouse.targetX - mouse.x) * 0.04;
+      mouse.y += (mouse.targetY - mouse.y) * 0.04;
 
       ctx.clearRect(0, 0, width, height);
 
-      // 1. Organic Mesh Gradients (inspired by shadergradient.co)
-      const gradient1 = ctx.createRadialGradient(
-        mouse.x * 0.4 + width * 0.2,
-        Math.sin(time) * 80 + height * 0.3,
-        10,
-        mouse.x * 0.4 + width * 0.2,
-        Math.sin(time) * 80 + height * 0.3,
-        width * 0.55
-      );
-      gradient1.addColorStop(0, "rgba(245, 158, 11, 0.06)"); // Amber core
-      gradient1.addColorStop(0.5, "rgba(217, 119, 6, 0.02)");
-      gradient1.addColorStop(1, "rgba(0, 0, 0, 0)");
+      // 1. Deep ambient dark glow background
+      const focalX = mouse.x;
+      const focalY = mouse.y;
 
-      const gradient2 = ctx.createRadialGradient(
-        width * 0.8 - Math.cos(time * 0.8) * 100,
-        height * 0.6 + Math.sin(time * 0.6) * 120,
-        20,
-        width * 0.8,
-        height * 0.6,
-        width * 0.6
+      // Focal light bloom (electric lime / emerald glow core)
+      const coreGlow = ctx.createRadialGradient(
+        focalX,
+        focalY,
+        0,
+        focalX,
+        focalY,
+        width * 0.45
       );
-      gradient2.addColorStop(0, "rgba(6, 182, 212, 0.05)"); // Cyan glow
-      gradient2.addColorStop(0.6, "rgba(14, 165, 233, 0.015)");
-      gradient2.addColorStop(1, "rgba(0, 0, 0, 0)");
+      coreGlow.addColorStop(0, "rgba(200, 241, 53, 0.16)"); // Lime core
+      coreGlow.addColorStop(0.25, "rgba(132, 204, 22, 0.07)");
+      coreGlow.addColorStop(0.55, "rgba(16, 185, 129, 0.03)");
+      coreGlow.addColorStop(1, "rgba(5, 7, 5, 0)");
 
-      const gradient3 = ctx.createRadialGradient(
-        width * 0.5 + Math.sin(time * 0.5) * 150,
-        height * 0.85,
-        10,
-        width * 0.5,
-        height * 0.85,
-        width * 0.5
-      );
-      gradient3.addColorStop(0, "rgba(16, 185, 129, 0.035)"); // Emerald accent
-      gradient3.addColorStop(1, "rgba(0, 0, 0, 0)");
-
-      ctx.fillStyle = gradient1;
-      ctx.fillRect(0, 0, width, height);
-      ctx.fillStyle = gradient2;
-      ctx.fillRect(0, 0, width, height);
-      ctx.fillStyle = gradient3;
+      ctx.fillStyle = coreGlow;
       ctx.fillRect(0, 0, width, height);
 
-      // 2. Connective Neural Mesh / Lattice
-      const maxDistance = 140;
-      for (let i = 0; i < particles.length; i++) {
-        const p1 = particles[i];
+      // Secondary ambient glow top right
+      const secondaryGlow = ctx.createRadialGradient(
+        width * 0.85,
+        height * 0.2,
+        0,
+        width * 0.85,
+        height * 0.2,
+        width * 0.35
+      );
+      secondaryGlow.addColorStop(0, "rgba(163, 230, 53, 0.06)");
+      secondaryGlow.addColorStop(0.6, "rgba(6, 78, 59, 0.02)");
+      secondaryGlow.addColorStop(1, "rgba(5, 7, 5, 0)");
 
-        // Move
-        p1.x += p1.vx;
-        p1.y += p1.vy;
+      ctx.fillStyle = secondaryGlow;
+      ctx.fillRect(0, 0, width, height);
 
-        // Wrap around bounds
-        if (p1.x < 0) p1.x = width;
-        if (p1.x > width) p1.x = 0;
-        if (p1.y < 0) p1.y = height;
-        if (p1.y > height) p1.y = 0;
+      // 2. High-Energy Flowing Light Stream / Aurora Beams
+      // Draw bezier ribbons spanning across the screen through the focal point
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
 
-        // Mouse gravity pull (subtle)
-        if (mouse.isHovered) {
-          const dx = mouse.x - p1.x;
-          const dy = mouse.y - p1.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 220 && dist > 10) {
-            p1.x += (dx / dist) * 0.3;
-            p1.y += (dy / dist) * 0.3;
-          }
-        }
+      for (let i = 0; i < ribbons.length; i++) {
+        const r = ribbons[i];
+        const t = time * r.speedMultiplier + r.offsetPhase;
 
-        // Draw particle node
+        // Path coordinates: start on left, sweep into focal aura, flare out to top/bottom right
+        const startX = -50;
+        const startY = height * 0.65 + Math.sin(t * 0.8) * 60 + r.spreadY * 0.6;
+
+        // Control point 1: curving towards focal node
+        const cp1x = focalX * 0.5 + Math.cos(t * 0.6) * 40;
+        const cp1y = startY + (focalY - startY) * 0.4 + Math.sin(t * 1.1) * r.amplitude * 0.4;
+
+        // Anchor near focal point (pinch point)
+        const pinchX = focalX + Math.sin(t * 0.9) * 20;
+        const pinchY = focalY + r.spreadY * 0.25 + Math.cos(t * 0.7) * 15;
+
+        // Control point 2: accelerating outwards to top-right
+        const cp2x = focalX + (width - focalX) * 0.45 + Math.cos(t * 0.5) * 60;
+        const cp2y = focalY + (height * 0.15 - focalY) * 0.6 + Math.sin(t * 0.8) * r.amplitude;
+
+        // End point: sweeping out off screen right
+        const endX = width + 80;
+        const endY = height * 0.15 + r.spreadY * 1.8 + Math.sin(t * 0.7) * 80;
+
         ctx.beginPath();
-        ctx.arc(p1.x, p1.y, p1.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${p1.color}${p1.alpha})`;
-        ctx.fill();
+        ctx.moveTo(startX, startY);
+        ctx.bezierCurveTo(cp1x, cp1y, pinchX - 60, pinchY, pinchX, pinchY);
+        ctx.bezierCurveTo(pinchX + 70, pinchY, cp2x, cp2y, endX, endY);
 
-        // Connect nearby nodes
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+        // Gradient stroke from subtle lime to bright core to fading green
+        const streamGrad = ctx.createLinearGradient(startX, startY, endX, endY);
+        streamGrad.addColorStop(0, `hsla(${r.colorHue}, 90%, 65%, 0)`);
+        streamGrad.addColorStop(0.35, `hsla(${r.colorHue}, 95%, 60%, ${r.alpha * 0.7})`);
+        streamGrad.addColorStop(0.48, `hsla(${r.colorHue + 10}, 100%, 75%, ${Math.min(0.9, r.alpha * 1.8)})`); // Intense highlight near core
+        streamGrad.addColorStop(0.7, `hsla(${r.colorHue - 10}, 90%, 55%, ${r.alpha * 0.8})`);
+        streamGrad.addColorStop(1, `hsla(${r.colorHue}, 85%, 50%, 0)`);
 
-          if (dist < maxDistance) {
-            const lineAlpha = (1 - dist / maxDistance) * 0.18;
-            ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(148, 163, 184, ${lineAlpha})`;
-            ctx.lineWidth = 0.8;
-            ctx.stroke();
-          }
-        }
+        ctx.strokeStyle = streamGrad;
+        ctx.lineWidth = r.thickness;
+        ctx.shadowColor = `hsl(${r.colorHue}, 100%, 60%)`;
+        ctx.shadowBlur = i % 3 === 0 ? 16 : 6;
+        ctx.stroke();
       }
+
+      ctx.restore();
+
+      // 3. Focal Convergence Light Vortex Ring
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
+      const ringPulse = Math.sin(time * 2.5) * 4;
+      const ringRadius = 24 + ringPulse;
+
+      const ringGrad = ctx.createRadialGradient(
+        focalX,
+        focalY,
+        ringRadius * 0.3,
+        focalX,
+        focalY,
+        ringRadius * 2
+      );
+      ringGrad.addColorStop(0, "rgba(225, 255, 100, 0.45)");
+      ringGrad.addColorStop(0.4, "rgba(200, 241, 53, 0.2)");
+      ringGrad.addColorStop(1, "rgba(200, 241, 53, 0)");
+
+      ctx.fillStyle = ringGrad;
+      ctx.beginPath();
+      ctx.arc(focalX, focalY, ringRadius * 2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // 4. Subtle ambient sparks floating in the vortex
+      ctx.save();
+      ctx.globalCompositeOperation = "screen";
+      for (let i = 0; i < sparks.length; i++) {
+        const s = sparks[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.pulsePhase += s.pulseSpeed;
+
+        if (s.x < 0) s.x = width;
+        if (s.x > width) s.x = 0;
+        if (s.y < 0) s.y = height;
+        if (s.y > height) s.y = 0;
+
+        const currentAlpha = s.alpha * (0.6 + Math.sin(s.pulsePhase) * 0.4);
+
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(215, 255, 60, ${currentAlpha})`;
+        ctx.shadowColor = "#c8f135";
+        ctx.shadowBlur = 8;
+        ctx.fill();
+      }
+      ctx.restore();
 
       animationFrameId = requestAnimationFrame(render);
     };
@@ -183,7 +243,7 @@ export default function ShaderCanvas({
         document.body.removeEventListener("mouseleave", handleMouseLeave);
       }
     };
-  }, [particleCount, interactive]);
+  }, [interactive]);
 
   return (
     <canvas

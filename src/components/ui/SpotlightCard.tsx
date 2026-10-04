@@ -12,7 +12,7 @@ interface SpotlightCardProps extends React.HTMLAttributes<HTMLDivElement> {
 export default function SpotlightCard({
   children,
   className = "",
-  spotlightColor = "rgba(245, 158, 11, 0.12)",
+  spotlightColor = "rgba(200, 241, 53, 0.12)",
   showCrosshairs = true,
   cornerTag,
   badge,
@@ -58,7 +58,7 @@ export default function SpotlightCard({
       onBlur={handleBlur}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`relative rounded-2xl border border-white/[0.08] bg-[#0c121e]/75 p-6 backdrop-blur-xl transition-all duration-300 group hover:border-amber-500/30 overflow-hidden ${className}`}
+      className={`relative rounded-2xl border border-white/[0.08] bg-[#0b100b]/75 p-6 backdrop-blur-xl transition-all duration-300 group hover:border-[#c8f135]/35 overflow-hidden ${className}`}
       {...props}
     >
       {/* Dynamic Cursor Spotlight Overlay */}
@@ -75,7 +75,7 @@ export default function SpotlightCard({
         className="pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100 rounded-2xl z-0"
         style={{
           opacity,
-          background: `radial-gradient(350px circle at ${position.x}px ${position.y}px, rgba(245, 158, 11, 0.35), transparent 70%)`,
+          background: `radial-gradient(350px circle at ${position.x}px ${position.y}px, rgba(200, 241, 53, 0.35), transparent 70%)`,
           mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           maskComposite: "exclude",
@@ -87,16 +87,16 @@ export default function SpotlightCard({
       {/* Basement Studio Corner Crosshairs (+) */}
       {showCrosshairs && (
         <>
-          <span className="absolute top-1.5 left-2 font-mono text-[9px] text-white/20 select-none group-hover:text-amber-400/50 transition-colors">
+          <span className="absolute top-1.5 left-2 font-mono text-[9px] text-white/20 select-none group-hover:text-[#c8f135]/50 transition-colors">
             +
           </span>
-          <span className="absolute top-1.5 right-2 font-mono text-[9px] text-white/20 select-none group-hover:text-amber-400/50 transition-colors">
+          <span className="absolute top-1.5 right-2 font-mono text-[9px] text-white/20 select-none group-hover:text-[#c8f135]/50 transition-colors">
             +
           </span>
-          <span className="absolute bottom-1.5 left-2 font-mono text-[9px] text-white/20 select-none group-hover:text-amber-400/50 transition-colors">
+          <span className="absolute bottom-1.5 left-2 font-mono text-[9px] text-white/20 select-none group-hover:text-[#c8f135]/50 transition-colors">
             +
           </span>
-          <span className="absolute bottom-1.5 right-2 font-mono text-[9px] text-white/20 select-none group-hover:text-amber-400/50 transition-colors">
+          <span className="absolute bottom-1.5 right-2 font-mono text-[9px] text-white/20 select-none group-hover:text-[#c8f135]/50 transition-colors">
             +
           </span>
         </>

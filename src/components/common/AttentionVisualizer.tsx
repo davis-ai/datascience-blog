@@ -92,22 +92,22 @@ export default function AttentionVisualizer() {
       {/* Header controls */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
         <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-cyan-400" />
+          <Layers className="w-4 h-4 text-[#c8f135]" />
           <span className="font-mono text-xs font-semibold text-white tracking-wider">
             MULTI-HEAD ATTENTION LATTICE
           </span>
-          <span className="font-mono text-[10px] text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded">
+          <span className="font-mono text-[10px] text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-2.5 py-0.5 rounded-full">
             Softmax(QKᵀ / √dₖ)
           </span>
         </div>
 
         {/* Head Selector */}
-        <div className="flex items-center gap-1 bg-black/40 p-1 rounded-lg border border-white/10">
+        <div className="flex items-center gap-1 bg-black/50 p-1 rounded-full border border-white/10">
           <button
             onClick={() => setSelectedHead(1)}
-            className={`font-mono text-[10px] px-2.5 py-1 rounded transition ${
+            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
               selectedHead === 1
-                ? "bg-cyan-500 text-slate-950 font-bold"
+                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -115,9 +115,9 @@ export default function AttentionVisualizer() {
           </button>
           <button
             onClick={() => setSelectedHead(2)}
-            className={`font-mono text-[10px] px-2.5 py-1 rounded transition ${
+            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
               selectedHead === 2
-                ? "bg-cyan-500 text-slate-950 font-bold"
+                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -125,9 +125,9 @@ export default function AttentionVisualizer() {
           </button>
           <button
             onClick={() => setSelectedHead(3)}
-            className={`font-mono text-[10px] px-2.5 py-1 rounded transition ${
+            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
               selectedHead === 3
-                ? "bg-cyan-500 text-slate-950 font-bold"
+                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -139,7 +139,7 @@ export default function AttentionVisualizer() {
       {/* Interactive Token Sequence */}
       <div
         ref={containerRef}
-        className="relative py-6 px-3 bg-black/40 rounded-xl border border-white/5 min-h-[160px] flex flex-col justify-between"
+        className="relative py-6 px-3 bg-black/40 rounded-2xl border border-white/5 min-h-[160px] flex flex-col justify-between"
       >
         {/* SVG Bezier Curves for Attention Arcs */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible">
@@ -160,9 +160,9 @@ export default function AttentionVisualizer() {
                   key={`arc-${targetIdx}`}
                   d={`M ${source.x} ${source.y - 12} Q ${midX} ${controlY} ${target.x} ${target.y - 12}`}
                   fill="none"
-                  stroke={weight > 0.3 ? "#06b6d4" : "#f59e0b"}
-                  strokeWidth={Math.max(1, weight * 5)}
-                  strokeOpacity={Math.min(0.9, weight * 1.8)}
+                  stroke={weight > 0.3 ? "#c8f135" : "#4ade80"}
+                  strokeWidth={Math.max(1.2, weight * 5.5)}
+                  strokeOpacity={Math.min(0.95, weight * 2)}
                   strokeDasharray={weight > 0.2 ? "none" : "3,3"}
                   className="transition-all duration-300"
                 />
@@ -184,17 +184,17 @@ export default function AttentionVisualizer() {
                   tokenRefs.current[idx] = el;
                 }}
                 onMouseEnter={() => setActiveTokenIdx(idx)}
-                className={`relative px-3 py-1.5 rounded-lg font-mono text-xs transition-all duration-200 border ${
+                className={`relative px-3 py-1.5 rounded-full font-mono text-xs transition-all duration-200 border ${
                   isActive
-                    ? "bg-amber-500 text-slate-950 font-bold border-amber-400 shadow-lg shadow-amber-500/30 scale-105"
+                    ? "bg-[#c8f135] text-slate-950 font-bold border-[#c8f135] shadow-[0_0_16px_rgba(200,241,53,0.35)] scale-105"
                     : isAttended
-                    ? "bg-cyan-950/80 text-cyan-200 border-cyan-500/60 shadow-md shadow-cyan-500/20"
-                    : "bg-slate-900/80 text-slate-400 border-white/5 hover:border-white/20 hover:text-white"
+                    ? "bg-[#c8f135]/15 text-[#c8f135] border-[#c8f135]/40 shadow-sm"
+                    : "bg-white/[0.04] text-slate-300 border-white/5 hover:border-white/20 hover:text-white"
                 }`}
               >
                 {token}
                 {isActive && (
-                  <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-mono text-amber-400 uppercase tracking-widest">
+                  <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-mono text-[#c8f135] uppercase tracking-widest font-bold">
                     QUERY
                   </span>
                 )}
@@ -215,7 +215,7 @@ export default function AttentionVisualizer() {
       </div>
 
       {/* Top Attended Tokens Breakdown */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-black/30 rounded-lg border border-white/5 font-mono text-[11px]">
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-black/40 rounded-xl border border-white/5 font-mono text-[11px]">
         <span className="text-slate-400">
           Query: <strong className="text-white">"{TOKENS[activeTokenIdx]}"</strong>
         </span>
@@ -229,10 +229,10 @@ export default function AttentionVisualizer() {
             .map((item) => (
               <span
                 key={item.token}
-                className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-cyan-950/60 text-cyan-300 border border-cyan-500/30 text-[10px]"
+                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#c8f135]/10 text-[#c8f135] border border-[#c8f135]/25 text-[10px]"
               >
                 <span>{item.token}</span>
-                <span className="font-bold text-amber-400">{(item.weight * 100).toFixed(0)}%</span>
+                <span className="font-bold text-white">{(item.weight * 100).toFixed(0)}%</span>
               </span>
             ))}
         </div>

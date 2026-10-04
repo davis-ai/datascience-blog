@@ -179,9 +179,9 @@ export default function ArticlePage() {
   return (
     <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Top Reading Progress Bar */}
-      <div className="fixed top-20 left-0 right-0 h-1 bg-slate-900 z-50">
+      <div className="fixed top-20 left-0 right-0 h-1 bg-[#050705] z-50">
         <div
-          className="h-full bg-gradient-to-r from-amber-400 via-cyan-400 to-emerald-400 transition-all duration-150"
+          className="h-full bg-gradient-to-r from-[#c8f135] via-emerald-400 to-[#d9ff43] shadow-[0_0_10px_#c8f135] transition-all duration-150"
           style={{ width: `${scrollProgress}%` }}
         />
       </div>
@@ -190,7 +190,7 @@ export default function ArticlePage() {
       <div className="mb-8">
         <Link
           to="/articles"
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-amber-400 transition"
+          className="inline-flex items-center gap-2 text-xs font-semibold font-mono text-slate-400 hover:text-[#c8f135] transition"
         >
           <ArrowLeft className="w-4 h-4" />
           Back to All Articles
@@ -201,37 +201,37 @@ export default function ArticlePage() {
         {/* Main Article Content */}
         <article className="lg:col-span-8 space-y-10">
           {/* Header */}
-          <div className="space-y-4 border-b border-slate-800 pb-8">
+          <div className="space-y-4 border-b border-white/[0.08] pb-8">
             <div className="flex flex-wrap items-center gap-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-400 bg-amber-950/70 border border-amber-500/30 px-3 py-1 rounded-full">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-3.5 py-1 rounded-full font-mono">
                 {article.category}
               </span>
-              <span className="text-xs text-slate-400 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" /> {article.readTime}
+              <span className="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
+                <Clock className="w-3.5 h-3.5 text-[#c8f135]" /> {article.readTime}
               </span>
-              <span className="text-xs text-slate-400 flex items-center gap-1.5">
-                <Eye className="w-3.5 h-3.5" /> {article.views.toLocaleString()} reads
+              <span className="text-xs text-slate-400 flex items-center gap-1.5 font-mono">
+                <Eye className="w-3.5 h-3.5 text-[#c8f135]" /> {article.views.toLocaleString()} reads
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-tight font-heading">
               {article.title}
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed">
+            <p className="text-base sm:text-lg text-slate-300 font-medium leading-relaxed font-sans">
               {article.subtitle}
             </p>
 
             {/* Author Meta & Action Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
+            <div className="flex flex-wrap items-center justify-between gap-4 pt-4 font-mono text-xs">
               <div className="flex items-center gap-3">
                 <img
                   src={profileSmall}
                   alt="Davis Ochieng"
-                  className="w-11 h-11 rounded-full border-2 border-amber-400 object-cover"
+                  className="w-11 h-11 rounded-full border-2 border-[#c8f135] object-cover"
                 />
                 <div>
-                  <p className="text-sm font-bold text-white">Davis Ochieng</p>
+                  <p className="text-sm font-bold text-white font-sans">Davis Ochieng</p>
                   <p className="text-xs text-slate-400">
                     Published on {article.publishedDate} {article.updatedDate && `• Updated ${article.updatedDate}`}
                   </p>
@@ -241,36 +241,36 @@ export default function ArticlePage() {
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   onClick={handleToggleSpeech}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold border transition ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold border transition ${
                     isSpeaking
-                      ? 'bg-cyan-500/20 border-cyan-400 text-cyan-300 shadow-md shadow-cyan-500/20 animate-pulse'
-                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:border-cyan-500/40'
+                      ? 'bg-[#c8f135]/20 border-[#c8f135] text-[#c8f135] shadow-md shadow-[#c8f135]/20 animate-pulse'
+                      : 'bg-white/[0.04] border-white/10 text-slate-300 hover:text-white hover:border-[#c8f135]/40'
                   }`}
                   title={isSpeaking ? 'Stop audio playback' : 'Listen to audio summary'}
                 >
-                  {isSpeaking ? <VolumeX className="w-4 h-4 text-cyan-400" /> : <Volume2 className="w-4 h-4 text-cyan-400" />}
+                  {isSpeaking ? <VolumeX className="w-4 h-4 text-[#c8f135]" /> : <Volume2 className="w-4 h-4 text-[#c8f135]" />}
                   <span>{isSpeaking ? 'Stop Audio' : 'Listen'}</span>
                 </button>
 
                 <button
                   onClick={handleBookmarkToggle}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold border transition ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold border transition ${
                     isBookmarked
-                      ? 'bg-amber-500/20 border-amber-400 text-amber-300 shadow-md shadow-amber-500/20'
-                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:border-amber-500/40'
+                      ? 'bg-[#c8f135]/20 border-[#c8f135] text-[#c8f135] shadow-md shadow-[#c8f135]/20'
+                      : 'bg-white/[0.04] border-white/10 text-slate-300 hover:text-white hover:border-[#c8f135]/40'
                   }`}
                   title={isBookmarked ? 'Remove from bookmarks' : 'Save article for later'}
                 >
-                  <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-amber-400 text-amber-400' : 'text-slate-400'}`} />
+                  <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-[#c8f135] text-[#c8f135]' : 'text-slate-400'}`} />
                   <span>{isBookmarked ? 'Saved' : 'Save'}</span>
                 </button>
 
                 <button
                   onClick={handleLike}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold border transition ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold border transition ${
                     isLiked
                       ? 'bg-rose-500/20 border-rose-500 text-rose-300 shadow-md shadow-rose-500/20'
-                      : 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:border-rose-500/40'
+                      : 'bg-white/[0.04] border-white/10 text-slate-300 hover:text-white hover:border-rose-500/40'
                   }`}
                 >
                   <Heart className={`w-4 h-4 ${isLiked ? 'fill-rose-400 text-rose-400' : ''}`} />
@@ -279,10 +279,10 @@ export default function ArticlePage() {
 
                 <button
                   onClick={handleShare}
-                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-900 border border-slate-800 text-slate-300 hover:text-white hover:border-amber-500/40 transition"
+                  className="flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold bg-white/[0.04] border border-white/10 text-slate-300 hover:text-white hover:border-[#c8f135]/40 transition"
                   title="Share article URL"
                 >
-                  <Share2 className="w-4 h-4 text-amber-400" />
+                  <Share2 className="w-4 h-4 text-[#c8f135]" />
                   Share
                 </button>
               </div>
@@ -290,15 +290,15 @@ export default function ArticlePage() {
           </div>
 
           {/* Key Takeaways Callout */}
-          <div className="glass-card p-6 rounded-3xl border border-amber-500/30 bg-amber-950/10 space-y-3">
-            <h3 className="text-sm font-bold text-amber-400 uppercase tracking-wider flex items-center gap-2">
-              <Sparkles className="w-4 h-4" />
+          <div className="glass-card p-6 rounded-3xl border border-[#c8f135]/30 bg-[#c8f135]/5 space-y-3 font-mono">
+            <h3 className="text-sm font-bold text-[#c8f135] uppercase tracking-wider flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-[#c8f135]" />
               Executive Summary & Key Takeaways
             </h3>
             <ul className="space-y-2">
               {article.keyTakeaways.map((takeaway, idx) => (
                 <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-200">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-[#c8f135] shrink-0 mt-0.5" />
                   <span>{takeaway}</span>
                 </li>
               ))}
@@ -309,7 +309,7 @@ export default function ArticlePage() {
           <div className="space-y-12">
             {article.sections.map((section) => (
               <section key={section.id} id={section.id} className="space-y-4 scroll-mt-28">
-                <h2 className="text-2xl font-bold text-white tracking-tight">
+                <h2 className="text-2xl font-bold text-white tracking-tight font-heading">
                   {section.title}
                 </h2>
 
@@ -325,24 +325,24 @@ export default function ArticlePage() {
                         ? 'bg-emerald-950/30 border-emerald-500/30 text-emerald-200'
                         : section.callout.type === 'warning'
                         ? 'bg-rose-950/30 border-rose-500/30 text-rose-200'
-                        : 'bg-cyan-950/30 border-cyan-500/30 text-cyan-200'
+                        : 'bg-black/40 border-[#c8f135]/30 text-slate-200'
                     }`}
                   >
-                    <Info className="w-5 h-5 shrink-0 mt-0.5 text-amber-400" />
+                    <Info className="w-5 h-5 shrink-0 mt-0.5 text-[#c8f135]" />
                     <p className="text-xs sm:text-sm font-medium">{section.callout.text}</p>
                   </div>
                 )}
 
                 {/* Code Snippet Box */}
                 {section.codeSnippet && (
-                  <div className="rounded-2xl bg-slate-950 border border-slate-800 overflow-hidden my-6 shadow-2xl">
-                    <div className="flex items-center justify-between px-4 py-2.5 bg-slate-900/90 border-b border-slate-800 text-xs">
-                      <span className="font-mono text-slate-400 font-semibold">
+                  <div className="rounded-2xl bg-[#050705] border border-white/10 overflow-hidden my-6 shadow-2xl font-mono">
+                    <div className="flex items-center justify-between px-4 py-2.5 bg-black/60 border-b border-white/[0.08] text-xs">
+                      <span className="text-slate-400 font-semibold">
                         {section.codeSnippet.filename || section.codeSnippet.language}
                       </span>
                       <button
                         onClick={() => copyCode(section.codeSnippet!.code, section.id)}
-                        className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-amber-400 transition"
+                        className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-[#c8f135] transition"
                       >
                         {copiedCodeId === section.id ? (
                           <>
@@ -367,56 +367,56 @@ export default function ArticlePage() {
           </div>
 
           {/* Share & Like Footer */}
-          <div className="p-6 rounded-3xl glass-card border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="p-6 rounded-3xl glass-card border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 font-mono">
             <div>
-              <p className="text-sm font-bold text-white">Found this technical deep-dive valuable?</p>
+              <p className="text-sm font-bold text-white font-sans">Found this technical deep-dive valuable?</p>
               <p className="text-xs text-slate-400">Share it with fellow engineers or drop feedback below.</p>
             </div>
             <div className="flex items-center gap-3">
               <button
                 onClick={handleLike}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold transition"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#c8f135] hover:bg-[#d9ff43] text-black text-xs font-bold transition shadow-[0_0_15px_rgba(200,241,53,0.3)]"
               >
-                <Heart className={`w-4 h-4 ${isLiked ? 'fill-slate-950' : ''}`} />
+                <Heart className={`w-4 h-4 ${isLiked ? 'fill-black' : ''}`} />
                 {isLiked ? 'Liked' : 'Like Article'} ({likeCount})
               </button>
               <button
                 onClick={handleShare}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-white text-xs font-semibold border border-white/10 transition"
               >
-                <Share2 className="w-4 h-4" />
+                <Share2 className="w-4 h-4 text-[#c8f135]" />
                 Copy Link
               </button>
             </div>
           </div>
 
           {/* Interactive Comments Section */}
-          <div className="space-y-6 pt-6 border-t border-slate-800">
-            <h3 className="text-xl font-bold text-white flex items-center gap-2">
-              <MessageSquare className="w-5 h-5 text-amber-400" />
+          <div className="space-y-6 pt-6 border-t border-white/[0.08]">
+            <h3 className="text-xl font-bold text-white flex items-center gap-2 font-heading">
+              <MessageSquare className="w-5 h-5 text-[#c8f135]" />
               Community Discussion ({comments.length})
             </h3>
 
             {/* Post Comment Form */}
-            <form onSubmit={handleCommentSubmit} className="space-y-3 glass-card p-4 rounded-2xl border border-slate-800">
+            <form onSubmit={handleCommentSubmit} className="space-y-3 glass-card p-4 sm:p-5 rounded-3xl border border-white/10 font-mono text-xs">
               <input
                 type="text"
                 placeholder="Your name or title (e.g. Alex - ML Engineer)"
                 value={commentAuthor}
                 onChange={(e) => setCommentAuthor(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400"
+                className="w-full bg-black/40 border border-white/10 rounded-full px-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#c8f135]"
               />
               <textarea
                 placeholder="Share your thoughts, benchmarks, or questions..."
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
                 rows={3}
-                className="w-full bg-slate-900 border border-slate-700/80 rounded-xl px-3.5 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-400 resize-none"
+                className="w-full bg-black/40 border border-white/10 rounded-2xl px-4 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#c8f135] resize-none"
               />
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold flex items-center gap-1.5 transition"
+                  className="px-5 py-2 rounded-full bg-[#c8f135] hover:bg-[#d9ff43] text-black text-xs font-bold flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(200,241,53,0.3)]"
                 >
                   <Send className="w-3.5 h-3.5" />
                   Post Comment
@@ -427,7 +427,7 @@ export default function ArticlePage() {
             {/* Comment List */}
             <div className="space-y-3">
               {comments.map((comment) => (
-                <div key={comment.id} className="p-4 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-2">
+                <div key={comment.id} className="p-4 rounded-2xl bg-black/30 border border-white/5 space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2.5">
                       <img
@@ -435,11 +435,11 @@ export default function ArticlePage() {
                         alt={comment.author}
                         className="w-7 h-7 rounded-full object-cover"
                       />
-                      <span className="text-xs font-bold text-white">{comment.author}</span>
+                      <span className="text-xs font-bold text-white font-sans">{comment.author}</span>
                     </div>
-                    <span className="text-[11px] text-slate-500">{comment.date}</span>
+                    <span className="text-[11px] text-slate-500 font-mono">{comment.date}</span>
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed pl-9">
+                  <p className="text-xs text-slate-300 leading-relaxed pl-9 font-sans">
                     {comment.content}
                   </p>
                 </div>
@@ -451,19 +451,19 @@ export default function ArticlePage() {
         {/* Sidebar (Table of Contents & Related) */}
         <aside className="lg:col-span-4 space-y-8">
           {/* Sticky Table of Contents */}
-          <div className="sticky top-28 glass-card p-6 rounded-3xl border border-slate-800 space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+          <div className="sticky top-28 glass-card p-6 rounded-3xl border border-white/10 space-y-4 font-mono text-xs">
+            <h3 className="font-bold uppercase tracking-wider text-slate-300">
               Table of Contents
             </h3>
-            <nav className="space-y-1.5 text-xs">
+            <nav className="space-y-1.5">
               {article.sections.map((section) => (
                 <a
                   key={section.id}
                   href={`#${section.id}`}
-                  className={`block py-1.5 px-3 rounded-lg transition ${
+                  className={`block py-1.5 px-3 rounded-xl transition ${
                     activeSection === section.id
-                      ? 'bg-amber-500/20 text-amber-300 font-bold border-l-2 border-amber-400'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
+                      ? 'bg-[#c8f135]/15 text-[#c8f135] font-bold border-l-2 border-[#c8f135]'
+                      : 'text-slate-400 hover:text-white hover:bg-white/[0.03]'
                   }`}
                 >
                   {section.title}
@@ -472,26 +472,26 @@ export default function ArticlePage() {
             </nav>
 
             {/* Author Profile Bio Card */}
-            <div className="pt-6 border-t border-slate-800/80 space-y-3">
+            <div className="pt-6 border-t border-white/[0.08] space-y-3">
               <div className="flex items-center gap-3">
                 <img
                   src={profileSmall}
                   alt="Davis Ochieng"
-                  className="w-10 h-10 rounded-full border border-amber-400 object-cover"
+                  className="w-10 h-10 rounded-full border border-[#c8f135] object-cover"
                 />
                 <div>
-                  <p className="text-xs font-bold text-white">Davis Ochieng</p>
-                  <p className="text-[11px] text-slate-400">Data Scientist & ML Engineer</p>
+                  <p className="text-xs font-bold text-white font-sans">Davis Ochieng</p>
+                  <p className="text-[11px] text-[#c8f135]">Data Scientist & ML Engineer</p>
                 </div>
               </div>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-400 leading-relaxed font-sans">
                 Writing about scalable deep learning, real-time MLOps architectures, and mathematical fundamentals of AI.
               </p>
             </div>
 
             {/* Related Articles */}
-            <div className="pt-6 border-t border-slate-800/80 space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+            <div className="pt-6 border-t border-white/[0.08] space-y-3">
+              <h4 className="font-bold uppercase tracking-wider text-slate-300">
                 Recommended Next
               </h4>
               <div className="space-y-3">
@@ -499,9 +499,9 @@ export default function ArticlePage() {
                   <Link
                     key={rel.slug}
                     to={`/articles/${rel.slug}`}
-                    className="block p-3 rounded-xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 transition group"
+                    className="block p-3 rounded-2xl bg-black/40 hover:bg-white/[0.04] border border-white/5 transition group"
                   >
-                    <p className="text-xs font-bold text-white group-hover:text-amber-300 transition-colors line-clamp-1">
+                    <p className="text-xs font-bold text-white group-hover:text-[#c8f135] transition-colors line-clamp-1 font-sans">
                       {rel.title}
                     </p>
                     <span className="text-[10px] text-slate-500">{rel.readTime}</span>

@@ -15,20 +15,20 @@ export default function TechTicker() {
   ];
 
   return (
-    <div className="w-full overflow-hidden border-y border-white/[0.08] bg-[#070b13] py-2.5 relative select-none">
+    <div className="w-full overflow-hidden border-y border-white/[0.06] bg-[#050705] py-3 relative select-none">
       {/* Edge gradient masks */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#070b13] to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#070b13] to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-[#050705] to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-[#050705] to-transparent z-10 pointer-events-none" />
 
       <div className="flex w-max animate-ticker gap-6">
         {[...items, ...items].map((item, idx) => (
           <div
             key={idx}
-            className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.06] text-slate-300 font-mono text-[11px] whitespace-nowrap hover:border-amber-500/40 hover:text-white transition"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-slate-300 font-mono text-[11px] whitespace-nowrap hover:border-[#c8f135]/40 hover:text-white transition"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            <span className="w-1.5 h-1.5 rounded-full bg-[#c8f135]" />
             <span className="font-semibold text-white">{item.label}</span>
-            <span className="text-[9px] text-slate-500 uppercase tracking-wider">
+            <span className="text-[9px] text-[#c8f135]/80 uppercase tracking-wider">
               //{item.cat}
             </span>
           </div>

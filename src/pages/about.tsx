@@ -139,16 +139,16 @@ EDUCATION & CERTIFICATIONS
           animate={{ opacity: 1, x: 0 }}
           className="lg:col-span-7 space-y-6"
         >
-          <div className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-black/60 border border-white/10 text-xs font-mono text-slate-300">
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
+          <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-[#c8f135]">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#c8f135] animate-pulse shadow-[0_0_8px_#c8f135]" />
             <span>[PROFILE_DOSSIER // DO-01]</span>
           </div>
 
           <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-heading">
-            Davis <span className="gradient-text-gold">Ochieng</span>
+            Davis <span className="font-serif-italic text-[#c8f135] font-normal">Ochieng</span>
           </h1>
 
-          <div className="font-mono text-xs sm:text-sm text-cyan-400 bg-cyan-950/40 border border-cyan-500/20 px-3 py-1.5 rounded-lg w-fit">
+          <div className="font-mono text-xs sm:text-sm text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-3.5 py-1.5 rounded-full w-fit">
             &gt; <TextScramble text="Senior Machine Learning Systems Engineer & Data Scientist" />
           </div>
 
@@ -164,16 +164,16 @@ EDUCATION & CERTIFICATIONS
           <div className="flex flex-wrap items-center gap-3 pt-2 font-mono text-xs">
             <button
               onClick={() => setShowResumeModal(true)}
-              className="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg shadow-amber-500/20 transition hover:scale-[1.02]"
+              className="px-5 py-3 rounded-full bg-[#c8f135] hover:bg-[#d9ff43] text-black font-bold uppercase tracking-wider flex items-center gap-2 shadow-[0_0_20px_rgba(200,241,53,0.3)] transition hover:scale-[1.02]"
             >
               <FileText className="w-4 h-4" />
               <span>Inspect CV Document</span>
             </button>
             <Link
               to="/contact"
-              className="px-5 py-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-200 font-semibold uppercase tracking-wider border border-white/10 flex items-center gap-2 transition"
+              className="px-5 py-3 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 font-semibold uppercase tracking-wider border border-white/10 flex items-center gap-2 transition hover:text-[#c8f135] hover:border-[#c8f135]/40"
             >
-              <Mail className="w-4 h-4 text-amber-400" />
+              <Mail className="w-4 h-4 text-[#c8f135]" />
               <span>Direct Consultation</span>
             </Link>
           </div>
@@ -188,9 +188,10 @@ EDUCATION & CERTIFICATIONS
           <SpotlightCard
             cornerTag="ID: 0x4B2"
             showCrosshairs={true}
+            spotlightColor="rgba(200, 241, 53, 0.15)"
             className="p-4 relative group"
           >
-            <div className="relative overflow-hidden rounded-xl border border-white/10">
+            <div className="relative overflow-hidden rounded-2xl border border-white/10">
               <picture>
                 <source srcSet={profileLarge} media="(min-width: 1024px)" width="384" height="384" />
                 <source srcSet={profileMedium} media="(min-width: 768px)" width="384" height="384" />
@@ -201,17 +202,17 @@ EDUCATION & CERTIFICATIONS
                   height="384"
                   fetchPriority="high"
                   decoding="async"
-                  className="w-full max-w-sm rounded-xl grayscale hover:grayscale-0 transition-all duration-700 object-cover"
+                  className="w-full max-w-sm rounded-2xl grayscale hover:grayscale-0 transition-all duration-700 object-cover"
                 />
               </picture>
             </div>
             
             <div className="mt-3 pt-3 border-t border-white/[0.08] flex items-center justify-between font-mono text-[11px] text-slate-400">
               <span className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span className="w-2 h-2 rounded-full bg-[#c8f135] animate-pulse shadow-[0_0_8px_#c8f135]" />
                 Location: Nairobi, KE [UTC+3]
               </span>
-              <span className="text-amber-400">BSc. Comp Sci (Honours)</span>
+              <span className="text-[#c8f135]">BSc. Comp Sci (Honours)</span>
             </div>
           </SpotlightCard>
         </motion.div>
@@ -222,12 +223,13 @@ EDUCATION & CERTIFICATIONS
         <SpotlightCard
           cornerTag="SKILL_PROFICIENCY"
           showCrosshairs={true}
+          spotlightColor="rgba(200, 241, 53, 0.15)"
           className="p-6 sm:p-8 space-y-6"
         >
           <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5">
             <div>
-              <div className="flex items-center gap-2 font-mono text-xs text-amber-400 uppercase tracking-widest">
-                <Cpu className="w-4 h-4" />
+              <div className="flex items-center gap-2 font-mono text-xs text-[#c8f135] uppercase tracking-widest">
+                <Cpu className="w-4 h-4 text-[#c8f135]" />
                 <span>Technical Benchmarks</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-black text-white font-heading mt-1">
@@ -236,12 +238,12 @@ EDUCATION & CERTIFICATIONS
             </div>
 
             {/* Category Tabs */}
-            <div className="flex gap-1.5 p-1 bg-black/40 rounded-xl border border-white/10 font-mono text-xs">
+            <div className="flex gap-1.5 p-1 bg-black/40 rounded-full border border-white/10 font-mono text-xs">
               <button
                 onClick={() => setActiveSkillCategory('ml')}
-                className={`px-3 py-1.5 rounded-lg transition ${
+                className={`px-3.5 py-1.5 rounded-full transition ${
                   activeSkillCategory === 'ml'
-                    ? 'bg-amber-500 text-slate-950 font-bold'
+                    ? 'bg-[#c8f135] text-black font-bold shadow-md shadow-[#c8f135]/20'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -249,9 +251,9 @@ EDUCATION & CERTIFICATIONS
               </button>
               <button
                 onClick={() => setActiveSkillCategory('mlops')}
-                className={`px-3 py-1.5 rounded-lg transition ${
+                className={`px-3.5 py-1.5 rounded-full transition ${
                   activeSkillCategory === 'mlops'
-                    ? 'bg-amber-500 text-slate-950 font-bold'
+                    ? 'bg-[#c8f135] text-black font-bold shadow-md shadow-[#c8f135]/20'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -259,9 +261,9 @@ EDUCATION & CERTIFICATIONS
               </button>
               <button
                 onClick={() => setActiveSkillCategory('fullstack')}
-                className={`px-3 py-1.5 rounded-lg transition ${
+                className={`px-3.5 py-1.5 rounded-full transition ${
                   activeSkillCategory === 'fullstack'
-                    ? 'bg-amber-500 text-slate-950 font-bold'
+                    ? 'bg-[#c8f135] text-black font-bold shadow-md shadow-[#c8f135]/20'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -272,17 +274,17 @@ EDUCATION & CERTIFICATIONS
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 font-mono">
             {skillsData[activeSkillCategory].map((skill, idx) => (
-              <div key={idx} className="p-4 rounded-xl bg-black/30 border border-white/5 space-y-2">
+              <div key={idx} className="p-4 rounded-2xl bg-black/30 border border-white/5 space-y-2">
                 <div className="flex justify-between items-center text-xs">
                   <span className="font-bold text-white">{skill.name}</span>
-                  <span className="text-amber-400 font-bold">{skill.level}%</span>
+                  <span className="text-[#c8f135] font-bold">{skill.level}%</span>
                 </div>
-                <div className="w-full h-1.5 rounded-full bg-slate-900 overflow-hidden">
+                <div className="w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${skill.level}%` }}
                     transition={{ duration: 0.8, delay: idx * 0.05 }}
-                    className="h-full bg-gradient-to-r from-amber-400 to-amber-500 rounded-full"
+                    className="h-full bg-gradient-to-r from-[#c8f135] to-emerald-400 rounded-full"
                   />
                 </div>
                 <p className="text-[11px] text-slate-400 font-sans">{skill.note}</p>
@@ -295,8 +297,8 @@ EDUCATION & CERTIFICATIONS
       {/* Career Trajectory & Milestones */}
       <section className="space-y-8">
         <div className="text-center space-y-2 max-w-xl mx-auto">
-          <div className="inline-flex items-center gap-2 font-mono text-xs text-cyan-400 uppercase tracking-widest">
-            <Briefcase className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 font-mono text-xs text-[#c8f135] uppercase tracking-widest">
+            <Briefcase className="w-3.5 h-3.5 text-[#c8f135]" />
             <span>Chronological Experience</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-black text-white font-heading">
@@ -309,15 +311,16 @@ EDUCATION & CERTIFICATIONS
           <SpotlightCard
             cornerTag="2023 - PRESENT"
             showCrosshairs={true}
+            spotlightColor="rgba(200, 241, 53, 0.15)"
             className="p-6 space-y-4"
           >
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-amber-400 bg-amber-950/60 border border-amber-500/30 px-2 py-0.5 rounded">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-2.5 py-0.5 rounded-full">
               NeuralScale AI // Senior
             </span>
             <h3 className="text-base font-bold text-white">
               Senior Machine Learning Engineer
             </h3>
-            <p className="text-xs font-mono text-amber-400/90">
+            <p className="text-xs font-mono text-[#c8f135]/90">
               Low-Latency Inference & LLM Fine-Tuning
             </p>
             <p className="text-xs text-slate-400 leading-relaxed">
@@ -329,9 +332,10 @@ EDUCATION & CERTIFICATIONS
           <SpotlightCard
             cornerTag="2021 - 2023"
             showCrosshairs={true}
+            spotlightColor="rgba(200, 241, 53, 0.15)"
             className="p-6 space-y-4"
           >
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded-full">
               Apex Data Labs // Lead
             </span>
             <h3 className="text-base font-bold text-white">
@@ -349,9 +353,10 @@ EDUCATION & CERTIFICATIONS
           <SpotlightCard
             cornerTag="2017 - 2021"
             showCrosshairs={true}
+            spotlightColor="rgba(200, 241, 53, 0.15)"
             className="p-6 space-y-4"
           >
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
               University Honours
             </span>
             <h3 className="text-base font-bold text-white">
@@ -373,21 +378,22 @@ EDUCATION & CERTIFICATIONS
         <SpotlightCard
           cornerTag="CERTIFIED"
           showCrosshairs={true}
+          spotlightColor="rgba(200, 241, 53, 0.15)"
           className="p-6 sm:p-8 space-y-5"
         >
           <h3 className="text-lg font-bold text-white flex items-center gap-2 font-mono">
-            <Award className="w-5 h-5 text-amber-400" />
+            <Award className="w-5 h-5 text-[#c8f135]" />
             Verified Certifications
           </h3>
 
           <div className="space-y-3 font-mono text-xs">
             {certifications.map((cert, idx) => (
-              <div key={idx} className="p-3.5 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between">
+              <div key={idx} className="p-3.5 rounded-2xl bg-black/40 border border-white/5 flex items-center justify-between">
                 <div>
                   <h4 className="font-bold text-white">{cert.title}</h4>
                   <p className="text-[11px] text-slate-400">{cert.issuer} • {cert.year}</p>
                 </div>
-                <span className="font-bold text-amber-400 bg-amber-950/60 border border-amber-500/30 px-2 py-0.5 rounded text-[10px]">
+                <span className="font-bold text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-2.5 py-0.5 rounded-full text-[10px]">
                   {cert.badge}
                 </span>
               </div>
@@ -399,23 +405,24 @@ EDUCATION & CERTIFICATIONS
         <SpotlightCard
           cornerTag="PHILOSOPHY"
           showCrosshairs={true}
+          spotlightColor="rgba(200, 241, 53, 0.15)"
           className="p-6 sm:p-8 space-y-5"
         >
           <h3 className="text-lg font-bold text-white flex items-center gap-2 font-mono">
-            <Sparkles className="w-5 h-5 text-cyan-400" />
+            <Sparkles className="w-5 h-5 text-[#c8f135]" />
             Core Engineering Tenets
           </h3>
 
           <ul className="space-y-3 text-xs sm:text-sm text-slate-300">
-            <li className="flex items-start gap-3 p-2.5 rounded-lg bg-black/30 border border-white/5">
-              <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+            <li className="flex items-start gap-3 p-3 rounded-2xl bg-black/30 border border-white/5">
+              <CheckCircle2 className="w-4 h-4 text-[#c8f135] shrink-0 mt-0.5" />
               <span><strong>Pragmatic Simplicity:</strong> The best ML model is the simplest one that solves the business problem reliably with minimal complexity.</span>
             </li>
-            <li className="flex items-start gap-3 p-2.5 rounded-lg bg-black/30 border border-white/5">
+            <li className="flex items-start gap-3 p-3 rounded-2xl bg-black/30 border border-white/5">
               <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
               <span><strong>Interpretability Matters:</strong> A prediction without transparent feature attribution (SHAP) is a liability in production.</span>
             </li>
-            <li className="flex items-start gap-3 p-2.5 rounded-lg bg-black/30 border border-white/5">
+            <li className="flex items-start gap-3 p-3 rounded-2xl bg-black/30 border border-white/5">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
               <span><strong>Latency is User Experience:</strong> Optimize inference via ONNX/TensorRT, zero-copy memory, and asynchronous queues from Day 1.</span>
             </li>
@@ -431,16 +438,16 @@ EDUCATION & CERTIFICATIONS
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-3xl bg-[#090e18] border border-white/10 rounded-2xl p-6 sm:p-8 shadow-2xl space-y-6 text-slate-200 max-h-[85vh] overflow-y-auto font-mono text-xs"
+              className="w-full max-w-3xl bg-[#080d08] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 text-slate-200 max-h-[85vh] overflow-y-auto font-mono text-xs"
             >
               <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
                 <div>
                   <h3 className="text-xl font-bold text-white font-heading">Davis Ochieng - Resume Summary</h3>
-                  <p className="text-amber-400 font-mono text-xs">Senior Machine Learning Engineer & Data Scientist</p>
+                  <p className="text-[#c8f135] font-mono text-xs">Senior Machine Learning Engineer & Data Scientist</p>
                 </div>
                 <button
                   onClick={() => setShowResumeModal(false)}
-                  className="p-1.5 rounded-lg bg-slate-900 text-slate-400 hover:text-white border border-white/10"
+                  className="p-1.5 rounded-full bg-white/[0.04] text-slate-400 hover:text-white border border-white/10"
                   aria-label="Close modal"
                 >
                   <X className="w-4 h-4" />
@@ -448,7 +455,7 @@ EDUCATION & CERTIFICATIONS
               </div>
 
               <div className="space-y-4 text-slate-300">
-                <div className="p-4 rounded-xl bg-black/40 border border-white/5 space-y-2">
+                <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2">
                   <h4 className="font-bold text-white text-sm">Executive Summary</h4>
                   <p className="leading-relaxed text-slate-400">
                     Senior Data Scientist and ML Systems Engineer with 5+ years of experience engineering production AI architectures. Specialized in Deep Learning, PyTorch, LoRA fine-tuning, ONNX optimization, and low-latency microservice orchestration.
@@ -456,11 +463,11 @@ EDUCATION & CERTIFICATIONS
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="p-4 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
                     <h5 className="font-bold text-white text-xs">Core Tech Stack</h5>
                     <p className="text-slate-400 text-[11px]">Python, PyTorch, HuggingFace, FastAPI, Docker, ONNX, Kafka, React 19, TypeScript</p>
                   </div>
-                  <div className="p-4 rounded-xl bg-black/40 border border-white/5 space-y-1">
+                  <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
                     <h5 className="font-bold text-white text-xs">Education & Certs</h5>
                     <p className="text-slate-400 text-[11px]">BSc. Computer Science (Honours), AWS Certified ML Specialist, DL.AI Specialization</p>
                   </div>
@@ -470,13 +477,13 @@ EDUCATION & CERTIFICATIONS
               <div className="flex items-center justify-end gap-3 pt-4 border-t border-white/[0.08]">
                 <button
                   onClick={() => setShowResumeModal(false)}
-                  className="px-4 py-2 rounded-xl bg-slate-900 text-slate-300 text-xs font-semibold border border-white/5"
+                  className="px-4 py-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-300 text-xs font-semibold border border-white/5"
                 >
                   Close
                 </button>
                 <button
                   onClick={handleDownloadResume}
-                  className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold flex items-center gap-2 shadow"
+                  className="px-5 py-2.5 rounded-full bg-[#c8f135] hover:bg-[#d9ff43] text-black font-bold flex items-center gap-2 shadow-[0_0_15px_rgba(200,241,53,0.3)]"
                 >
                   <Download className="w-4 h-4" />
                   Download Complete Resume (.txt)

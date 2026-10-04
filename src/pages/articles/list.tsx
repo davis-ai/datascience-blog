@@ -83,12 +83,13 @@ export default function ArticlesListPage() {
     <div className="min-h-screen py-8 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
       {/* Header */}
       <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/60 border border-white/10 text-xs font-mono text-cyan-400">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-[#c8f135]">
+          <span className="w-1.5 h-1.5 rounded-full bg-[#c8f135] animate-pulse shadow-[0_0_8px_#c8f135]" />
           <BookOpen className="w-3.5 h-3.5" />
           <span>[RESEARCH_PUBLICATIONS // INDEX]</span>
         </div>
         <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-heading">
-          Technical Field Guides & <span className="gradient-text-cyan">Research</span>
+          Technical Field Guides & <span className="font-serif-italic text-[#c8f135] font-normal">Research</span>
         </h1>
         <p className="text-slate-400 text-xs sm:text-base font-mono">
           Mathematical foundations, empirical benchmarks, and production architectures across Deep Learning and MLOps.
@@ -100,15 +101,16 @@ export default function ArticlesListPage() {
         <SpotlightCard
           cornerTag="FEATURED_PAPER"
           showCrosshairs={true}
-          className="p-6 sm:p-10 border-amber-500/30"
+          spotlightColor="rgba(200, 241, 53, 0.15)"
+          className="p-6 sm:p-10 border-[#c8f135]/30"
         >
           <div className="max-w-3xl space-y-4 font-mono">
             <div className="flex flex-wrap items-center gap-3 text-xs">
-              <span className="font-bold uppercase tracking-wider text-amber-400 bg-amber-950/70 border border-amber-500/40 px-2.5 py-0.5 rounded text-[10px]">
+              <span className="font-bold uppercase tracking-wider text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/40 px-3 py-0.5 rounded-full text-[10px]">
                 ✦ Primary Research Paper
               </span>
               <span className="text-slate-400 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" /> {featuredArticle.readTime}
+                <Clock className="w-3.5 h-3.5 text-[#c8f135]" /> {featuredArticle.readTime}
               </span>
               <span className="text-slate-500">
                 {featuredArticle.publishedDate}
@@ -127,7 +129,7 @@ export default function ArticlesListPage() {
               {featuredArticle.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5"
+                  className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/[0.04] text-slate-400 border border-white/5"
                 >
                   #{tag}
                 </span>
@@ -137,7 +139,7 @@ export default function ArticlesListPage() {
             <div className="pt-3">
               <Link
                 to={`/articles/${featuredArticle.slug}`}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold font-mono transition shadow-lg shadow-amber-500/20"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#c8f135] hover:bg-[#d9ff43] text-black text-xs font-bold font-mono transition shadow-[0_0_20px_rgba(200,241,53,0.3)]"
               >
                 <span>Read Full Publication</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -155,10 +157,10 @@ export default function ArticlesListPage() {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-xl transition ${
+              className={`px-3.5 py-1.5 rounded-full transition ${
                 selectedCategory === cat
-                  ? 'bg-cyan-500 text-slate-950 font-bold shadow-md shadow-cyan-500/20'
-                  : 'bg-black/30 text-slate-400 hover:text-white border border-white/5'
+                  ? 'bg-[#c8f135] text-black font-bold shadow-md shadow-[#c8f135]/20'
+                  : 'bg-white/[0.03] text-slate-400 hover:text-white border border-white/5'
               }`}
             >
               {cat}
@@ -175,7 +177,7 @@ export default function ArticlesListPage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search topics, tags..."
-              className="w-full bg-black/50 border border-white/10 rounded-xl pl-9 pr-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-cyan-400 transition"
+              className="w-full bg-black/50 border border-white/10 rounded-full pl-9 pr-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#c8f135] transition"
             />
           </div>
 
@@ -183,7 +185,7 @@ export default function ArticlesListPage() {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
             aria-label="Sort articles"
-            className="bg-black/50 border border-white/10 rounded-xl px-3 py-2 text-xs text-slate-300 focus:outline-none focus:border-cyan-400"
+            className="bg-black/50 border border-white/10 rounded-full px-4 py-2 text-xs text-slate-300 focus:outline-none focus:border-[#c8f135]"
           >
             <option value="newest">Latest Date</option>
             <option value="popular">Most Read</option>
@@ -204,23 +206,24 @@ export default function ArticlesListPage() {
               key={article.slug}
               cornerTag={`DOC_${idx + 1}`}
               showCrosshairs={true}
+              spotlightColor="rgba(200, 241, 53, 0.15)"
               className="p-6 flex flex-col justify-between space-y-5"
             >
               <div className="space-y-4">
                 {/* Meta Header */}
                 <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="font-bold uppercase tracking-wider text-cyan-400 bg-cyan-950/60 border border-cyan-500/30 px-2.5 py-0.5 rounded text-[10px]">
+                  <span className="font-bold uppercase tracking-wider text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-2.5 py-0.5 rounded-full text-[10px]">
                     {article.category}
                   </span>
                   <span className="text-slate-400 flex items-center gap-1 text-[11px]">
-                    <Clock className="w-3 h-3" /> {article.readTime}
+                    <Clock className="w-3 h-3 text-[#c8f135]" /> {article.readTime}
                   </span>
                 </div>
 
                 {/* Title */}
                 <div>
                   <Link to={`/articles/${article.slug}`}>
-                    <h3 className="text-base font-bold text-white group-hover:text-cyan-300 transition-colors line-clamp-2 font-heading leading-snug">
+                    <h3 className="text-base font-bold text-white group-hover:text-[#c8f135] transition-colors line-clamp-2 font-heading leading-snug">
                       {article.title}
                     </h3>
                   </Link>
@@ -234,7 +237,7 @@ export default function ArticlesListPage() {
                   {article.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] font-mono px-2 py-0.5 rounded bg-black/40 text-slate-400 border border-white/5"
+                      className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-slate-400 border border-white/5"
                     >
                       #{tag}
                     </span>
@@ -263,18 +266,18 @@ export default function ArticlesListPage() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={(e) => toggleBookmark(e, article.slug)}
-                    className={`p-1.5 rounded-lg border transition ${
+                    className={`p-1.5 rounded-full border transition ${
                       isBookmarked
-                        ? 'bg-amber-500/20 text-amber-400 border-amber-500/40'
-                        : 'bg-black/30 text-slate-400 border-white/5 hover:text-white'
+                        ? 'bg-[#c8f135]/20 text-[#c8f135] border-[#c8f135]/40'
+                        : 'bg-white/[0.04] text-slate-400 border-white/5 hover:text-white'
                     }`}
                     title={isBookmarked ? 'Remove bookmark' : 'Bookmark publication'}
                   >
-                    <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-amber-400' : ''}`} />
+                    <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-[#c8f135]' : ''}`} />
                   </button>
                   <Link
                     to={`/articles/${article.slug}`}
-                    className="font-bold text-cyan-400 hover:text-cyan-300 text-xs flex items-center gap-1"
+                    className="font-bold text-[#c8f135] hover:text-[#d9ff43] text-xs flex items-center gap-1"
                   >
                     Read →
                   </Link>

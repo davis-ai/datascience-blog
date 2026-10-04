@@ -127,15 +127,15 @@ export default function TerminalConsole() {
   };
 
   return (
-    <div className="w-full bg-[#080d16] rounded-2xl border border-white/10 shadow-2xl overflow-hidden font-mono text-xs flex flex-col">
+    <div className="w-full bg-[#050805] rounded-2xl border border-white/10 shadow-2xl overflow-hidden font-mono text-xs flex flex-col">
       {/* Terminal Title Bar */}
-      <div className="px-4 py-3 bg-[#0c121e] border-b border-white/[0.08] flex items-center justify-between">
+      <div className="px-4 py-3 bg-[#0a0e0a] border-b border-white/[0.08] flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-red-500/80 border border-red-600" />
-          <div className="w-3 h-3 rounded-full bg-amber-500/80 border border-amber-600" />
+          <div className="w-3 h-3 rounded-full bg-[#c8f135]/80 border border-[#c8f135]" />
           <div className="w-3 h-3 rounded-full bg-emerald-500/80 border border-emerald-600" />
           <span className="ml-2 text-slate-400 font-mono text-[11px] flex items-center gap-1.5">
-            <Terminal className="w-3.5 h-3.5 text-amber-400" />
+            <Terminal className="w-3.5 h-3.5 text-[#c8f135]" />
             davis@cluster-node-01: ~ (bash)
           </span>
         </div>
@@ -156,9 +156,9 @@ export default function TerminalConsole() {
             key={line.id}
             className={`leading-relaxed ${
               line.type === "input"
-                ? "text-amber-400 font-semibold"
+                ? "text-[#c8f135] font-semibold"
                 : line.type === "system"
-                ? "text-cyan-400"
+                ? "text-emerald-400"
                 : line.type === "error"
                 ? "text-red-400"
                 : "text-slate-300"
@@ -168,7 +168,7 @@ export default function TerminalConsole() {
           </div>
         ))}
         {isBenchmarking && (
-          <div className="text-amber-400 animate-pulse flex items-center gap-2">
+          <div className="text-[#c8f135] animate-pulse flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5 animate-spin" />
             Executing TensorRT CUDA benchmarking kernel...
           </div>
@@ -177,13 +177,13 @@ export default function TerminalConsole() {
       </div>
 
       {/* Quick Action Suggestion Chips */}
-      <div className="px-4 py-2 bg-[#090e18] border-t border-white/[0.04] flex flex-wrap items-center gap-1.5">
+      <div className="px-4 py-2 bg-[#080c08] border-t border-white/[0.04] flex flex-wrap items-center gap-1.5">
         <span className="text-[10px] text-slate-500 mr-1">RUN:</span>
         {["status", "benchmark", "models", "stack", "bio"].map((cmd) => (
           <button
             key={cmd}
             onClick={() => executeCommand(cmd)}
-            className="px-2 py-0.5 rounded bg-slate-900 hover:bg-amber-500/20 text-slate-400 hover:text-amber-300 border border-white/5 hover:border-amber-500/30 text-[10px] transition"
+            className="px-2.5 py-0.5 rounded-full bg-white/[0.03] hover:bg-[#c8f135]/20 text-slate-400 hover:text-[#c8f135] border border-white/5 hover:border-[#c8f135]/30 text-[10px] transition"
           >
             ${cmd}
           </button>
@@ -191,8 +191,8 @@ export default function TerminalConsole() {
       </div>
 
       {/* Command Input Field */}
-      <div className="px-4 py-3 bg-[#0a0f1b] border-t border-white/[0.08] flex items-center gap-2">
-        <span className="text-amber-400 font-bold">davis@cluster:~$</span>
+      <div className="px-4 py-3 bg-[#060a06] border-t border-white/[0.08] flex items-center gap-2">
+        <span className="text-[#c8f135] font-bold">davis@cluster:~$</span>
         <input
           type="text"
           value={inputValue}
@@ -203,7 +203,7 @@ export default function TerminalConsole() {
         />
         <button
           onClick={() => executeCommand(inputValue)}
-          className="px-2.5 py-1 rounded bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1 transition"
+          className="px-3 py-1 rounded-full bg-[#c8f135] hover:bg-[#d8ff44] text-slate-950 font-bold text-xs flex items-center gap-1 transition"
           aria-label="Send Command"
         >
           <CornerDownLeft className="w-3 h-3" />

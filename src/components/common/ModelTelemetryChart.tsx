@@ -50,12 +50,12 @@ export default function ModelTelemetryChart() {
         dynamicAnimation: { enabled: true },
       },
     },
-    colors: ["#f59e0b", "#06b6d4"],
+    colors: ["#c8f135", "#38bdf8"],
     fill: {
       type: "gradient",
       gradient: {
         shadeIntensity: 1,
-        opacityFrom: 0.35,
+        opacityFrom: 0.4,
         opacityTo: 0.02,
         stops: [0, 95, 100],
       },
@@ -122,7 +122,7 @@ export default function ModelTelemetryChart() {
       background: "transparent",
       toolbar: { show: false },
     },
-    colors: ["#f59e0b", "#10b981"],
+    colors: ["#c8f135", "#10b981"],
     plotOptions: {
       bar: {
         horizontal: false,
@@ -145,10 +145,10 @@ export default function ModelTelemetryChart() {
       {
         title: {
           text: "Throughput (Tokens / sec)",
-          style: { color: "#f59e0b", fontSize: "11px" },
+          style: { color: "#c8f135", fontSize: "11px" },
         },
         labels: {
-          style: { colors: "#f59e0b", fontSize: "10px", fontFamily: "monospace" },
+          style: { colors: "#c8f135", fontSize: "10px", fontFamily: "monospace" },
         },
       },
       {
@@ -187,7 +187,7 @@ export default function ModelTelemetryChart() {
       background: "transparent",
       toolbar: { show: false },
     },
-    colors: ["#06b6d4"],
+    colors: ["#c8f135"],
     plotOptions: {
       bar: {
         horizontal: true,
@@ -198,7 +198,7 @@ export default function ModelTelemetryChart() {
     dataLabels: {
       enabled: true,
       formatter: (val) => `${val} ms`,
-      style: { colors: ["#fff"], fontSize: "11px", fontFamily: "monospace" },
+      style: { colors: ["#050705"], fontSize: "11px", fontFamily: "monospace", fontWeight: 700 },
     },
     grid: {
       borderColor: "rgba(255, 255, 255, 0.06)",
@@ -243,22 +243,22 @@ export default function ModelTelemetryChart() {
       {/* Telemetry Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
         <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#c8f135] animate-pulse" />
           <span className="font-mono text-xs font-semibold text-white tracking-wider">
             LIVE TELEMETRY // BENCHMARK CLUSTER
           </span>
-          <span className="hidden sm:inline-block font-mono text-[10px] text-amber-400 bg-amber-950/60 border border-amber-500/30 px-2 py-0.5 rounded">
+          <span className="hidden sm:inline-block font-mono text-[10px] text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-2 py-0.5 rounded-full">
             GPU: A100-SXM4-80GB
           </span>
         </div>
 
         {/* Model preset selector */}
-        <div className="flex items-center gap-1.5 bg-black/40 p-1 rounded-lg border border-white/10">
+        <div className="flex items-center gap-1 bg-black/50 p-1 rounded-full border border-white/10">
           <button
             onClick={() => setSelectedModel("llama-3-8b")}
-            className={`font-mono text-[10px] px-2.5 py-1 rounded transition ${
+            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
               selectedModel === "llama-3-8b"
-                ? "bg-amber-500 text-slate-950 font-bold"
+                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -266,9 +266,9 @@ export default function ModelTelemetryChart() {
           </button>
           <button
             onClick={() => setSelectedModel("vision-unet")}
-            className={`font-mono text-[10px] px-2.5 py-1 rounded transition ${
+            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
               selectedModel === "vision-unet"
-                ? "bg-amber-500 text-slate-950 font-bold"
+                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -276,9 +276,9 @@ export default function ModelTelemetryChart() {
           </button>
           <button
             onClick={() => setSelectedModel("mamba-hybrid")}
-            className={`font-mono text-[10px] px-2.5 py-1 rounded transition ${
+            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
               selectedModel === "mamba-hybrid"
-                ? "bg-amber-500 text-slate-950 font-bold"
+                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
                 : "text-slate-400 hover:text-white"
             }`}
           >
@@ -292,9 +292,9 @@ export default function ModelTelemetryChart() {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setActiveMetric("loss")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition ${
               activeMetric === "loss"
-                ? "bg-amber-500/15 text-amber-400 border border-amber-500/40"
+                ? "bg-[#c8f135]/15 text-[#c8f135] border border-[#c8f135]/40 shadow-[0_0_12px_rgba(200,241,53,0.15)]"
                 : "text-slate-400 hover:text-slate-200 border border-transparent"
             }`}
           >
@@ -303,9 +303,9 @@ export default function ModelTelemetryChart() {
           </button>
           <button
             onClick={() => setActiveMetric("throughput")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition ${
               activeMetric === "throughput"
-                ? "bg-amber-500/15 text-amber-400 border border-amber-500/40"
+                ? "bg-[#c8f135]/15 text-[#c8f135] border border-[#c8f135]/40 shadow-[0_0_12px_rgba(200,241,53,0.15)]"
                 : "text-slate-400 hover:text-slate-200 border border-transparent"
             }`}
           >
@@ -314,9 +314,9 @@ export default function ModelTelemetryChart() {
           </button>
           <button
             onClick={() => setActiveMetric("latency")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition ${
               activeMetric === "latency"
-                ? "bg-amber-500/15 text-amber-400 border border-amber-500/40"
+                ? "bg-[#c8f135]/15 text-[#c8f135] border border-[#c8f135]/40 shadow-[0_0_12px_rgba(200,241,53,0.15)]"
                 : "text-slate-400 hover:text-slate-200 border border-transparent"
             }`}
           >
@@ -328,10 +328,10 @@ export default function ModelTelemetryChart() {
         {/* Live metric badge */}
         <div className="flex items-center gap-3 font-mono text-[11px] text-slate-400">
           <div>
-            P99 Latency: <span className="text-emerald-400 font-bold">12.8ms</span>
+            P99 Latency: <span className="text-[#c8f135] font-bold">12.8ms</span>
           </div>
           <div>
-            Final Val Loss: <span className="text-amber-400 font-bold">{lossData[selectedModel].val.slice(-1)[0]}</span>
+            Final Val Loss: <span className="text-[#c8f135] font-bold">{lossData[selectedModel].val.slice(-1)[0]}</span>
           </div>
         </div>
       </div>
@@ -373,19 +373,19 @@ export default function ModelTelemetryChart() {
 
       {/* Bottom Telemetry Metrics Strip */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-white/[0.06] font-mono text-[11px]">
-        <div className="bg-black/30 p-2 rounded-lg border border-white/5">
+        <div className="bg-black/40 p-2.5 rounded-xl border border-white/5">
           <span className="text-slate-500 block text-[10px]">OPTIMIZER</span>
           <span className="text-white font-semibold">AdamW (β1=0.9, β2=0.95)</span>
         </div>
-        <div className="bg-black/30 p-2 rounded-lg border border-white/5">
+        <div className="bg-black/40 p-2.5 rounded-xl border border-white/5">
           <span className="text-slate-500 block text-[10px]">ATTENTION BACKEND</span>
           <span className="text-cyan-400 font-semibold">FlashAttention-2 + FP8</span>
         </div>
-        <div className="bg-black/30 p-2 rounded-lg border border-white/5">
+        <div className="bg-black/40 p-2.5 rounded-xl border border-white/5">
           <span className="text-slate-500 block text-[10px]">LORA RANK & ALPHA</span>
-          <span className="text-amber-400 font-semibold">r = 16, α = 32</span>
+          <span className="text-[#c8f135] font-semibold">r = 16, α = 32</span>
         </div>
-        <div className="bg-black/30 p-2 rounded-lg border border-white/5">
+        <div className="bg-black/40 p-2.5 rounded-xl border border-white/5">
           <span className="text-slate-500 block text-[10px]">CACHE HIT RATE</span>
           <span className="text-emerald-400 font-semibold">98.4% (Redis KV)</span>
         </div>

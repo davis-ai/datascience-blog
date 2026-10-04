@@ -38,7 +38,7 @@ export const PROJECTS_DATA: Project[] = [
       'Mixed precision (AMP) training with gradient accumulation.',
       'Exported to ONNX and compiled via TensorRT for edge clinical workstations.'
     ],
-    gradient: 'from-amber-500/20 via-orange-500/10 to-transparent'
+    gradient: 'from-[#c8f135]/20 via-[#a3e635]/10 to-transparent'
   },
   {
     id: 'pulseai-market-sentiment',
@@ -61,7 +61,7 @@ export const PROJECTS_DATA: Project[] = [
       'Quantized INT8 FinBERT serving via Triton Inference Server.',
       'Prometheus and Grafana dashboards for real-time model drift monitoring.'
     ],
-    gradient: 'from-cyan-500/20 via-blue-500/10 to-transparent'
+    gradient: 'from-[#c8f135]/15 via-emerald-500/10 to-transparent'
   },
   {
     id: 'optiroute-rl-logistics',
@@ -84,7 +84,7 @@ export const PROJECTS_DATA: Project[] = [
       'Proximal Policy Optimization (PPO) with spatial graph embeddings.',
       'Interactive Mapbox web dashboard with real-time route animations.'
     ],
-    gradient: 'from-emerald-500/20 via-teal-500/10 to-transparent'
+    gradient: 'from-emerald-500/20 via-[#c8f135]/10 to-transparent'
   },
   {
     id: 'datacanvas-eda-profiler',
@@ -107,7 +107,7 @@ export const PROJECTS_DATA: Project[] = [
       'Automated feature correlation matrix and collinearity detection.',
       'Generates exportable PDF & HTML executive reports.'
     ],
-    gradient: 'from-purple-500/20 via-pink-500/10 to-transparent'
+    gradient: 'from-[#c8f135]/20 via-teal-500/10 to-transparent'
   },
   {
     id: 'churnguard-saas-retention',
@@ -129,6 +129,6 @@ export const PROJECTS_DATA: Project[] = [
       'Automated weekly email digests summarizing highest-risk enterprise accounts.',
       'Local SHAP waterfall breakdown for customer success agents.'
     ],
-    gradient: 'from-amber-500/20 via-rose-500/10 to-transparent'
+    gradient: 'from-[#c8f135]/20 via-lime-600/10 to-transparent'
   }
 ];

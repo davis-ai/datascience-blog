@@ -48,12 +48,12 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
   ).slice(0, 3);
 
   const navItems = [
-    { label: 'Home Page', path: '/', icon: <Home className="w-4 h-4 text-amber-400" /> },
-    { label: 'All Articles & Tutorials', path: '/articles', icon: <BookOpen className="w-4 h-4 text-cyan-400" /> },
-    { label: 'Featured AI Projects', path: '/projects', icon: <Cpu className="w-4 h-4 text-emerald-400" /> },
-    { label: 'Interactive ML Playground', path: '/playground', icon: <Sparkles className="w-4 h-4 text-purple-400" /> },
-    { label: 'About & Career Journey', path: '/about', icon: <User className="w-4 h-4 text-orange-400" /> },
-    { label: 'Contact & Consultation', path: '/contact', icon: <Mail className="w-4 h-4 text-rose-400" /> },
+    { label: 'Home Page', path: '/', icon: <Home className="w-4 h-4 text-[#c8f135]" /> },
+    { label: 'All Articles & Tutorials', path: '/articles', icon: <BookOpen className="w-4 h-4 text-emerald-400" /> },
+    { label: 'Featured AI Projects', path: '/projects', icon: <Cpu className="w-4 h-4 text-[#c8f135]" /> },
+    { label: 'Interactive ML Playground', path: '/playground', icon: <Sparkles className="w-4 h-4 text-teal-400" /> },
+    { label: 'About & Career Journey', path: '/about', icon: <User className="w-4 h-4 text-lime-400" /> },
+    { label: 'Contact & Consultation', path: '/contact', icon: <Mail className="w-4 h-4 text-emerald-400" /> },
   ].filter((item) => item.label.toLowerCase().includes(query.toLowerCase()));
 
   const handleSelect = (path: string) => {
@@ -64,36 +64,36 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/70 backdrop-blur-md">
+      <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-black/80 backdrop-blur-md">
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: -20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -20 }}
-          className="w-full max-w-2xl bg-slate-900/95 border border-slate-700/70 rounded-2xl shadow-2xl overflow-hidden text-slate-200"
+          className="w-full max-w-2xl bg-[#080d08]/95 border border-white/10 rounded-3xl shadow-2xl overflow-hidden text-slate-200 backdrop-blur-2xl"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Search Header */}
-          <div className="flex items-center px-4 py-3.5 border-b border-slate-800 gap-3">
-            <Search className="w-5 h-5 text-amber-400 shrink-0" />
+          <div className="flex items-center px-5 py-4 border-b border-white/[0.08] gap-3">
+            <Search className="w-5 h-5 text-[#c8f135] shrink-0" />
             <input
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search articles, projects, playground tools, or pages..."
+              placeholder="Search articles, projects, ML tools, or architecture docs..."
               autoFocus
               className="w-full bg-transparent text-white placeholder-slate-500 focus:outline-none text-base"
             />
             {query && (
               <button
                 onClick={() => setQuery('')}
-                className="text-slate-400 hover:text-white text-xs px-2 py-1 bg-slate-800 rounded"
+                className="text-slate-400 hover:text-white text-xs px-2.5 py-1 bg-white/5 rounded-full"
               >
                 Clear
               </button>
             )}
             <button
               onClick={onClose}
-              className="p-1 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition"
+              className="p-1.5 text-slate-400 hover:text-white rounded-full hover:bg-white/5 transition"
               aria-label="Close search"
             >
               <X className="w-5 h-5" />
@@ -101,11 +101,11 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
           </div>
 
           {/* Results List */}
-          <div className="max-h-[60vh] overflow-y-auto p-3 space-y-4">
+          <div className="max-h-[60vh] overflow-y-auto p-3.5 space-y-4">
             {/* Quick Navigation */}
             {navItems.length > 0 && (
               <div>
-                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-1.5">
+                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-1.5 font-mono">
                   Navigation
                 </p>
                 <div className="space-y-1">
@@ -113,13 +113,13 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                     <button
                       key={item.path}
                       onClick={() => handleSelect(item.path)}
-                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-800/70 text-left transition group"
+                      className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-left transition group"
                     >
-                      <div className="flex items-center gap-2.5 text-sm text-slate-200 group-hover:text-amber-300">
+                      <div className="flex items-center gap-3 text-sm text-slate-200 group-hover:text-[#c8f135]">
                         {item.icon}
                         <span>{item.label}</span>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-amber-400 transition" />
+                      <ArrowRight className="w-4 h-4 text-slate-600 group-hover:text-[#c8f135] transition" />
                     </button>
                   ))}
                 </div>
@@ -129,7 +129,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
             {/* Articles */}
             {filteredArticles.length > 0 && (
               <div>
-                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-1.5">
+                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-1.5 font-mono">
                   Articles & Tutorials
                 </p>
                 <div className="space-y-1">
@@ -137,17 +137,17 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                     <button
                       key={article.slug}
                       onClick={() => handleSelect(`/articles/${article.slug}`)}
-                      className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-slate-800/70 text-left transition group"
+                      className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-left transition group"
                     >
                       <div>
-                        <p className="text-sm font-medium text-slate-100 group-hover:text-cyan-300">
+                        <p className="text-sm font-medium text-slate-100 group-hover:text-[#c8f135]">
                           {article.title}
                         </p>
                         <p className="text-xs text-slate-400 line-clamp-1">
                           {article.excerpt}
                         </p>
                       </div>
-                      <span className="text-[11px] text-amber-400 bg-amber-950/40 border border-amber-500/20 px-2 py-0.5 rounded-full shrink-0 ml-3">
+                      <span className="text-[10px] font-mono text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/25 px-2.5 py-0.5 rounded-full shrink-0 ml-3">
                         {article.readTime}
                       </span>
                     </button>
@@ -159,7 +159,7 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
             {/* Projects */}
             {filteredProjects.length > 0 && (
               <div>
-                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-1.5">
+                <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider px-3 mb-1.5 font-mono">
                   AI Projects
                 </p>
                 <div className="space-y-1">
@@ -167,19 +167,19 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
                     <button
                       key={project.id}
                       onClick={() => handleSelect('/projects')}
-                      className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg hover:bg-slate-800/70 text-left transition group"
+                      className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl hover:bg-white/5 text-left transition group"
                     >
                       <div>
-                        <p className="text-sm font-medium text-slate-100 group-hover:text-emerald-300">
+                        <p className="text-sm font-medium text-slate-100 group-hover:text-[#c8f135]">
                           {project.title}
                         </p>
                         <p className="text-xs text-slate-400 line-clamp-1">
                           {project.subtitle}
                         </p>
                       </div>
-                      <div className="flex gap-1 shrink-0 ml-3">
+                      <div className="flex gap-1 shrink-0 ml-3 font-mono">
                         {project.techStack.slice(0, 2).map((t) => (
-                          <span key={t} className="text-[10px] text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded">
+                          <span key={t} className="text-[10px] text-slate-300 bg-white/5 px-2 py-0.5 rounded-full">
                             {t}
                           </span>
                         ))}
@@ -198,12 +198,12 @@ export default function CommandPalette({ isOpen, onClose }: CommandPaletteProps)
           </div>
 
           {/* Footer Shortcuts */}
-          <div className="px-4 py-2.5 bg-slate-950/60 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500">
+          <div className="px-4 py-3 bg-black/50 border-t border-white/[0.08] flex items-center justify-between text-xs text-slate-500 font-mono">
             <div className="flex items-center gap-3">
-              <span><kbd className="px-1.5 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px]">↑</kbd> <kbd className="px-1.5 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px]">↓</kbd> to navigate</span>
-              <span><kbd className="px-1.5 py-0.5 bg-slate-800 text-slate-300 rounded text-[10px]">ESC</kbd> to close</span>
+              <span><kbd className="px-1.5 py-0.5 bg-white/5 text-slate-300 rounded text-[10px]">↑</kbd> <kbd className="px-1.5 py-0.5 bg-white/5 text-slate-300 rounded text-[10px]">↓</kbd> to navigate</span>
+              <span><kbd className="px-1.5 py-0.5 bg-white/5 text-slate-300 rounded text-[10px]">ESC</kbd> to close</span>
             </div>
-            <span className="text-amber-400/80">Davis Ochieng DS Studio</span>
+            <span className="text-[#c8f135]">Davis Ochieng ML Systems</span>
           </div>
         </motion.div>
       </div>
