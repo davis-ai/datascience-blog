@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
-  BookOpen, 
   Search, 
   Clock, 
   Eye, 
@@ -51,7 +50,7 @@ export default function ArticlesListPage() {
     try {
       localStorage.setItem('bookmarked_articles', JSON.stringify(updated));
     } catch {
-      // localStorage error fallback
+      // fallback
     }
   };
 
@@ -80,48 +79,41 @@ export default function ArticlesListPage() {
   const featuredArticle = ARTICLES_DATA.find((a) => a.featured) || ARTICLES_DATA[0];
 
   return (
-    <div className="min-h-screen py-8 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+    <div className="py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
       {/* Header */}
-      <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-[#c8f135]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c8f135] animate-pulse shadow-[0_0_8px_#c8f135]" />
-          <BookOpen className="w-3.5 h-3.5" />
-          <span>[RESEARCH_PUBLICATIONS // INDEX]</span>
+      <div className="space-y-2 border-b border-white/[0.08] pb-6">
+        <div className="font-mono text-xs text-[#85858b]">
+          Publications & research
         </div>
-        <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-heading">
-          Technical Field Guides & <span className="font-serif-italic text-[#c8f135] font-normal">Research</span>
+        <h1 className="text-2xl sm:text-3xl font-medium text-[#ededed] tracking-tight font-heading">
+          Technical guides and papers
         </h1>
-        <p className="text-slate-400 text-xs sm:text-base font-mono">
-          Mathematical foundations, empirical benchmarks, and production architectures across Deep Learning and MLOps.
+        <p className="text-xs sm:text-sm text-[#a1a1a6] max-w-2xl">
+          Empirical benchmarks, parameter-efficient adaptation, and production inference architectures.
         </p>
       </div>
 
-      {/* Featured Lead Article Banner (if no search active) */}
+      {/* Featured Lead Article Banner */}
       {!searchQuery && selectedCategory === 'All' && featuredArticle && (
-        <SpotlightCard
-          cornerTag="FEATURED_PAPER"
-          showCrosshairs={true}
-          spotlightColor="rgba(200, 241, 53, 0.15)"
-          className="p-6 sm:p-10 border-[#c8f135]/30"
-        >
-          <div className="max-w-3xl space-y-4 font-mono">
-            <div className="flex flex-wrap items-center gap-3 text-xs">
-              <span className="font-bold uppercase tracking-wider text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/40 px-3 py-0.5 rounded-full text-[10px]">
-                ✦ Primary Research Paper
+        <div className="p-6 sm:p-8 rounded-xl border border-white/[0.08] bg-[#19191b] space-y-4">
+          <div className="max-w-3xl space-y-3">
+            <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[#85858b]">
+              <span className="text-[#4cc38a] font-medium">
+                Featured publication
               </span>
-              <span className="text-slate-400 flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5 text-[#c8f135]" /> {featuredArticle.readTime}
+              <span>•</span>
+              <span className="flex items-center gap-1.5">
+                <Clock className="w-3.5 h-3.5 text-[#85858b]" /> {featuredArticle.readTime}
               </span>
-              <span className="text-slate-500">
-                {featuredArticle.publishedDate}
-              </span>
+              <span>•</span>
+              <span>{featuredArticle.publishedDate}</span>
             </div>
 
-            <h2 className="text-2xl sm:text-3xl font-black text-white font-heading leading-snug">
+            <h2 className="text-xl sm:text-2xl font-medium text-[#ededed] font-heading leading-snug">
               {featuredArticle.title}
             </h2>
 
-            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed font-sans">
+            <p className="text-xs sm:text-sm text-[#a1a1a6] leading-relaxed">
               {featuredArticle.excerpt}
             </p>
 
@@ -129,38 +121,38 @@ export default function ArticlesListPage() {
               {featuredArticle.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/[0.04] text-slate-400 border border-white/5"
+                  className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#232325] text-[#85858b] border border-white/[0.06]"
                 >
                   #{tag}
                 </span>
               ))}
             </div>
 
-            <div className="pt-3">
+            <div className="pt-2">
               <Link
                 to={`/articles/${featuredArticle.slug}`}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#c8f135] hover:bg-[#d9ff43] text-black text-xs font-bold font-mono transition shadow-[0_0_20px_rgba(200,241,53,0.3)]"
+                className="btn-primary"
               >
-                <span>Read Full Publication</span>
+                <span>Read paper</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
           </div>
-        </SpotlightCard>
+        </div>
       )}
 
       {/* Filter, Search & Sort Bar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-3 bg-black/40 rounded-2xl border border-white/10 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-3 p-2.5 bg-[#19191b] rounded-lg border border-white/[0.08]">
         {/* Category Tabs */}
-        <div className="flex flex-wrap gap-1.5 w-full md:w-auto font-mono text-xs">
+        <div className="flex flex-wrap gap-1 w-full md:w-auto font-mono text-xs">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-1.5 rounded-full transition ${
+              className={`px-3 py-1.5 rounded-md transition-colors ${
                 selectedCategory === cat
-                  ? 'bg-[#c8f135] text-black font-bold shadow-md shadow-[#c8f135]/20'
-                  : 'bg-white/[0.03] text-slate-400 hover:text-white border border-white/5'
+                  ? 'bg-[#232325] text-[#ededed] border border-white/[0.08]'
+                  : 'text-[#85858b] hover:text-[#ededed] hover:bg-white/[0.04]'
               }`}
             >
               {cat}
@@ -169,15 +161,15 @@ export default function ArticlesListPage() {
         </div>
 
         {/* Search & Sort Controls */}
-        <div className="flex items-center gap-3 w-full md:w-auto font-mono text-xs">
-          <div className="relative flex-1 md:w-64">
-            <Search className="w-3.5 h-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+        <div className="flex items-center gap-2.5 w-full md:w-auto font-mono text-xs">
+          <div className="relative flex-1 md:w-60">
+            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#85858b]" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search topics, tags..."
-              className="w-full bg-black/50 border border-white/10 rounded-full pl-9 pr-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#c8f135] transition"
+              placeholder="Search topics..."
+              className="w-full bg-[#141415] border border-white/[0.08] rounded-md pl-8 pr-3 py-1.5 text-xs text-[#ededed] placeholder-[#85858b] focus:outline-none focus:border-white/[0.2]"
             />
           </div>
 
@@ -185,18 +177,18 @@ export default function ArticlesListPage() {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
             aria-label="Sort articles"
-            className="bg-black/50 border border-white/10 rounded-full px-4 py-2 text-xs text-slate-300 focus:outline-none focus:border-[#c8f135]"
+            className="bg-[#141415] border border-white/[0.08] rounded-md px-3 py-1.5 text-xs text-[#a1a1a6] focus:outline-none"
           >
-            <option value="newest">Latest Date</option>
-            <option value="popular">Most Read</option>
-            <option value="readTime">In-Depth</option>
+            <option value="newest">Latest</option>
+            <option value="popular">Most read</option>
+            <option value="readTime">In-depth</option>
           </select>
         </div>
       </div>
 
-      {/* Articles Grid with SpotlightCard */}
+      {/* Articles Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredArticles.map((article, idx) => {
+        {filteredArticles.map((article) => {
           const isLiked = likedArticles[article.slug];
           const isBookmarked = bookmarkedSlugs.includes(article.slug);
           const likeCount = article.initialLikes + (isLiked ? 1 : 0);
@@ -204,40 +196,32 @@ export default function ArticlesListPage() {
           return (
             <SpotlightCard
               key={article.slug}
-              cornerTag={`DOC_${idx + 1}`}
-              showCrosshairs={true}
-              spotlightColor="rgba(200, 241, 53, 0.15)"
-              className="p-6 flex flex-col justify-between space-y-5"
+              className="p-5 flex flex-col justify-between space-y-4"
             >
-              <div className="space-y-4">
-                {/* Meta Header */}
-                <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="font-bold uppercase tracking-wider text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-2.5 py-0.5 rounded-full text-[10px]">
-                    {article.category}
-                  </span>
-                  <span className="text-slate-400 flex items-center gap-1 text-[11px]">
-                    <Clock className="w-3 h-3 text-[#c8f135]" /> {article.readTime}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-xs font-mono text-[#85858b]">
+                  <span>{article.category}</span>
+                  <span className="flex items-center gap-1 text-[11px]">
+                    <Clock className="w-3 h-3 text-[#85858b]" /> {article.readTime}
                   </span>
                 </div>
 
-                {/* Title */}
                 <div>
                   <Link to={`/articles/${article.slug}`}>
-                    <h3 className="text-base font-bold text-white group-hover:text-[#c8f135] transition-colors line-clamp-2 font-heading leading-snug">
+                    <h3 className="text-sm font-medium text-[#ededed] hover:text-white transition-colors line-clamp-2 leading-snug">
                       {article.title}
                     </h3>
                   </Link>
-                  <p className="text-xs text-slate-400 mt-2 line-clamp-3 leading-relaxed font-sans">
+                  <p className="text-xs text-[#a1a1a6] mt-1.5 line-clamp-3 leading-relaxed">
                     {article.excerpt}
                   </p>
                 </div>
 
-                {/* Tags */}
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {article.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-slate-400 border border-white/5"
+                      className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#232325] text-[#85858b] border border-white/[0.06]"
                     >
                       #{tag}
                     </span>
@@ -246,19 +230,19 @@ export default function ArticlesListPage() {
               </div>
 
               {/* Bottom Footer */}
-              <div className="flex items-center justify-between pt-4 border-t border-white/[0.06] text-xs font-mono text-slate-400">
+              <div className="flex items-center justify-between pt-3 border-t border-white/[0.08] text-xs font-mono text-[#85858b]">
                 <div className="flex items-center gap-3">
                   <span className="flex items-center gap-1 text-[11px]">
-                    <Eye className="w-3.5 h-3.5 text-slate-500" />
+                    <Eye className="w-3.5 h-3.5 text-[#85858b]" />
                     {article.views.toLocaleString()}
                   </span>
                   <button
                     onClick={(e) => toggleLike(e, article.slug)}
-                    className={`flex items-center gap-1 text-[11px] transition ${
-                      isLiked ? 'text-rose-400 font-semibold' : 'text-slate-500 hover:text-rose-400'
+                    className={`flex items-center gap-1 text-[11px] transition-colors ${
+                      isLiked ? 'text-[#e5484d] font-medium' : 'text-[#85858b] hover:text-[#ededed]'
                     }`}
                   >
-                    <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-rose-400' : ''}`} />
+                    <Heart className={`w-3.5 h-3.5 ${isLiked ? 'fill-[#e5484d]' : ''}`} />
                     {likeCount}
                   </button>
                 </div>
@@ -266,20 +250,21 @@ export default function ArticlesListPage() {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={(e) => toggleBookmark(e, article.slug)}
-                    className={`p-1.5 rounded-full border transition ${
+                    className={`p-1.5 rounded-md border transition-colors ${
                       isBookmarked
-                        ? 'bg-[#c8f135]/20 text-[#c8f135] border-[#c8f135]/40'
-                        : 'bg-white/[0.04] text-slate-400 border-white/5 hover:text-white'
+                        ? 'bg-[#232325] text-[#4cc38a] border-white/[0.12]'
+                        : 'bg-[#19191b] text-[#85858b] border-white/[0.08] hover:text-[#ededed]'
                     }`}
-                    title={isBookmarked ? 'Remove bookmark' : 'Bookmark publication'}
+                    title={isBookmarked ? 'Remove bookmark' : 'Bookmark'}
                   >
-                    <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-[#c8f135]' : ''}`} />
+                    <Bookmark className={`w-3.5 h-3.5 ${isBookmarked ? 'fill-[#4cc38a]' : ''}`} />
                   </button>
                   <Link
                     to={`/articles/${article.slug}`}
-                    className="font-bold text-[#c8f135] hover:text-[#d9ff43] text-xs flex items-center gap-1"
+                    className="text-xs text-[#ededed] hover:text-white flex items-center gap-1 transition-colors"
                   >
-                    Read →
+                    <span>Read</span>
+                    <ArrowRight className="w-3 h-3" />
                   </Link>
                 </div>
               </div>

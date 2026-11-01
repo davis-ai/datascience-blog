@@ -30,7 +30,7 @@ const ATTENTION_HEADS: Record<number, Record<number, number[]>> = {
     9: [0.02, 0.08, 0.05, 0.05, 0.02, 0.04, 0.18, 0.06, 0.3, 0.2],
   },
   2: {
-    // Head 2: Semantic Core (Transformer -> Architecture, Attention, Tensors)
+    // Head 2: Semantic Core
     0: [0.05, 0.3, 0.2, 0.1, 0.05, 0.05, 0.15, 0.03, 0.04, 0.03],
     1: [0.02, 0.15, 0.28, 0.08, 0.04, 0.08, 0.25, 0.02, 0.03, 0.05],
     2: [0.01, 0.25, 0.1, 0.1, 0.04, 0.06, 0.32, 0.02, 0.04, 0.06],
@@ -58,13 +58,12 @@ const ATTENTION_HEADS: Record<number, Record<number, number[]>> = {
 };
 
 export default function AttentionVisualizer() {
-  const [activeTokenIdx, setActiveTokenIdx] = useState<number>(6); // "attention" by default
-  const [selectedHead, setSelectedHead] = useState<number>(2); // Head 2 default
+  const [activeTokenIdx, setActiveTokenIdx] = useState<number>(6); // "attention"
+  const [selectedHead, setSelectedHead] = useState<number>(2);
   const [tokenCoords, setTokenCoords] = useState<{ x: number; y: number }[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const tokenRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-  // Update token coordinates for drawing bezier attention arcs
   useEffect(() => {
     const updateCoords = () => {
       if (!containerRef.current) return;
@@ -91,44 +90,44 @@ export default function AttentionVisualizer() {
     <div className="w-full space-y-4">
       {/* Header controls */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
-        <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-[#c8f135]" />
-          <span className="font-mono text-xs font-semibold text-white tracking-wider">
-            MULTI-HEAD ATTENTION LATTICE
+        <div className="flex items-center gap-2.5">
+          <Layers className="w-4 h-4 text-[#85858b]" />
+          <span className="text-xs font-medium text-[#ededed]">
+            Multi-head attention weights
           </span>
-          <span className="font-mono text-[10px] text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-2.5 py-0.5 rounded-full">
+          <span className="font-mono text-[10px] text-[#85858b] bg-[#141415] border border-white/[0.08] px-2 py-0.5 rounded">
             Softmax(QKᵀ / √dₖ)
           </span>
         </div>
 
         {/* Head Selector */}
-        <div className="flex items-center gap-1 bg-black/50 p-1 rounded-full border border-white/10">
+        <div className="flex items-center gap-1 bg-[#141415] p-1 rounded-md border border-white/[0.08]">
           <button
             onClick={() => setSelectedHead(1)}
-            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
+            className={`font-mono text-[11px] px-2.5 py-1 rounded transition-colors ${
               selectedHead === 1
-                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                : "text-[#85858b] hover:text-[#ededed]"
             }`}
           >
             Head 1 (Syntax)
           </button>
           <button
             onClick={() => setSelectedHead(2)}
-            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
+            className={`font-mono text-[11px] px-2.5 py-1 rounded transition-colors ${
               selectedHead === 2
-                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                : "text-[#85858b] hover:text-[#ededed]"
             }`}
           >
             Head 2 (Semantic)
           </button>
           <button
             onClick={() => setSelectedHead(3)}
-            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
+            className={`font-mono text-[11px] px-2.5 py-1 rounded transition-colors ${
               selectedHead === 3
-                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                : "text-[#85858b] hover:text-[#ededed]"
             }`}
           >
             Head 3 (Locality)
@@ -139,7 +138,7 @@ export default function AttentionVisualizer() {
       {/* Interactive Token Sequence */}
       <div
         ref={containerRef}
-        className="relative py-6 px-3 bg-black/40 rounded-2xl border border-white/5 min-h-[160px] flex flex-col justify-between"
+        className="relative py-6 px-3 bg-[#141415] rounded-lg border border-white/[0.08] min-h-[160px] flex flex-col justify-between"
       >
         {/* SVG Bezier Curves for Attention Arcs */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible">
@@ -160,11 +159,11 @@ export default function AttentionVisualizer() {
                   key={`arc-${targetIdx}`}
                   d={`M ${source.x} ${source.y - 12} Q ${midX} ${controlY} ${target.x} ${target.y - 12}`}
                   fill="none"
-                  stroke={weight > 0.3 ? "#c8f135" : "#4ade80"}
-                  strokeWidth={Math.max(1.2, weight * 5.5)}
-                  strokeOpacity={Math.min(0.95, weight * 2)}
+                  stroke="#4cc38a"
+                  strokeWidth={Math.max(1, weight * 4)}
+                  strokeOpacity={Math.min(0.85, Math.max(0.2, weight * 1.8))}
                   strokeDasharray={weight > 0.2 ? "none" : "3,3"}
-                  className="transition-all duration-300"
+                  className="transition-all duration-200"
                 />
               );
             })}
@@ -184,22 +183,22 @@ export default function AttentionVisualizer() {
                   tokenRefs.current[idx] = el;
                 }}
                 onMouseEnter={() => setActiveTokenIdx(idx)}
-                className={`relative px-3 py-1.5 rounded-full font-mono text-xs transition-all duration-200 border ${
+                className={`relative px-2.5 py-1 rounded-md font-mono text-xs transition-colors border ${
                   isActive
-                    ? "bg-[#c8f135] text-slate-950 font-bold border-[#c8f135] shadow-[0_0_16px_rgba(200,241,53,0.35)] scale-105"
+                    ? "bg-[#232325] text-[#ededed] font-medium border-[#4cc38a]"
                     : isAttended
-                    ? "bg-[#c8f135]/15 text-[#c8f135] border-[#c8f135]/40 shadow-sm"
-                    : "bg-white/[0.04] text-slate-300 border-white/5 hover:border-white/20 hover:text-white"
+                    ? "bg-[#19191b] text-[#4cc38a] border-white/[0.12]"
+                    : "bg-[#19191b] text-[#a1a1a6] border-white/[0.06] hover:border-white/[0.14] hover:text-[#ededed]"
                 }`}
               >
                 {token}
                 {isActive && (
-                  <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-[9px] font-mono text-[#c8f135] uppercase tracking-widest font-bold">
-                    QUERY
+                  <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-[9px] font-mono text-[#4cc38a]">
+                    query
                   </span>
                 )}
                 {!isActive && weight >= 0.05 && (
-                  <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[8px] font-mono text-slate-400">
+                  <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[8px] font-mono text-[#85858b]">
                     {(weight * 100).toFixed(0)}%
                   </span>
                 )}
@@ -208,19 +207,18 @@ export default function AttentionVisualizer() {
           })}
         </div>
 
-        {/* Hover Hint */}
-        <p className="text-center font-mono text-[10px] text-slate-500 pt-3">
-          Hover over any token to recalculate attention weights & dependency arcs in real time.
+        <p className="text-center font-mono text-[11px] text-[#85858b] pt-3">
+          Hover over a token to inspect projected attention weights
         </p>
       </div>
 
       {/* Top Attended Tokens Breakdown */}
-      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-black/40 rounded-xl border border-white/5 font-mono text-[11px]">
-        <span className="text-slate-400">
-          Query: <strong className="text-white">"{TOKENS[activeTokenIdx]}"</strong>
+      <div className="flex flex-wrap items-center justify-between gap-2 p-2.5 bg-[#141415] rounded-lg border border-white/[0.08] font-mono text-xs">
+        <span className="text-[#85858b]">
+          Selected query: <strong className="text-[#ededed] font-medium">"{TOKENS[activeTokenIdx]}"</strong>
         </span>
         <div className="flex items-center gap-3">
-          <span className="text-slate-500">Top-3 Keys:</span>
+          <span className="text-[#85858b]">Highest attention:</span>
           {activeWeights
             .map((w, i) => ({ token: TOKENS[i], weight: w, idx: i }))
             .filter((item) => item.idx !== activeTokenIdx)
@@ -229,10 +227,10 @@ export default function AttentionVisualizer() {
             .map((item) => (
               <span
                 key={item.token}
-                className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#c8f135]/10 text-[#c8f135] border border-[#c8f135]/25 text-[10px]"
+                className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-[#19191b] text-[#ededed] border border-white/[0.08] text-[11px]"
               >
                 <span>{item.token}</span>
-                <span className="font-bold text-white">{(item.weight * 100).toFixed(0)}%</span>
+                <span className="text-[#4cc38a] font-medium">{(item.weight * 100).toFixed(0)}%</span>
               </span>
             ))}
         </div>

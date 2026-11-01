@@ -1,17 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
-  Sparkles, 
   ArrowRight, 
-  BookOpen, 
-  Activity, 
-  Github,
-  Terminal as TerminalIcon,
-  Cpu,
-  Layers,
-  Zap,
-  Copy,
-  Check,
+  Github, 
+  Terminal as TerminalIcon, 
+  Cpu, 
+  Layers, 
+  Zap, 
+  Copy, 
+  Check, 
   Code2
 } from "lucide-react";
 import { FaPython, FaDocker, FaAws } from "react-icons/fa";
@@ -20,8 +17,6 @@ import profileSmall from "../assets/images/profile-optimized-small.jpg";
 import { ARTICLES_DATA } from "../data/articles";
 import { PROJECTS_DATA } from "../data/projects";
 import SpotlightCard from "../components/ui/SpotlightCard";
-import TextScramble from "../components/common/TextScramble";
-import TechTicker from "../components/common/TechTicker";
 import ModelTelemetryChart from "../components/common/ModelTelemetryChart";
 import AttentionVisualizer from "../components/common/AttentionVisualizer";
 import TerminalConsole from "../components/common/TerminalConsole";
@@ -30,14 +25,6 @@ import { useToast } from "../components/ui/toast";
 export default function HomePage() {
   const { showToast } = useToast();
   const [copiedBibtex, setCopiedBibtex] = useState(false);
-
-  // In-browser interactive mini gradient descent simulator state
-  const [simLearningRate, setSimLearningRate] = useState<number>(0.05);
-  const simSteps = 24;
-
-  // Compute simulated loss and weights based on interactive learning rate
-  const simulatedLoss = Math.max(0.0018, (0.45 * Math.exp(-simLearningRate * simSteps * 1.5) + (simLearningRate > 0.08 ? (simLearningRate - 0.08) * 4 : 0))).toFixed(4);
-  const isDiverging = simLearningRate > 0.12;
 
   const copyBibtex = () => {
     const bibtex = `@article{ochieng2025qlora,
@@ -48,67 +35,59 @@ export default function HomePage() {
 }`;
     navigator.clipboard.writeText(bibtex);
     setCopiedBibtex(true);
-    showToast("BibTeX citation copied to clipboard!", "success");
+    showToast("BibTeX citation copied to clipboard", "success");
     setTimeout(() => setCopiedBibtex(false), 2000);
   };
 
   const metricsStats = [
     { 
-      tag: "SYS_01", 
-      label: "Production Inference", 
+      label: "Inference latency", 
       val: "<12.8ms", 
-      desc: "p99 latency with TensorRT & Triton Server", 
-      accent: "text-[#c8f135]" 
+      desc: "p99 latency with TensorRT and Triton"
     },
     { 
-      tag: "SYS_02", 
-      label: "Peak LLM Throughput", 
-      val: "142 tok/s", 
-      desc: "4-bit AWQ quantized Llama-3-8B on A100", 
-      accent: "text-emerald-400" 
+      label: "Peak LLM throughput", 
+      val: "142.1 tok/s", 
+      desc: "4-bit AWQ Llama-3-8B on single A100"
     },
     { 
-      tag: "SYS_03", 
-      label: "Deployed Architectures", 
-      val: "15+ Models", 
-      desc: "Vision, LLM fine-tunes & Real-time Classifiers", 
-      accent: "text-[#c8f135]" 
+      label: "Adaptation rank", 
+      val: "r = 16", 
+      desc: "Optimal intrinsic rank for sparse MoE"
     },
     { 
-      tag: "SYS_04", 
-      label: "Research Audience", 
-      val: "50k+ Readers", 
-      desc: "Engineers reading deep-dive technical guides", 
-      accent: "text-teal-400" 
+      label: "Continuous uptime", 
+      val: "99.98%", 
+      desc: "180 days across production cluster"
     },
   ];
 
   const techCategories = [
     {
-      title: "Deep Learning & LLM Fine-Tuning",
+      title: "Deep learning & fine-tuning",
       items: [
-        { name: "PyTorch 2.5", icon: <SiPytorch className="text-red-500" />, note: "Distributed DDP, FSDP" },
-        { name: "HuggingFace PEFT", icon: <Layers className="text-[#c8f135]" />, note: "LoRA, QLoRA, DoRA" },
-        { name: "FlashAttention-2", icon: <Zap className="text-emerald-400" />, note: "Tiled IO kernel acceleration" },
-        { name: "vLLM / Triton", icon: <Cpu className="text-[#c8f135]" />, note: "Continuous batching & PagedAttention" },
+        { name: "PyTorch 2.5", icon: <SiPytorch className="text-[#a1a1a6]" />, note: "Distributed DDP and FSDP" },
+        { name: "HuggingFace PEFT", icon: <Layers className="text-[#a1a1a6]" />, note: "LoRA, QLoRA, DoRA" },
+        { name: "FlashAttention-2", icon: <Zap className="text-[#a1a1a6]" />, note: "Tiled IO kernel acceleration" },
+        { name: "vLLM & Triton", icon: <Cpu className="text-[#a1a1a6]" />, note: "Continuous batching and PagedAttention" },
       ]
     },
     {
-      title: "High-Throughput Systems & MLOps",
+      title: "High-throughput systems & MLOps",
       items: [
-        { name: "FastAPI Async", icon: <SiFastapi className="text-teal-400" />, note: "Sub-15ms non-blocking endpoints" },
-        { name: "Apache Kafka", icon: <SiApachekafka className="text-red-400" />, note: "Real-time 20k msg/s streaming" },
-        { name: "Docker & K8s", icon: <FaDocker className="text-blue-400" />, note: "GPU-accelerated orchestrations" },
-        { name: "AWS Cloud / SageMaker", icon: <FaAws className="text-[#c8f135]" />, note: "Multi-node training clusters" },
+        { name: "FastAPI Async", icon: <SiFastapi className="text-[#a1a1a6]" />, note: "Non-blocking REST endpoints" },
+        { name: "Apache Kafka", icon: <SiApachekafka className="text-[#a1a1a6]" />, note: "Real-time streaming ingestion" },
+        { name: "Docker & K8s", icon: <FaDocker className="text-[#a1a1a6]" />, note: "GPU-orchestrated deployments" },
+        { name: "AWS Cloud & SageMaker", icon: <FaAws className="text-[#a1a1a6]" />, note: "Multi-node training clusters" },
       ]
     },
     {
-      title: "Data Engineering & Analytics",
+      title: "Numerical compute & interfaces",
       items: [
-        { name: "Python 3.12", icon: <FaPython className="text-yellow-300" />, note: "Vectorized scientific compute" },
-        { name: "Scikit-Learn", icon: <SiScikitlearn className="text-cyan-400" />, note: "Gradient boosted ensembles" },
-        { name: "SHAP / TreeExplainer", icon: <Activity className="text-emerald-400" />, note: "Feature attribution & interpretability" },
-        { name: "React 19 / TS", icon: <SiReact className="text-[#c8f135]" />, note: "High-craft WebGL & research UI" },
+        { name: "Python 3.12", icon: <FaPython className="text-[#a1a1a6]" />, note: "Vectorized numerical pipelines" },
+        { name: "Scikit-Learn", icon: <SiScikitlearn className="text-[#a1a1a6]" />, note: "Gradient boosted ensembles" },
+        { name: "SHAP & TreeExplainer", icon: <Cpu className="text-[#a1a1a6]" />, note: "Feature attribution and interpretability" },
+        { name: "React 19 & TypeScript", icon: <SiReact className="text-[#a1a1a6]" />, note: "High-precision telemetry interfaces" },
       ]
     }
   ];
@@ -117,129 +96,86 @@ export default function HomePage() {
   const featuredArticles = ARTICLES_DATA.slice(0, 3);
 
   return (
-    <div className="space-y-24 pb-24">
-      {/* Top Technical Hero Section */}
-      <section className="relative pt-8 sm:pt-14 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <div className="space-y-16 pb-20">
+      {/* Hero Section */}
+      <section className="pt-10 sm:pt-14 pb-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           
-          {/* Left Column: Technical Identity & Editorial Bio */}
-          <div className="lg:col-span-6 space-y-6 text-left">
-            {/* System Status Pill matching video */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-white/[0.04] border border-white/10 text-xs font-mono text-slate-300 backdrop-blur-md">
-              <span className="w-2 h-2 rounded-full bg-[#c8f135] animate-pulse" />
-              <span className="text-white font-semibold">open beta / 240+ models deployed</span>
-              <span className="text-slate-600">|</span>
-              <span className="text-[#c8f135]">DAVIS OCHIENG</span>
+          {/* Left Column: Identity & Bio */}
+          <div className="lg:col-span-5 space-y-5 text-left">
+            <div className="inline-flex items-center gap-2 font-mono text-xs text-[#85858b]">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#4cc38a]" />
+              <span>Davis Ochieng • Machine Learning Systems</span>
             </div>
 
-            {/* Editorial Headline with elegant serif italic pairing */}
             <div className="space-y-3">
-              <h1 className="text-3xl sm:text-5xl lg:text-[3.4rem] font-black text-white tracking-tight leading-[1.08] font-heading">
-                The architectures run <span className="font-editorial text-[#c8f135] font-normal italic tracking-normal">themselves.</span>
+              <h1 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-medium text-[#ededed] tracking-tight leading-[1.12] font-heading">
+                Machine learning systems engineered for low latency and scale
               </h1>
-              
-              <div className="flex items-center gap-2 text-xs font-mono text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/25 px-3.5 py-1.5 rounded-full w-fit">
-                <span>&gt;</span>
-                <TextScramble 
-                  text="LoRA / QLoRA • 3D Computer Vision • Sub-15ms Real-Time Inference" 
-                  speed={20}
-                />
+              <p className="text-sm text-[#a1a1a6] leading-relaxed">
+                I design and optimize production deep learning architectures. Focus areas include low-rank parameter adaptation (PEFT), high-throughput inference serving with vLLM, and real-time streaming pipelines.
+              </p>
+            </div>
+
+            {/* Profile Credentials */}
+            <div className="p-3 rounded-lg bg-[#19191b] border border-white/[0.08] flex items-center gap-3 max-w-md">
+              <img
+                src={profileSmall}
+                alt="Davis Ochieng"
+                width="44"
+                height="44"
+                className="w-11 h-11 rounded-md object-cover border border-white/[0.1]"
+              />
+              <div className="text-xs space-y-0.5">
+                <div className="text-[#ededed] font-medium">Davis Ochieng</div>
+                <p className="text-[#a1a1a6]">Senior Machine Learning Engineer</p>
+                <p className="text-[11px] text-[#85858b]">BSc Comp Sci (First Class) • AWS Certified ML</p>
               </div>
             </div>
 
-            {/* Narrative description */}
-            <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
-              I bridge mathematical deep learning research with robust production systems. Specializing in high-throughput inference optimization, low-rank parameter adaptation, and autonomous ML pipelines that only alert a human when it matters.
-            </p>
-
-            {/* Quick Profile Badge with verified credentials */}
-            <div className="p-3 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center gap-4 max-w-md backdrop-blur-md">
-              <div className="relative">
-                <img
-                  src={profileSmall}
-                  alt="Davis Ochieng"
-                  width="54"
-                  height="54"
-                  className="w-12 h-12 rounded-xl object-cover border border-[#c8f135]/40 shadow-md"
-                />
-                <span className="absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full bg-[#c8f135] border-2 border-[#050705]" />
-              </div>
-              <div className="text-xs space-y-0.5 font-mono">
-                <div className="text-white font-bold flex items-center gap-1.5">
-                  Davis Ochieng
-                  <span className="text-[10px] text-[#c8f135] bg-[#c8f135]/15 px-2 py-0.2 rounded-full border border-[#c8f135]/30">
-                    Verified
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-400">Senior ML Systems Engineer</p>
-                <p className="text-[10px] text-slate-500">BSc. Comp Sci (First Class) • AWS Certified ML</p>
-              </div>
-            </div>
-
-            {/* Magnetic CTA Buttons */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Link
-                to="/playground"
-                className="px-6 py-3 rounded-full bg-[#c8f135] hover:bg-[#d8ff44] text-slate-950 font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-2 shadow-[0_0_24px_rgba(200,241,53,0.35)] transition-all hover:scale-105"
-              >
-                <Sparkles className="w-4 h-4" />
-                Launch ML Lab
-              </Link>
+            {/* Action Buttons */}
+            <div className="flex flex-wrap items-center gap-3 pt-1">
               <Link
                 to="/projects"
-                className="px-5 py-3 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 hover:text-white font-semibold text-xs font-mono border border-white/10 flex items-center gap-2 transition backdrop-blur-sm hover:border-[#c8f135]/30"
+                className="btn-primary"
               >
-                <Cpu className="w-4 h-4 text-[#c8f135]" />
-                Explore Projects
+                <span>Explore projects</span>
+                <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/articles"
-                className="px-4 py-3 rounded-full bg-transparent hover:bg-white/5 text-slate-400 hover:text-[#c8f135] font-mono text-xs transition flex items-center gap-1"
+                className="btn-secondary"
               >
-                <BookOpen className="w-4 h-4" />
-                Read Papers →
+                <span>Read publications</span>
               </Link>
             </div>
-            
-            <p className="text-[11px] font-mono text-slate-500">
-              open source weights / interactive demos / zero vendor lock-in
-            </p>
           </div>
 
-          {/* Right Column: Live Telemetry Console (ApexCharts powered) */}
-          <div className="lg:col-span-6">
-            <SpotlightCard 
-              showCrosshairs={true}
-              cornerTag="TELEMETRY_01"
-              className="p-5 sm:p-6 shadow-2xl"
-            >
+          {/* Right Column: Live Telemetry Console */}
+          <div className="lg:col-span-7">
+            <div className="p-5 sm:p-6 rounded-xl border border-white/[0.08] bg-[#19191b]">
               <ModelTelemetryChart />
-            </SpotlightCard>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Infinite Hardware & Stack Ticker Tape (Basement Studio style) */}
-      <TechTicker />
-
-      {/* 4 High-Precision Telemetry Metrics */}
+      {/* 4 Telemetry Metrics */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {metricsStats.map((metric) => (
             <SpotlightCard
-              key={metric.tag}
-              cornerTag={metric.tag}
-              showCrosshairs={true}
+              key={metric.label}
               className="p-5"
             >
-              <div className="space-y-2 pt-1">
-                <span className="text-[11px] font-mono text-slate-400 uppercase tracking-wider block">
+              <div className="space-y-1.5">
+                <span className="text-xs text-[#85858b] block font-mono">
                   {metric.label}
                 </span>
-                <div className={`text-3xl sm:text-4xl font-black font-mono tracking-tight ${metric.accent}`}>
+                <div className="text-2xl sm:text-3xl font-medium font-mono text-[#ededed] tracking-tight">
                   {metric.val}
                 </div>
-                <p className="text-xs text-slate-400 leading-snug">
+                <p className="text-xs text-[#a1a1a6] leading-snug">
                   {metric.desc}
                 </p>
               </div>
@@ -248,239 +184,136 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Deep Architecture Bento Grid (Aceternity UI + Book of Shapes style) */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5">
+      {/* Architecture & Telemetry Modules */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-baseline justify-between gap-2 border-b border-white/[0.08] pb-4">
           <div>
-            <div className="flex items-center gap-2 font-mono text-xs text-[#c8f135] uppercase tracking-widest">
-              <Layers className="w-4 h-4" />
-              <span>Interactive Architecture Lattice</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-white font-heading mt-1">
-              Deep Engineering Modules
+            <h2 className="text-xl sm:text-2xl font-medium text-[#ededed] font-heading">
+              System architectures & telemetry
             </h2>
+            <p className="text-xs text-[#85858b] mt-0.5">
+              Interactive multi-head attention weights, live node console, and pipeline execution budgets.
+            </p>
           </div>
-          <p className="text-xs font-mono text-slate-400 max-w-sm">
-            Live interactive simulations, attention weight maps, and real-time model telemetry directly in your browser.
-          </p>
         </div>
 
-        {/* Bento Layout */}
+        {/* Modules Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Module 1: Multi-Head Attention Visualizer (7 cols) */}
           <div className="lg:col-span-7">
-            <SpotlightCard
-              cornerTag="ATTN_LATTICE"
-              showCrosshairs={true}
-              className="p-6 h-full flex flex-col justify-between"
-            >
+            <SpotlightCard className="p-5 h-full flex flex-col justify-between">
               <AttentionVisualizer />
             </SpotlightCard>
           </div>
 
-          {/* Module 2: Hacker Terminal Console (5 cols) */}
+          {/* Module 2: Terminal Console (5 cols) */}
           <div className="lg:col-span-5">
-            <SpotlightCard
-              cornerTag="CLI_SHELL"
-              showCrosshairs={true}
-              className="p-5 h-full flex flex-col justify-between"
-            >
-              <div className="space-y-3 pb-3">
+            <SpotlightCard className="p-5 h-full flex flex-col justify-between space-y-3">
+              <div className="space-y-1 pb-1">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs font-bold text-white flex items-center gap-2">
-                    <TerminalIcon className="w-4 h-4 text-[#c8f135]" />
-                    Interactive Cluster Terminal
+                  <span className="text-xs font-medium text-[#ededed] flex items-center gap-2">
+                    <TerminalIcon className="w-4 h-4 text-[#85858b]" />
+                    Interactive cluster terminal
                   </span>
-                  <span className="text-[10px] font-mono text-[#c8f135] bg-[#c8f135]/10 px-2 py-0.5 rounded-full border border-[#c8f135]/25">
-                    LIVE_SESSION
+                  <span className="text-[11px] font-mono text-[#85858b]">
+                    active session
                   </span>
                 </div>
-                <p className="text-xs text-slate-400">
-                  Execute live system queries against the simulated model deployment cluster.
+                <p className="text-xs text-[#a1a1a6]">
+                  Query simulated cluster hardware specs, throughput tests, and deployed configurations.
                 </p>
               </div>
               <TerminalConsole />
             </SpotlightCard>
           </div>
 
-          {/* Module 3: In-Browser Gradient Descent Optimizer (4 cols) */}
-          <div className="lg:col-span-4">
-            <SpotlightCard
-              cornerTag="SGD_SIMULATOR"
-              showCrosshairs={true}
-              className="p-6 space-y-4"
-            >
+          {/* Module 3: Pipeline Blueprint (6 cols) */}
+          <div className="lg:col-span-6">
+            <SpotlightCard className="p-5 space-y-4">
               <div className="space-y-1">
-                <span className="font-mono text-xs font-bold text-white flex items-center gap-2">
-                  <Activity className="w-4 h-4 text-[#c8f135]" />
-                  Live Gradient Descent Optimizer
+                <span className="text-xs font-medium text-[#ededed] flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-[#85858b]" />
+                  Inference pipeline execution budget
                 </span>
-                <p className="text-xs text-slate-400">
-                  Tweak the learning rate (α) and observe empirical loss convergence.
+                <p className="text-xs text-[#a1a1a6]">
+                  Component latency breakdown for end-to-end asynchronous streaming.
                 </p>
               </div>
 
-              {/* Parabolic Loss Curve Representation */}
-              <div className="h-32 bg-black/50 rounded-xl border border-white/5 relative p-3 flex flex-col justify-between overflow-hidden">
-                <svg className="absolute inset-0 w-full h-full pointer-events-none">
-                  <path
-                    d="M 20 100 Q 150 15 280 100"
-                    fill="none"
-                    stroke="rgba(255,255,255,0.15)"
-                    strokeWidth="1.5"
-                    strokeDasharray="3,3"
-                  />
-                  {/* Current gradient descent ball */}
-                  <circle
-                    cx={isDiverging ? 260 : Math.max(30, 150 - (0.1 - simLearningRate) * 1100)}
-                    cy={isDiverging ? 90 : Math.max(35, 100 - (1 - parseFloat(simulatedLoss)) * 60)}
-                    r="6"
-                    fill={isDiverging ? "#ef4444" : "#c8f135"}
-                    className="transition-all duration-300 shadow-lg"
-                  />
-                </svg>
-                <div className="flex justify-between items-center text-[10px] font-mono text-slate-500 relative z-10">
-                  <span>θ_init</span>
-                  <span className={isDiverging ? "text-red-400 font-bold" : "text-[#c8f135] font-bold"}>
-                    {isDiverging ? "DIVERGING!" : "MINIMA // J(θ*)"}
-                  </span>
-                  <span>θ_opt</span>
-                </div>
-                <div className="flex justify-between items-center text-xs font-mono relative z-10 pt-8">
-                  <span className="text-slate-400">Current MSE:</span>
-                  <span className={`font-bold ${isDiverging ? "text-red-400" : "text-[#c8f135]"}`}>
-                    {simulatedLoss}
-                  </span>
-                </div>
-              </div>
-
-              {/* Slider Controls */}
               <div className="space-y-2 font-mono text-xs">
-                <div className="flex justify-between">
-                  <span className="text-slate-400">Learning Rate (α):</span>
-                  <span className="text-[#c8f135] font-bold">{simLearningRate.toFixed(3)}</span>
+                <div className="p-2.5 rounded-lg bg-[#141415] border border-white/[0.08] flex items-center justify-between">
+                  <span className="text-[#ededed] flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#85858b]" />
+                    Kafka message ingestion
+                  </span>
+                  <span className="text-xs text-[#85858b]">0.8ms (zero-copy)</span>
                 </div>
-                <input
-                  type="range"
-                  min="0.005"
-                  max="0.15"
-                  step="0.005"
-                  value={simLearningRate}
-                  onChange={(e) => setSimLearningRate(parseFloat(e.target.value))}
-                  className="w-full accent-[#c8f135] cursor-pointer h-1.5 bg-slate-800 rounded-lg"
-                />
-                <div className="flex justify-between text-[10px] text-slate-500">
-                  <span>0.005 (Slow)</span>
-                  <span>0.050 (Optimal)</span>
-                  <span>0.150 (Overshoot)</span>
+                <div className="p-2.5 rounded-lg bg-[#141415] border border-white/[0.08] flex items-center justify-between">
+                  <span className="text-[#ededed] flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#85858b]" />
+                    Polars vector preprocessing
+                  </span>
+                  <span className="text-xs text-[#85858b]">1.2ms (SIMD Arrow)</span>
+                </div>
+                <div className="p-2.5 rounded-lg bg-[#232325] border border-white/[0.12] flex items-center justify-between">
+                  <span className="text-[#4cc38a] font-medium flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#4cc38a]" />
+                    TensorRT-LLM execution
+                  </span>
+                  <span className="text-xs text-[#4cc38a] font-medium">8.4ms (FP8 GEMM)</span>
+                </div>
+                <div className="p-2.5 rounded-lg bg-[#141415] border border-white/[0.08] flex items-center justify-between">
+                  <span className="text-[#ededed] flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#85858b]" />
+                    Redis semantic cache lookup
+                  </span>
+                  <span className="text-xs text-[#85858b]">0.8ms (98.4% hit rate)</span>
                 </div>
               </div>
 
-              <Link
-                to="/playground"
-                className="w-full py-2.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-[#c8f135] hover:text-[#d9ff43] font-mono text-xs font-bold border border-[#c8f135]/30 flex items-center justify-center gap-1.5 transition"
-              >
-                <span>Full 4-Tab ML Lab</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </SpotlightCard>
-          </div>
-
-          {/* Module 4: High-Throughput Pipeline Blueprint (4 cols) */}
-          <div className="lg:col-span-4">
-            <SpotlightCard
-              cornerTag="MLOPS_PIPELINE"
-              showCrosshairs={true}
-              className="p-6 space-y-4"
-            >
-              <div className="space-y-1">
-                <span className="font-mono text-xs font-bold text-white flex items-center gap-2">
-                  <Zap className="w-4 h-4 text-[#c8f135]" />
-                  Sub-15ms Pipeline Architecture
-                </span>
-                <p className="text-xs text-slate-400">
-                  End-to-end low-latency asynchronous microservice anatomy.
-                </p>
-              </div>
-
-              <div className="space-y-2.5 font-mono text-xs">
-                <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between">
-                  <span className="text-slate-300 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-cyan-400" />
-                    Kafka Ingestion
-                  </span>
-                  <span className="text-[10px] text-slate-500">0.8ms (Zero-Copy)</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between">
-                  <span className="text-slate-300 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#c8f135]" />
-                    Polars Preprocessing
-                  </span>
-                  <span className="text-[10px] text-slate-500">1.2ms (SIMD Arrow)</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-[#c8f135]/10 border border-[#c8f135]/30 flex items-center justify-between">
-                  <span className="text-[#c8f135] font-bold flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-[#c8f135] animate-pulse" />
-                    TensorRT-LLM Kernel
-                  </span>
-                  <span className="text-[10px] text-[#c8f135] font-bold">8.4ms (FP8 GEMM)</span>
-                </div>
-                <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between">
-                  <span className="text-slate-300 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                    Redis Semantic Cache
-                  </span>
-                  <span className="text-[10px] text-emerald-400 font-bold">98.4% Hit Rate</span>
-                </div>
-              </div>
-
-              <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/5 text-[11px] font-mono text-slate-400 flex items-center justify-between">
-                <span>Total Round-Trip:</span>
-                <span className="text-white font-bold">&lt;11.2ms p99</span>
+              <div className="p-2.5 rounded-lg bg-[#141415] border border-white/[0.08] text-xs font-mono text-[#a1a1a6] flex items-center justify-between">
+                <span>Total round-trip:</span>
+                <span className="text-[#ededed] font-medium">&lt;11.2ms p99</span>
               </div>
             </SpotlightCard>
           </div>
 
-          {/* Module 5: arXiv Research Preprint Dossier (4 cols) */}
-          <div className="lg:col-span-4">
-            <SpotlightCard
-              cornerTag="ARXIV_PREPRINT"
-              showCrosshairs={true}
-              className="p-6 space-y-4 flex flex-col justify-between"
-            >
+          {/* Module 4: arXiv Research Preprint (6 cols) */}
+          <div className="lg:col-span-6">
+            <SpotlightCard className="p-5 space-y-4 flex flex-col justify-between">
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[10px] text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/25 px-2.5 py-0.5 rounded-full">
+                  <span className="font-mono text-[11px] text-[#85858b]">
                     arXiv:2501.08492 [cs.LG]
                   </span>
-                  <span className="text-[10px] font-mono text-slate-500">Jan 2025</span>
+                  <span className="text-[11px] font-mono text-[#85858b]">January 2025</span>
                 </div>
-                <h3 className="text-sm font-bold text-white leading-snug">
-                  Rank Allocation Dynamics in Quantized Low-Rank Adaptation (QLoRA)
+                <h3 className="text-sm font-medium text-[#ededed] leading-snug">
+                  Rank allocation dynamics in quantized low-rank adaptation (QLoRA)
                 </h3>
-                <p className="text-xs text-slate-400 line-clamp-3">
+                <p className="text-xs text-[#a1a1a6] leading-relaxed">
                   Investigating optimal intrinsic rank distribution across attention projection matrices versus feed-forward layers in sparse mixture-of-experts architectures.
                 </p>
               </div>
 
               <div className="space-y-2.5 pt-2">
-                <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 font-mono text-[10px] text-slate-400 flex items-center justify-between">
+                <div className="p-2.5 rounded-lg bg-[#141415] border border-white/[0.08] font-mono text-xs text-[#85858b] flex items-center justify-between">
                   <span>Author:</span>
-                  <span className="text-white font-semibold">Davis Ochieng</span>
+                  <span className="text-[#ededed]">Davis Ochieng</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <button
                     onClick={copyBibtex}
-                    className="flex-1 py-2 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 font-mono text-xs border border-white/10 flex items-center justify-center gap-1.5 transition"
+                    className="btn-secondary flex-1"
                   >
-                    {copiedBibtex ? <Check className="w-3.5 h-3.5 text-[#c8f135]" /> : <Copy className="w-3.5 h-3.5 text-[#c8f135]" />}
-                    <span>{copiedBibtex ? "Copied!" : "Copy BibTeX"}</span>
+                    {copiedBibtex ? <Check className="w-3.5 h-3.5 text-[#4cc38a]" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copiedBibtex ? "Copied" : "Copy BibTeX"}</span>
                   </button>
                   <Link
                     to="/articles/qlora-rank-adaptation"
-                    className="px-3.5 py-2 rounded-full bg-[#c8f135]/15 hover:bg-[#c8f135]/25 text-[#c8f135] font-mono text-xs border border-[#c8f135]/30 transition flex items-center gap-1"
+                    className="btn-secondary"
                   >
-                    <span>Read</span>
+                    <span>Read paper</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
@@ -490,67 +323,61 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Featured Production AI Projects */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5">
+      {/* Featured Production Systems */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-baseline justify-between gap-2 border-b border-white/[0.08] pb-4">
           <div>
-            <div className="flex items-center gap-2 font-mono text-xs text-[#c8f135] uppercase tracking-widest">
-              <Cpu className="w-4 h-4" />
-              <span>Production Deployments</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-white font-heading mt-1">
-              Featured Machine Learning Systems
+            <h2 className="text-xl sm:text-2xl font-medium text-[#ededed] font-heading">
+              Featured systems
             </h2>
+            <p className="text-xs text-[#85858b] mt-0.5">
+              Production architectures engineered for high throughput and reliability.
+            </p>
           </div>
           <Link
             to="/projects"
-            className="text-xs font-mono font-bold text-[#c8f135] hover:text-[#d9ff43] flex items-center gap-1 group"
+            className="text-xs font-mono text-[#a1a1a6] hover:text-[#ededed] flex items-center gap-1 transition-colors"
           >
-            <span>View All Production Systems</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <span>All projects</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {featuredProjects.map((project, idx) => (
+          {featuredProjects.map((project) => (
             <SpotlightCard
               key={project.id}
-              cornerTag={`PRJ_${idx + 1}`}
-              showCrosshairs={true}
-              className="p-6 flex flex-col justify-between space-y-5"
+              className="p-5 flex flex-col justify-between space-y-4"
             >
-              <div className="space-y-4">
+              <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/25 px-2.5 py-0.5 rounded-full">
+                  <span className="text-[11px] font-mono text-[#85858b]">
                     {project.category}
                   </span>
-                  <span className="text-xs font-mono text-slate-400">
-                    {project.metrics[0].label}: <strong className="text-white">{project.metrics[0].value}</strong>
+                  <span className="text-xs font-mono text-[#a1a1a6]">
+                    {project.metrics[0].label}: <strong className="text-[#ededed] font-medium">{project.metrics[0].value}</strong>
                   </span>
                 </div>
 
-                <h3 className="text-base font-bold text-white leading-snug group-hover:text-[#c8f135] transition-colors">
+                <h3 className="text-sm font-medium text-[#ededed] leading-snug">
                   {project.title}
                 </h3>
 
-                <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
+                <p className="text-xs text-[#a1a1a6] line-clamp-3 leading-relaxed">
                   {project.description}
                 </p>
 
-                {/* Key Architecture Point */}
                 {project.architectureHighlights[0] && (
-                  <div className="p-2.5 rounded-xl bg-black/40 border border-white/5 text-[11px] font-mono text-slate-400 flex items-start gap-2">
-                    <span className="text-[#c8f135] font-bold">✦</span>
-                    <span className="line-clamp-2">{project.architectureHighlights[0]}</span>
+                  <div className="p-2 rounded bg-[#141415] border border-white/[0.08] text-[11px] font-mono text-[#85858b]">
+                    {project.architectureHighlights[0]}
                   </div>
                 )}
 
-                {/* Tech Stack Chips */}
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {project.techStack.slice(0, 4).map((tech) => (
                     <span
                       key={tech}
-                      className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/[0.04] text-slate-300 border border-white/5"
+                      className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#232325] text-[#85858b] border border-white/[0.06]"
                     >
                       {tech}
                     </span>
@@ -558,20 +385,20 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Card Footer Links */}
-              <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between font-mono text-xs">
+              <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between text-xs">
                 <Link
                   to="/projects"
-                  className="text-[#c8f135] hover:text-[#d9ff43] font-semibold flex items-center gap-1"
+                  className="text-xs text-[#ededed] hover:text-white flex items-center gap-1 transition-colors"
                 >
-                  Architecture Deep-Dive →
+                  <span>Architecture review</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
                 <a
                   href={project.githubUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="p-2 rounded-full bg-white/[0.04] border border-white/10 text-slate-400 hover:text-white transition"
-                  aria-label="GitHub Repository"
+                  className="p-1.5 rounded bg-[#232325] border border-white/[0.08] text-[#85858b] hover:text-[#ededed] transition-colors"
+                  aria-label="GitHub repository"
                 >
                   <Github className="w-3.5 h-3.5" />
                 </a>
@@ -582,49 +409,44 @@ export default function HomePage() {
       </section>
 
       {/* Featured Technical Publications */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 border-b border-white/[0.08] pb-5">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-baseline justify-between gap-2 border-b border-white/[0.08] pb-4">
           <div>
-            <div className="flex items-center gap-2 font-mono text-xs text-[#c8f135] uppercase tracking-widest">
-              <BookOpen className="w-4 h-4" />
-              <span>Research & Guides</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-black text-white font-heading mt-1">
-              Technical Publications
+            <h2 className="text-xl sm:text-2xl font-medium text-[#ededed] font-heading">
+              Technical publications
             </h2>
+            <p className="text-xs text-[#85858b] mt-0.5">
+              Deep dives into parameter-efficient fine tuning, quantization, and real-time inference.
+            </p>
           </div>
           <Link
             to="/articles"
-            className="text-xs font-mono font-bold text-[#c8f135] hover:text-[#d9ff43] flex items-center gap-1 group"
+            className="text-xs font-mono text-[#a1a1a6] hover:text-[#ededed] flex items-center gap-1 transition-colors"
           >
-            <span>Browse All Publications</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <span>All articles</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {featuredArticles.map((article, idx) => (
+          {featuredArticles.map((article) => (
             <SpotlightCard
               key={article.slug}
-              cornerTag={`PUB_${idx + 1}`}
-              showCrosshairs={true}
-              className="p-6 flex flex-col justify-between space-y-5"
+              className="p-5 flex flex-col justify-between space-y-4"
             >
-              <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs font-mono">
-                  <span className="font-semibold text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/25 px-2.5 py-0.5 rounded-full text-[10px]">
-                    {article.category}
-                  </span>
-                  <span className="text-slate-400 text-[11px]">{article.readTime}</span>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between text-xs font-mono text-[#85858b]">
+                  <span>{article.category}</span>
+                  <span>{article.readTime}</span>
                 </div>
 
                 <Link to={`/articles/${article.slug}`}>
-                  <h3 className="text-base font-bold text-white group-hover:text-[#c8f135] transition-colors line-clamp-2">
+                  <h3 className="text-sm font-medium text-[#ededed] hover:text-white transition-colors line-clamp-2 leading-snug">
                     {article.title}
                   </h3>
                 </Link>
 
-                <p className="text-xs text-slate-400 line-clamp-3 leading-relaxed">
+                <p className="text-xs text-[#a1a1a6] line-clamp-3 leading-relaxed">
                   {article.excerpt}
                 </p>
 
@@ -632,7 +454,7 @@ export default function HomePage() {
                   {article.tags.slice(0, 3).map((tag) => (
                     <span
                       key={tag}
-                      className="text-[10px] font-mono px-2.5 py-0.5 rounded-full bg-white/[0.04] text-slate-400 border border-white/5"
+                      className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#232325] text-[#85858b] border border-white/[0.06]"
                     >
                       #{tag}
                     </span>
@@ -640,13 +462,14 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="pt-4 border-t border-white/[0.06] flex items-center justify-between font-mono text-xs">
-                <span className="text-slate-500">{article.publishedDate}</span>
+              <div className="pt-3 border-t border-white/[0.08] flex items-center justify-between text-xs">
+                <span className="text-[#85858b] font-mono text-[11px]">{article.publishedDate}</span>
                 <Link
                   to={`/articles/${article.slug}`}
-                  className="font-bold text-[#c8f135] hover:text-[#d9ff43] flex items-center gap-1"
+                  className="text-xs text-[#ededed] hover:text-white flex items-center gap-1 transition-colors"
                 >
-                  Read Paper →
+                  <span>Read paper</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </SpotlightCard>
@@ -654,46 +477,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Categorized Technical Ecosystem Matrix */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-        <div className="border-b border-white/[0.08] pb-5">
-          <div className="flex items-center gap-2 font-mono text-xs text-[#c8f135] uppercase tracking-widest">
-            <Code2 className="w-4 h-4" />
-            <span>Infrastructure Matrix</span>
+      {/* Tooling & Infrastructure Matrix */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+        <div className="border-b border-white/[0.08] pb-4">
+          <div className="flex items-center gap-2 text-xs font-mono text-[#85858b]">
+            <Code2 className="w-4 h-4 text-[#85858b]" />
+            <span>Infrastructure stack</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-black text-white font-heading mt-1">
-            Engineered Tooling & Infrastructure
+          <h2 className="text-xl sm:text-2xl font-medium text-[#ededed] font-heading mt-1">
+            Tooling & infrastructure
           </h2>
-          <p className="text-xs font-mono text-slate-400 mt-1">
-            Core stack utilized in architecting, testing, and scaling production AI systems.
+          <p className="text-xs text-[#85858b] mt-0.5">
+            Core stack across training, quantization, and real-time serving.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {techCategories.map((cat, idx) => (
+          {techCategories.map((cat) => (
             <SpotlightCard
               key={cat.title}
-              cornerTag={`STACK_${idx + 1}`}
-              showCrosshairs={true}
-              className="p-6 space-y-4"
+              className="p-5 space-y-3"
             >
-              <h3 className="font-mono text-xs font-bold text-white tracking-wider uppercase text-[#c8f135]/90 pb-2 border-b border-white/[0.06]">
+              <h3 className="font-mono text-xs font-medium text-[#ededed] pb-2 border-b border-white/[0.08]">
                 {cat.title}
               </h3>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {cat.items.map((item) => (
                   <div
                     key={item.name}
-                    className="p-2.5 rounded-xl bg-black/40 border border-white/5 flex items-center justify-between hover:border-[#c8f135]/30 transition"
+                    className="p-2.5 rounded-lg bg-[#141415] border border-white/[0.06] flex items-center justify-between hover:border-white/[0.12] transition-colors"
                   >
                     <div className="flex items-center gap-2.5">
-                      <div className="text-xl">{item.icon}</div>
+                      <div className="text-lg text-[#85858b]">{item.icon}</div>
                       <div>
-                        <p className="text-xs font-bold text-white">{item.name}</p>
-                        <p className="text-[10px] font-mono text-slate-400">{item.note}</p>
+                        <p className="text-xs font-medium text-[#ededed]">{item.name}</p>
+                        <p className="text-[11px] font-mono text-[#85858b]">{item.note}</p>
                       </div>
                     </div>
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#c8f135]" />
                   </div>
                 ))}
               </div>

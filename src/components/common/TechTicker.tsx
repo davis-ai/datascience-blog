@@ -24,11 +24,11 @@ export default function TechTicker() {
         {[...items, ...items].map((item, idx) => (
           <div
             key={idx}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-slate-300 font-mono text-[11px] whitespace-nowrap hover:border-[#c8f135]/40 hover:text-white transition"
+            className="flex items-center gap-2 px-3 py-1 rounded-md bg-[#19191b] border border-white/[0.08] text-[#ededed] font-mono text-[11px] whitespace-nowrap transition"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#c8f135]" />
-            <span className="font-semibold text-white">{item.label}</span>
-            <span className="text-[9px] text-[#c8f135]/80 uppercase tracking-wider">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#4cc38a]" />
+            <span className="font-medium text-[#ededed]">{item.label}</span>
+            <span className="text-[10px] text-[#85858b]">
               //{item.cat}
             </span>
           </div>

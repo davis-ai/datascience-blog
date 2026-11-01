@@ -15,7 +15,6 @@ export default function ModelTelemetryChart() {
     setMounted(true);
   }, []);
 
-  // 1. Loss convergence series
   const lossData: Record<ModelPreset, { train: number[]; val: number[] }> = {
     "llama-3-8b": {
       train: [3.42, 2.85, 2.21, 1.78, 1.45, 1.18, 0.94, 0.76, 0.61, 0.52, 0.44, 0.38, 0.33, 0.29, 0.26, 0.24],
@@ -32,10 +31,10 @@ export default function ModelTelemetryChart() {
   };
 
   const steps = [
-    "Step 100", "Step 200", "Step 300", "Step 400", 
-    "Step 500", "Step 600", "Step 700", "Step 800",
-    "Step 900", "Step 1k", "Step 1.2k", "Step 1.4k",
-    "Step 1.6k", "Step 1.8k", "Step 2k", "Step 2.4k"
+    "100", "200", "300", "400", 
+    "500", "600", "700", "800",
+    "900", "1.0k", "1.2k", "1.4k",
+    "1.6k", "1.8k", "2.0k", "2.4k"
   ];
 
   const lossOptions: ApexOptions = {
@@ -46,64 +45,64 @@ export default function ModelTelemetryChart() {
       zoom: { enabled: false },
       animations: {
         enabled: true,
-        speed: 700,
+        speed: 400,
         dynamicAnimation: { enabled: true },
       },
     },
-    colors: ["#c8f135", "#38bdf8"],
+    colors: ["#4cc38a", "#85858b"],
     fill: {
       type: "gradient",
       gradient: {
         shadeIntensity: 1,
-        opacityFrom: 0.4,
-        opacityTo: 0.02,
+        opacityFrom: 0.18,
+        opacityTo: 0.0,
         stops: [0, 95, 100],
       },
     },
     stroke: {
       curve: "smooth",
-      width: [2.5, 2],
+      width: [2, 1.5],
       dashArray: [0, 4],
     },
     dataLabels: { enabled: false },
     grid: {
-      borderColor: "rgba(255, 255, 255, 0.06)",
-      strokeDashArray: 3,
+      borderColor: "rgba(237, 237, 237, 0.06)",
+      strokeDashArray: 2,
       xaxis: { lines: { show: true } },
       yaxis: { lines: { show: true } },
-      padding: { top: 10, right: 10, bottom: 0, left: 10 },
+      padding: { top: 8, right: 8, bottom: 0, left: 8 },
     },
     xaxis: {
       categories: steps,
       labels: {
         style: {
-          colors: "#64748b",
+          colors: "#85858b",
           fontSize: "10px",
           fontFamily: "monospace",
         },
       },
-      axisBorder: { color: "rgba(255, 255, 255, 0.08)" },
-      axisTicks: { color: "rgba(255, 255, 255, 0.08)" },
+      axisBorder: { color: "rgba(237, 237, 237, 0.08)" },
+      axisTicks: { color: "rgba(237, 237, 237, 0.08)" },
     },
     yaxis: {
       title: {
-        text: "Cross-Entropy Loss",
-        style: { color: "#94a3b8", fontSize: "11px", fontWeight: 500 },
+        text: "Cross-entropy loss",
+        style: { color: "#a1a1a6", fontSize: "11px", fontWeight: 400 },
       },
       labels: {
         formatter: (val) => val.toFixed(2),
-        style: { colors: "#64748b", fontSize: "10px", fontFamily: "monospace" },
+        style: { colors: "#85858b", fontSize: "10px", fontFamily: "monospace" },
       },
     },
     tooltip: {
       theme: "dark",
       style: { fontSize: "11px", fontFamily: "monospace" },
-      y: { formatter: (val) => `${val.toFixed(4)} CE` },
+      y: { formatter: (val) => `${val.toFixed(4)}` },
     },
     legend: {
       position: "top",
       horizontalAlign: "right",
-      labels: { colors: "#94a3b8" },
+      labels: { colors: "#a1a1a6" },
       fontFamily: "monospace",
       fontSize: "11px",
       markers: { size: 4 },
@@ -111,54 +110,53 @@ export default function ModelTelemetryChart() {
   };
 
   const lossSeries = [
-    { name: "Training Loss (LoRA r=16)", data: lossData[selectedModel].train },
-    { name: "Validation Loss (Eval-Loss)", data: lossData[selectedModel].val },
+    { name: "Training loss (LoRA r=16)", data: lossData[selectedModel].train },
+    { name: "Validation loss", data: lossData[selectedModel].val },
   ];
 
-  // 2. Throughput / Quantization series
   const throughputOptions: ApexOptions = {
     chart: {
       type: "bar",
       background: "transparent",
       toolbar: { show: false },
     },
-    colors: ["#c8f135", "#10b981"],
+    colors: ["#4cc38a", "#85858b"],
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: "48%",
-        borderRadius: 6,
+        columnWidth: "44%",
+        borderRadius: 4,
       },
     },
     dataLabels: { enabled: false },
     grid: {
-      borderColor: "rgba(255, 255, 255, 0.06)",
-      strokeDashArray: 3,
+      borderColor: "rgba(237, 237, 237, 0.06)",
+      strokeDashArray: 2,
     },
     xaxis: {
       categories: ["FP16 Native", "INT8 TensorRT", "AWQ 4-Bit", "QLoRA / NF4"],
       labels: {
-        style: { colors: "#94a3b8", fontSize: "11px", fontFamily: "monospace" },
+        style: { colors: "#a1a1a6", fontSize: "11px", fontFamily: "monospace" },
       },
     },
     yaxis: [
       {
         title: {
-          text: "Throughput (Tokens / sec)",
-          style: { color: "#c8f135", fontSize: "11px" },
+          text: "Throughput (tokens/s)",
+          style: { color: "#4cc38a", fontSize: "11px", fontWeight: 400 },
         },
         labels: {
-          style: { colors: "#c8f135", fontSize: "10px", fontFamily: "monospace" },
+          style: { colors: "#4cc38a", fontSize: "10px", fontFamily: "monospace" },
         },
       },
       {
         opposite: true,
         title: {
-          text: "VRAM Allocation (GB)",
-          style: { color: "#10b981", fontSize: "11px" },
+          text: "VRAM allocation (GB)",
+          style: { color: "#85858b", fontSize: "11px", fontWeight: 400 },
         },
         labels: {
-          style: { colors: "#10b981", fontSize: "10px", fontFamily: "monospace" },
+          style: { colors: "#85858b", fontSize: "10px", fontFamily: "monospace" },
         },
       },
     ],
@@ -169,59 +167,58 @@ export default function ModelTelemetryChart() {
     legend: {
       position: "top",
       horizontalAlign: "right",
-      labels: { colors: "#94a3b8" },
+      labels: { colors: "#a1a1a6" },
       fontFamily: "monospace",
       fontSize: "11px",
     },
   };
 
   const throughputSeries = [
-    { name: "Tokens / sec (A100 SXM)", data: [42.4, 98.6, 142.1, 126.8] },
-    { name: "VRAM Used (GB)", data: [16.8, 8.9, 5.2, 5.8] },
+    { name: "Tokens / sec (A100)", data: [42.4, 98.6, 142.1, 126.8] },
+    { name: "VRAM used (GB)", data: [16.8, 8.9, 5.2, 5.8] },
   ];
 
-  // 3. Latency Waterfall series
   const latencyOptions: ApexOptions = {
     chart: {
       type: "bar",
       background: "transparent",
       toolbar: { show: false },
     },
-    colors: ["#c8f135"],
+    colors: ["#4cc38a"],
     plotOptions: {
       bar: {
         horizontal: true,
         borderRadius: 4,
-        barHeight: "45%",
+        barHeight: "40%",
       },
     },
     dataLabels: {
       enabled: true,
       formatter: (val) => `${val} ms`,
-      style: { colors: ["#050705"], fontSize: "11px", fontFamily: "monospace", fontWeight: 700 },
+      style: { colors: ["#0f0f10"], fontSize: "10px", fontFamily: "monospace", fontWeight: 500 },
     },
     grid: {
-      borderColor: "rgba(255, 255, 255, 0.06)",
-      strokeDashArray: 3,
+      borderColor: "rgba(237, 237, 237, 0.06)",
+      strokeDashArray: 2,
     },
     xaxis: {
       categories: [
-        "1. Tokenizer & Embedding",
-        "2. FlashAttention-2 Kernel",
-        "3. MLP Feed-Forward",
-        "4. Top-K Sampling & Detokenize",
+        "Tokenizer & embedding",
+        "FlashAttention-2 kernel",
+        "MLP feed-forward",
+        "Top-k sampling & decode",
       ],
       title: {
-        text: "Inference Latency (Milliseconds)",
-        style: { color: "#94a3b8", fontSize: "11px" },
+        text: "Inference latency (ms)",
+        style: { color: "#a1a1a6", fontSize: "11px", fontWeight: 400 },
       },
       labels: {
-        style: { colors: "#64748b", fontSize: "10px", fontFamily: "monospace" },
+        style: { colors: "#85858b", fontSize: "10px", fontFamily: "monospace" },
       },
     },
     yaxis: {
       labels: {
-        style: { colors: "#94a3b8", fontSize: "11px", fontFamily: "monospace" },
+        style: { colors: "#a1a1a6", fontSize: "11px", fontFamily: "monospace" },
       },
     },
     tooltip: {
@@ -233,7 +230,7 @@ export default function ModelTelemetryChart() {
 
   const latencySeries = [
     {
-      name: "Latency Budget",
+      name: "Latency budget",
       data: [1.8, 5.4, 4.2, 1.4],
     },
   ];
@@ -242,44 +239,44 @@ export default function ModelTelemetryChart() {
     <div className="w-full space-y-4">
       {/* Telemetry Header */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.08]">
-        <div className="flex items-center gap-2">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#c8f135] animate-pulse" />
-          <span className="font-mono text-xs font-semibold text-white tracking-wider">
-            LIVE TELEMETRY // BENCHMARK CLUSTER
+        <div className="flex items-center gap-2.5">
+          <span className="w-2 h-2 rounded-full bg-[#4cc38a]" />
+          <span className="text-xs font-medium text-[#ededed]">
+            Model benchmark telemetry
           </span>
-          <span className="hidden sm:inline-block font-mono text-[10px] text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-2 py-0.5 rounded-full">
-            GPU: A100-SXM4-80GB
+          <span className="font-mono text-[11px] text-[#85858b]">
+            A100-SXM4-80GB
           </span>
         </div>
 
         {/* Model preset selector */}
-        <div className="flex items-center gap-1 bg-black/50 p-1 rounded-full border border-white/10">
+        <div className="flex items-center gap-1 bg-[#141415] p-1 rounded-md border border-white/[0.08]">
           <button
             onClick={() => setSelectedModel("llama-3-8b")}
-            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
+            className={`font-mono text-[11px] px-2.5 py-1 rounded transition-colors ${
               selectedModel === "llama-3-8b"
-                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                : "text-[#85858b] hover:text-[#ededed]"
             }`}
           >
             Llama-3-8B
           </button>
           <button
             onClick={() => setSelectedModel("vision-unet")}
-            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
+            className={`font-mono text-[11px] px-2.5 py-1 rounded transition-colors ${
               selectedModel === "vision-unet"
-                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                : "text-[#85858b] hover:text-[#ededed]"
             }`}
           >
             3D-U-Net
           </button>
           <button
             onClick={() => setSelectedModel("mamba-hybrid")}
-            className={`font-mono text-[10px] px-3 py-1 rounded-full transition ${
+            className={`font-mono text-[11px] px-2.5 py-1 rounded transition-colors ${
               selectedModel === "mamba-hybrid"
-                ? "bg-[#c8f135] text-slate-950 font-bold shadow-sm"
-                : "text-slate-400 hover:text-white"
+                ? "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                : "text-[#85858b] hover:text-[#ededed]"
             }`}
           >
             Mamba-Hybrid
@@ -289,55 +286,55 @@ export default function ModelTelemetryChart() {
 
       {/* Sub-Tabs: Loss, Throughput, Latency */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={() => setActiveMetric("loss")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-colors ${
               activeMetric === "loss"
-                ? "bg-[#c8f135]/15 text-[#c8f135] border border-[#c8f135]/40 shadow-[0_0_12px_rgba(200,241,53,0.15)]"
-                : "text-slate-400 hover:text-slate-200 border border-transparent"
+                ? "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                : "text-[#85858b] hover:text-[#ededed]"
             }`}
           >
-            <Activity className="w-3.5 h-3.5" />
-            Convergence (Loss)
+            <Activity className="w-3.5 h-3.5 text-[#85858b]" />
+            <span>Convergence</span>
           </button>
           <button
             onClick={() => setActiveMetric("throughput")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-colors ${
               activeMetric === "throughput"
-                ? "bg-[#c8f135]/15 text-[#c8f135] border border-[#c8f135]/40 shadow-[0_0_12px_rgba(200,241,53,0.15)]"
-                : "text-slate-400 hover:text-slate-200 border border-transparent"
+                ? "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                : "text-[#85858b] hover:text-[#ededed]"
             }`}
           >
-            <Zap className="w-3.5 h-3.5" />
-            Throughput (Tokens/s)
+            <Zap className="w-3.5 h-3.5 text-[#85858b]" />
+            <span>Throughput</span>
           </button>
           <button
             onClick={() => setActiveMetric("latency")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono transition ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono transition-colors ${
               activeMetric === "latency"
-                ? "bg-[#c8f135]/15 text-[#c8f135] border border-[#c8f135]/40 shadow-[0_0_12px_rgba(200,241,53,0.15)]"
-                : "text-slate-400 hover:text-slate-200 border border-transparent"
+                ? "bg-[#232325] text-[#ededed] border border-white/[0.08]"
+                : "text-[#85858b] hover:text-[#ededed]"
             }`}
           >
-            <Cpu className="w-3.5 h-3.5" />
-            Kernel Breakdown
+            <Cpu className="w-3.5 h-3.5 text-[#85858b]" />
+            <span>Latency</span>
           </button>
         </div>
 
-        {/* Live metric badge */}
-        <div className="flex items-center gap-3 font-mono text-[11px] text-slate-400">
+        {/* Live metric summary */}
+        <div className="flex items-center gap-4 font-mono text-[11px] text-[#85858b]">
           <div>
-            P99 Latency: <span className="text-[#c8f135] font-bold">12.8ms</span>
+            p99 latency: <span className="text-[#ededed] font-medium">12.8ms</span>
           </div>
           <div>
-            Final Val Loss: <span className="text-[#c8f135] font-bold">{lossData[selectedModel].val.slice(-1)[0]}</span>
+            Final loss: <span className="text-[#4cc38a] font-medium">{lossData[selectedModel].val.slice(-1)[0]}</span>
           </div>
         </div>
       </div>
 
       {/* Chart Canvas Container */}
-      <div className="w-full h-64 sm:h-72 -ml-2 -mr-2">
+      <div className="w-full h-64 sm:h-72">
         {mounted && (
           <>
             {activeMetric === "loss" && (
@@ -372,22 +369,22 @@ export default function ModelTelemetryChart() {
       </div>
 
       {/* Bottom Telemetry Metrics Strip */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-white/[0.06] font-mono text-[11px]">
-        <div className="bg-black/40 p-2.5 rounded-xl border border-white/5">
-          <span className="text-slate-500 block text-[10px]">OPTIMIZER</span>
-          <span className="text-white font-semibold">AdamW (β1=0.9, β2=0.95)</span>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2 border-t border-white/[0.08] font-mono text-xs">
+        <div className="bg-[#141415] p-2.5 rounded-lg border border-white/[0.06]">
+          <span className="text-[#85858b] block text-[10px]">Optimizer</span>
+          <span className="text-[#ededed] font-medium">AdamW (β1=0.9)</span>
         </div>
-        <div className="bg-black/40 p-2.5 rounded-xl border border-white/5">
-          <span className="text-slate-500 block text-[10px]">ATTENTION BACKEND</span>
-          <span className="text-cyan-400 font-semibold">FlashAttention-2 + FP8</span>
+        <div className="bg-[#141415] p-2.5 rounded-lg border border-white/[0.06]">
+          <span className="text-[#85858b] block text-[10px]">Attention backend</span>
+          <span className="text-[#ededed] font-medium">FlashAttention-2</span>
         </div>
-        <div className="bg-black/40 p-2.5 rounded-xl border border-white/5">
-          <span className="text-slate-500 block text-[10px]">LORA RANK & ALPHA</span>
-          <span className="text-[#c8f135] font-semibold">r = 16, α = 32</span>
+        <div className="bg-[#141415] p-2.5 rounded-lg border border-white/[0.06]">
+          <span className="text-[#85858b] block text-[10px]">LoRA rank</span>
+          <span className="text-[#4cc38a] font-medium">r = 16, α = 32</span>
         </div>
-        <div className="bg-black/40 p-2.5 rounded-xl border border-white/5">
-          <span className="text-slate-500 block text-[10px]">CACHE HIT RATE</span>
-          <span className="text-emerald-400 font-semibold">98.4% (Redis KV)</span>
+        <div className="bg-[#141415] p-2.5 rounded-lg border border-white/[0.06]">
+          <span className="text-[#85858b] block text-[10px]">Cache hit rate</span>
+          <span className="text-[#ededed] font-medium">98.4% (Redis KV)</span>
         </div>
       </div>
     </div>

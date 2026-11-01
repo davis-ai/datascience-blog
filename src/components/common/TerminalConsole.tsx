@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Terminal, CornerDownLeft, Trash2, Sparkles } from "lucide-react";
+import { Terminal, CornerDownLeft, Trash2 } from "lucide-react";
 
 interface TerminalLine {
   id: string;
@@ -8,9 +8,9 @@ interface TerminalLine {
 }
 
 const INITIAL_LINES: TerminalLine[] = [
-  { id: "1", type: "system", text: "DAVIS_OS v2.6.4 (x86_64-linux-gnu / CUDA 12.4)" },
-  { id: "2", type: "system", text: "Cluster status: 4x NVIDIA A100-SXM4 (HEALTHY) • Triton Server: ACTIVE" },
-  { id: "3", type: "output", text: "Type 'help' or tap any command below to explore system architecture." },
+  { id: "1", type: "system", text: "Cluster node: a100-sxm4-01 (Linux x86_64, CUDA 12.4, Triton 24.08)" },
+  { id: "2", type: "system", text: "Inference server: online • p99 target: <15ms" },
+  { id: "3", type: "output", text: "Type 'help' or select a command below to inspect node telemetry." },
 ];
 
 export default function TerminalConsole() {
@@ -30,7 +30,7 @@ export default function TerminalConsole() {
     const inputLine: TerminalLine = {
       id: Math.random().toString(),
       type: "input",
-      text: `davis@cluster:~$ ${cmdText}`,
+      text: `davis@node:~$ ${cmdText}`,
     };
 
     let responseLines: TerminalLine[] = [];
@@ -40,63 +40,51 @@ export default function TerminalConsole() {
       case "?":
         responseLines = [
           { id: Math.random().toString(), type: "output", text: "Available commands:" },
-          { id: Math.random().toString(), type: "output", text: "  status      - Display real-time cluster health, latency & uptime" },
-          { id: Math.random().toString(), type: "output", text: "  benchmark   - Execute live simulated LLM throughput test" },
-          { id: Math.random().toString(), type: "output", text: "  models      - List production-grade deployed architectures" },
-          { id: Math.random().toString(), type: "output", text: "  stack       - Print core machine learning & infrastructure stack" },
-          { id: Math.random().toString(), type: "output", text: "  bio         - Print Davis Ochieng engineering profile" },
+          { id: Math.random().toString(), type: "output", text: "  status      - Display cluster health, latency and hardware specs" },
+          { id: Math.random().toString(), type: "output", text: "  benchmark   - Run simulated LLM throughput test on A100" },
+          { id: Math.random().toString(), type: "output", text: "  models      - List deployed models and quantization formats" },
+          { id: Math.random().toString(), type: "output", text: "  stack       - Print core machine learning and systems stack" },
           { id: Math.random().toString(), type: "output", text: "  clear       - Reset terminal buffer" },
         ];
         break;
 
       case "status":
         responseLines = [
-          { id: Math.random().toString(), type: "system", text: "── SYSTEM TELEMETRY REPORT ──────────────────────────" },
-          { id: Math.random().toString(), type: "output", text: "• UPTIME: 99.98% over last 180 days" },
-          { id: Math.random().toString(), type: "output", text: "• P99 INFERENCE LATENCY: 12.8ms (Sub-15ms Target: PASS)" },
-          { id: Math.random().toString(), type: "output", text: "• GPU CLUSTER: 4x A100-SXM4 (80GB VRAM / Node)" },
-          { id: Math.random().toString(), type: "output", text: "• ACCELERATION: TensorRT 10.0 + FlashAttention-2 + AWQ" },
-          { id: Math.random().toString(), type: "output", text: "• LOCATION: Nairobi, Kenya [EAT / UTC+3]" },
-          { id: Math.random().toString(), type: "output", text: "• CONTRACT / ADVISORY: AVAILABLE FOR SELECT ENGAGEMENTS" },
+          { id: Math.random().toString(), type: "system", text: "── Node status report ───────────────────────────────" },
+          { id: Math.random().toString(), type: "output", text: "• Uptime: 99.98% (180 days continuous)" },
+          { id: Math.random().toString(), type: "output", text: "• p99 latency: 12.8ms across 2.4M requests" },
+          { id: Math.random().toString(), type: "output", text: "• GPU allocation: 4x A100-SXM4 (80GB VRAM/node)" },
+          { id: Math.random().toString(), type: "output", text: "• Acceleration: TensorRT 10.0 + FlashAttention-2 + FP8" },
+          { id: Math.random().toString(), type: "output", text: "• Region: Nairobi [UTC+3]" },
         ];
         break;
 
       case "benchmark":
         setIsBenchmarking(true);
         responseLines = [
-          { id: Math.random().toString(), type: "system", text: "[BENCHMARK INITIATED] Model: Llama-3-8B-Instruct (4-Bit AWQ)..." },
-          { id: Math.random().toString(), type: "output", text: "Warmup phase: 128 tokens processed in 0.89s (143.8 tok/s)" },
-          { id: Math.random().toString(), type: "output", text: "Context Window: 8,192 tokens | Batch Size: 16" },
-          { id: Math.random().toString(), type: "output", text: "Throughput: 142.1 tokens/sec | VRAM: 5.2GB / 80GB (6.5%)" },
-          { id: Math.random().toString(), type: "output", text: "P95 TTFT (Time to First Token): 18.2ms" },
-          { id: Math.random().toString(), type: "output", text: "✔ Status: High-throughput benchmark completed with 0 dropped frames." },
+          { id: Math.random().toString(), type: "system", text: "Running throughput benchmark on Llama-3-8B (AWQ 4-bit)..." },
+          { id: Math.random().toString(), type: "output", text: "Warmup: 128 tokens in 0.89s (143.8 tok/s)" },
+          { id: Math.random().toString(), type: "output", text: "Context: 8,192 tokens | Batch size: 16" },
+          { id: Math.random().toString(), type: "output", text: "Throughput: 142.1 tokens/sec | VRAM: 5.2GB / 80GB" },
+          { id: Math.random().toString(), type: "output", text: "Time to first token (TTFT): 18.2ms p95" },
         ];
-        setTimeout(() => setIsBenchmarking(false), 800);
+        setTimeout(() => setIsBenchmarking(false), 600);
         break;
 
       case "models":
         responseLines = [
-          { id: Math.random().toString(), type: "output", text: "1. Llama-3-8B QLoRA Adapter (Legal/Financial fine-tune, r=16, α=32)" },
+          { id: Math.random().toString(), type: "output", text: "1. Llama-3-8B QLoRA (Rank r=16, Alpha=32, 4-bit NF4)" },
           { id: Math.random().toString(), type: "output", text: "2. 3D Medical U-Net (Volumetric brain MRI segmentation, Dice=0.912)" },
-          { id: Math.random().toString(), type: "output", text: "3. Real-Time Fraud Classifier (XGBoost + SHAP, <3ms p99 latency)" },
-          { id: Math.random().toString(), type: "output", text: "4. Multimodal CLIP Vision Embedder (10M vector search via Qdrant)" },
+          { id: Math.random().toString(), type: "output", text: "3. Real-time classifier (XGBoost + TreeExplainer, <3ms p99)" },
+          { id: Math.random().toString(), type: "output", text: "4. Multimodal CLIP embedder (Vector index in Qdrant)" },
         ];
         break;
 
       case "stack":
         responseLines = [
-          { id: Math.random().toString(), type: "output", text: "CORE: Python 3.12, PyTorch 2.5, C++, CUDA, Triton" },
-          { id: Math.random().toString(), type: "output", text: "ML / DEEP LEARNING: HuggingFace, PEFT, LoRA/QLoRA, vLLM, TensorRT" },
-          { id: Math.random().toString(), type: "output", text: "DATA & SERVING: FastAPI, Apache Kafka, Redis, Polars, Docker, K8s" },
-          { id: Math.random().toString(), type: "output", text: "FRONTEND / UI: React 19, TypeScript, Tailwind CSS, WebGL" },
-        ];
-        break;
-
-      case "bio":
-        responseLines = [
-          { id: Math.random().toString(), type: "output", text: "Davis Ochieng is a Data Scientist and Machine Learning Systems Engineer." },
-          { id: Math.random().toString(), type: "output", text: "Passionate about making deep learning reliable, explainable, and lightning-fast in production." },
-          { id: Math.random().toString(), type: "output", text: "First Class Honours in Computer Science; AWS Certified ML Specialist." },
+          { id: Math.random().toString(), type: "output", text: "Languages: Python 3.12, C++, CUDA, Triton" },
+          { id: Math.random().toString(), type: "output", text: "Frameworks: PyTorch 2.5, HuggingFace PEFT, vLLM, TensorRT" },
+          { id: Math.random().toString(), type: "output", text: "Infrastructure: FastAPI, Apache Kafka, Redis, Docker, K8s" },
         ];
         break;
 
@@ -110,7 +98,7 @@ export default function TerminalConsole() {
           {
             id: Math.random().toString(),
             type: "error",
-            text: `command not found: "${cmdText}". Type 'help' for available commands.`,
+            text: `Command not found: "${cmdText}". Type 'help' for options.`,
           },
         ];
         break;
@@ -127,84 +115,83 @@ export default function TerminalConsole() {
   };
 
   return (
-    <div className="w-full bg-[#050805] rounded-2xl border border-white/10 shadow-2xl overflow-hidden font-mono text-xs flex flex-col">
+    <div className="w-full bg-[#141415] rounded-lg border border-white/[0.08] overflow-hidden font-mono text-xs flex flex-col">
       {/* Terminal Title Bar */}
-      <div className="px-4 py-3 bg-[#0a0e0a] border-b border-white/[0.08] flex items-center justify-between">
+      <div className="px-3.5 py-2.5 bg-[#19191b] border-b border-white/[0.08] flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 rounded-full bg-red-500/80 border border-red-600" />
-          <div className="w-3 h-3 rounded-full bg-[#c8f135]/80 border border-[#c8f135]" />
-          <div className="w-3 h-3 rounded-full bg-emerald-500/80 border border-emerald-600" />
-          <span className="ml-2 text-slate-400 font-mono text-[11px] flex items-center gap-1.5">
-            <Terminal className="w-3.5 h-3.5 text-[#c8f135]" />
-            davis@cluster-node-01: ~ (bash)
+          <div className="w-2.5 h-2.5 rounded-full bg-[#3f3f46]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#3f3f46]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#3f3f46]" />
+          <span className="ml-2 text-[#85858b] text-[11px] flex items-center gap-1.5">
+            <Terminal className="w-3.5 h-3.5 text-[#85858b]" />
+            node-01: ~ (sh)
           </span>
         </div>
 
         <button
           onClick={() => setLines([])}
-          className="text-slate-500 hover:text-slate-300 p-1 rounded transition"
-          title="Clear Terminal"
+          className="text-[#85858b] hover:text-[#ededed] p-1 rounded transition-colors"
+          title="Clear"
         >
           <Trash2 className="w-3.5 h-3.5" />
         </button>
       </div>
 
       {/* Terminal Output Area */}
-      <div className="p-4 space-y-2 h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-800">
+      <div className="p-3.5 space-y-1.5 h-60 overflow-y-auto scrollbar-thin">
         {lines.map((line) => (
           <div
             key={line.id}
             className={`leading-relaxed ${
               line.type === "input"
-                ? "text-[#c8f135] font-semibold"
+                ? "text-[#ededed] font-medium"
                 : line.type === "system"
-                ? "text-emerald-400"
+                ? "text-[#4cc38a]"
                 : line.type === "error"
-                ? "text-red-400"
-                : "text-slate-300"
+                ? "text-[#e5484d]"
+                : "text-[#a1a1a6]"
             }`}
           >
             {line.text}
           </div>
         ))}
         {isBenchmarking && (
-          <div className="text-[#c8f135] animate-pulse flex items-center gap-2">
-            <Sparkles className="w-3.5 h-3.5 animate-spin" />
-            Executing TensorRT CUDA benchmarking kernel...
+          <div className="text-[#4cc38a] flex items-center gap-2">
+            Executing CUDA benchmark kernel...
           </div>
         )}
         <div ref={terminalEndRef} />
       </div>
 
-      {/* Quick Action Suggestion Chips */}
-      <div className="px-4 py-2 bg-[#080c08] border-t border-white/[0.04] flex flex-wrap items-center gap-1.5">
-        <span className="text-[10px] text-slate-500 mr-1">RUN:</span>
-        {["status", "benchmark", "models", "stack", "bio"].map((cmd) => (
+      {/* Suggestion Chips */}
+      <div className="px-3.5 py-2 bg-[#19191b] border-t border-white/[0.06] flex flex-wrap items-center gap-1.5">
+        <span className="text-[10px] text-[#85858b] mr-1">Run:</span>
+        {["status", "benchmark", "models", "stack"].map((cmd) => (
           <button
             key={cmd}
             onClick={() => executeCommand(cmd)}
-            className="px-2.5 py-0.5 rounded-full bg-white/[0.03] hover:bg-[#c8f135]/20 text-slate-400 hover:text-[#c8f135] border border-white/5 hover:border-[#c8f135]/30 text-[10px] transition"
+            className="px-2 py-0.5 rounded bg-[#232325] hover:bg-[#2f2f32] text-[#a1a1a6] hover:text-[#ededed] border border-white/[0.08] text-[11px] transition-colors"
           >
-            ${cmd}
+            {cmd}
           </button>
         ))}
       </div>
 
       {/* Command Input Field */}
-      <div className="px-4 py-3 bg-[#060a06] border-t border-white/[0.08] flex items-center gap-2">
-        <span className="text-[#c8f135] font-bold">davis@cluster:~$</span>
+      <div className="px-3.5 py-2.5 bg-[#141415] border-t border-white/[0.08] flex items-center gap-2">
+        <span className="text-[#4cc38a]">davis@node:~$</span>
         <input
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="type 'status', 'benchmark' or 'help'..."
-          className="flex-1 bg-transparent text-white focus:outline-none placeholder-slate-600 text-xs font-mono"
+          placeholder="Type 'status' or 'benchmark'..."
+          className="flex-1 bg-transparent text-[#ededed] focus:outline-none placeholder-[#85858b] text-xs font-mono"
         />
         <button
           onClick={() => executeCommand(inputValue)}
-          className="px-3 py-1 rounded-full bg-[#c8f135] hover:bg-[#d8ff44] text-slate-950 font-bold text-xs flex items-center gap-1 transition"
-          aria-label="Send Command"
+          className="p-1.5 rounded bg-[#232325] hover:bg-[#2f2f32] text-[#ededed] border border-white/[0.08] transition-colors"
+          aria-label="Send"
         >
           <CornerDownLeft className="w-3 h-3" />
         </button>

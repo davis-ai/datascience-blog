@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Cpu, 
   Github, 
   ExternalLink, 
-  Sparkles, 
   Search, 
   Layers, 
   X
@@ -34,31 +32,29 @@ export default function ProjectsPage() {
     if (project.liveUrl) {
       window.open(project.liveUrl, '_blank');
     } else {
-      showToast(`Staging sandbox for "${project.title}" initialized in GPU cluster`, 'info');
+      showToast(`Staging sandbox for "${project.title}" initialized`, 'info');
     }
   };
 
   return (
-    <div className="min-h-screen py-8 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-12">
+    <div className="py-10 sm:py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10">
       {/* Header */}
-      <div className="text-center space-y-4 max-w-3xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] text-xs font-mono text-[#c8f135]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#c8f135] animate-pulse shadow-[0_0_8px_#c8f135]" />
-          <Cpu className="w-3.5 h-3.5" />
-          <span>[SYSTEMS_CATALOG // PROD_TIER_A]</span>
+      <div className="space-y-2 border-b border-white/[0.08] pb-6">
+        <div className="font-mono text-xs text-[#85858b]">
+          Production deployments
         </div>
-        <h1 className="text-3xl sm:text-5xl font-black text-white tracking-tight font-heading">
-          Featured Machine Learning <span className="font-serif-italic text-[#c8f135] font-normal">Systems</span>
+        <h1 className="text-2xl sm:text-3xl font-medium text-[#ededed] tracking-tight font-heading">
+          Machine learning systems
         </h1>
-        <p className="text-slate-400 text-xs sm:text-base font-mono">
-          Scalable deep learning models, low-latency inference pipelines, and automated intelligence engines engineered for production.
+        <p className="text-xs sm:text-sm text-[#a1a1a6] max-w-2xl">
+          Deep learning models, low-latency inference pipelines, and automated intelligence engines engineered for production.
         </p>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-4 p-3 bg-black/40 rounded-2xl border border-white/10 backdrop-blur-md">
+      <div className="flex flex-col md:flex-row items-center justify-between gap-3 p-2.5 bg-[#19191b] rounded-lg border border-white/[0.08]">
         {/* Category Buttons */}
-        <div className="flex flex-wrap gap-1.5 w-full md:w-auto font-mono text-xs">
+        <div className="flex flex-wrap gap-1 w-full md:w-auto font-mono text-xs">
           {categories.map((cat) => {
             const count = cat === 'All' 
               ? PROJECTS_DATA.length 
@@ -68,17 +64,15 @@ export default function ProjectsPage() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-full transition flex items-center gap-1.5 ${
+                className={`px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 ${
                   selectedCategory === cat
-                    ? 'bg-[#c8f135] text-black font-bold shadow-md shadow-[#c8f135]/20'
-                    : 'bg-white/[0.03] text-slate-400 hover:text-white border border-white/5'
+                    ? 'bg-[#232325] text-[#ededed] border border-white/[0.08]'
+                    : 'text-[#85858b] hover:text-[#ededed] hover:bg-white/[0.04]'
                 }`}
               >
                 <span>{cat}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
-                  selectedCategory === cat ? 'bg-black/20 text-black' : 'bg-white/5 text-slate-500'
-                }`}>
-                  {count}
+                <span className="text-[10px] text-[#85858b]">
+                  ({count})
                 </span>
               </button>
             );
@@ -86,85 +80,80 @@ export default function ProjectsPage() {
         </div>
 
         {/* Search Input */}
-        <div className="relative w-full md:w-72 font-mono text-xs">
-          <Search className="w-3.5 h-3.5 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+        <div className="relative w-full md:w-64 font-mono text-xs">
+          <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[#85858b]" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search stack or architecture..."
-            className="w-full bg-black/50 border border-white/10 rounded-full pl-9 pr-4 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#c8f135] transition"
+            className="w-full bg-[#141415] border border-white/[0.08] rounded-md pl-8 pr-3 py-1.5 text-xs text-[#ededed] placeholder-[#85858b] focus:outline-none focus:border-white/[0.2]"
           />
         </div>
       </div>
 
-      {/* Projects Grid with SpotlightCard */}
+      {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredProjects.map((project, idx) => (
+        {filteredProjects.map((project) => (
           <SpotlightCard
             key={project.id}
-            cornerTag={`PRJ_NODE_${idx + 1}`}
-            showCrosshairs={true}
-            spotlightColor="rgba(200, 241, 53, 0.15)"
-            className="p-6 sm:p-7 flex flex-col justify-between space-y-5"
+            className="p-5 sm:p-6 flex flex-col justify-between space-y-4"
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {/* Category & Status */}
-              <div className="flex items-center justify-between font-mono text-xs">
-                <span className="font-bold uppercase tracking-wider text-[#c8f135] bg-[#c8f135]/10 border border-[#c8f135]/30 px-2.5 py-0.5 rounded-full text-[10px]">
-                  {project.category}
-                </span>
+              <div className="flex items-center justify-between font-mono text-xs text-[#85858b]">
+                <span>{project.category}</span>
                 {project.featured && (
-                  <span className="flex items-center gap-1 text-[11px] text-[#c8f135] bg-white/[0.04] border border-[#c8f135]/20 px-2.5 py-0.5 rounded-full">
-                    <Sparkles className="w-3 h-3 text-[#c8f135]" /> Core Deployment
+                  <span className="text-[11px] text-[#4cc38a]">
+                    Core deployment
                   </span>
                 )}
               </div>
 
               {/* Title & Description */}
               <div>
-                <h3 className="text-xl font-bold text-white group-hover:text-[#c8f135] transition-colors font-heading">
+                <h3 className="text-base sm:text-lg font-medium text-[#ededed] font-heading">
                   {project.title}
                 </h3>
-                <p className="text-xs text-[#c8f135]/80 mt-1 font-mono">
+                <p className="text-xs text-[#85858b] mt-0.5 font-mono">
                   {project.subtitle}
                 </p>
-                <p className="text-xs text-slate-400 mt-2.5 leading-relaxed">
+                <p className="text-xs text-[#a1a1a6] mt-2 leading-relaxed">
                   {project.description}
                 </p>
               </div>
 
               {/* Key Metrics Bar */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-3 rounded-xl bg-black/40 border border-white/5 font-mono">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 p-2.5 rounded-lg bg-[#141415] border border-white/[0.08] font-mono">
                 {project.metrics.map((m, mIdx) => (
                   <div key={mIdx} className="text-center">
-                    <p className="text-[9px] text-slate-500 uppercase tracking-tight">{m.label}</p>
-                    <p className="text-xs sm:text-sm font-black text-white">{m.value}</p>
+                    <p className="text-[10px] text-[#85858b]">{m.label}</p>
+                    <p className="text-xs font-medium text-[#ededed]">{m.value}</p>
                   </div>
                 ))}
               </div>
 
               {/* Architecture Highlights */}
-              <div className="space-y-1.5 font-mono">
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
-                  Technical Architecture Highlights:
+              <div className="space-y-1 font-mono text-xs">
+                <p className="text-[10px] text-[#85858b]">
+                  Architecture notes:
                 </p>
                 <ul className="space-y-1">
                   {project.architectureHighlights.map((point, pIdx) => (
-                    <li key={pIdx} className="text-xs text-slate-300 flex items-start gap-2">
-                      <span className="text-[#c8f135] font-bold shrink-0 mt-0.5">✦</span>
+                    <li key={pIdx} className="text-xs text-[#a1a1a6] flex items-start gap-2">
+                      <span className="text-[#85858b] shrink-0 mt-0.5">•</span>
                       <span>{point}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              {/* Tech Stack Pills */}
+              {/* Tech Stack Chips */}
               <div className="flex flex-wrap gap-1.5 pt-1">
                 {project.techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/[0.04] text-slate-300 border border-white/5"
+                    className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#232325] text-[#85858b] border border-white/[0.06]"
                   >
                     {tech}
                   </span>
@@ -173,83 +162,87 @@ export default function ProjectsPage() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-3 pt-4 border-t border-white/[0.06] font-mono text-xs">
+            <div className="flex items-center gap-2 pt-3 border-t border-white/[0.08] text-xs">
               <button
                 onClick={() => setActiveModalProject(project)}
-                className="flex-1 py-2 px-3 rounded-full bg-white/[0.04] hover:bg-white/[0.08] text-slate-200 font-semibold border border-white/10 flex items-center justify-center gap-2 transition"
+                className="btn-secondary flex-1"
               >
-                <Layers className="w-3.5 h-3.5 text-[#c8f135]" />
-                <span>Architecture Blueprint</span>
+                <Layers className="w-3.5 h-3.5" />
+                <span>Blueprint</span>
               </button>
 
               <button
                 onClick={() => handleDemoClick(project)}
-                className="py-2 px-4 rounded-full bg-[#c8f135] hover:bg-[#d9ff43] text-black font-bold flex items-center justify-center gap-1.5 transition shadow-[0_0_15px_rgba(200,241,53,0.3)]"
+                className="btn-primary"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span>Live Sandbox</span>
+                <span>Sandbox</span>
               </button>
 
               <a
                 href={project.githubUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="p-2 rounded-full bg-white/[0.04] border border-white/10 text-slate-400 hover:text-[#c8f135] hover:border-[#c8f135]/40 transition"
+                className="p-2 rounded-md bg-[#232325] border border-white/[0.08] text-[#85858b] hover:text-[#ededed] transition-colors"
                 aria-label="GitHub Repository"
               >
-                <Github className="w-4 h-4" />
+                <Github className="w-3.5 h-3.5" />
               </a>
             </div>
           </SpotlightCard>
         ))}
       </div>
 
-      {/* Deep Architecture Blueprint Modal */}
+      {/* Blueprint Modal */}
       <AnimatePresence>
         {activeModalProject && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+          <div 
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            onClick={() => setActiveModalProject(null)}
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-3xl bg-[#080d08] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl space-y-6 text-slate-200 max-h-[85vh] overflow-y-auto font-mono text-xs"
+              exit={{ opacity: 0, scale: 0.98 }}
+              className="w-full max-w-2xl bg-[#19191b] border border-white/[0.08] rounded-xl p-5 sm:p-6 shadow-2xl space-y-5 text-[#ededed] max-h-[85vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
             >
-              <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+              <div className="flex items-center justify-between border-b border-white/[0.08] pb-3">
                 <div>
-                  <span className="text-[10px] text-[#c8f135] uppercase tracking-widest font-bold">
-                    SYSTEM SPECIFICATION // {activeModalProject.category}
+                  <span className="text-[11px] font-mono text-[#85858b]">
+                    {activeModalProject.category}
                   </span>
-                  <h3 className="text-xl font-bold text-white font-heading mt-0.5">
+                  <h3 className="text-lg font-medium text-[#ededed] font-heading mt-0.5">
                     {activeModalProject.title}
                   </h3>
                 </div>
                 <button
                   onClick={() => setActiveModalProject(null)}
-                  className="p-1.5 rounded-full bg-white/[0.04] text-slate-400 hover:text-white border border-white/10"
-                  aria-label="Close modal"
+                  className="p-1 rounded text-[#85858b] hover:text-[#ededed]"
+                  aria-label="Close"
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="space-y-4">
-                <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2">
-                  <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">
-                    SYSTEM OVERVIEW
+              <div className="space-y-4 text-xs">
+                <div className="p-3.5 rounded-lg bg-[#141415] border border-white/[0.06] space-y-1.5">
+                  <span className="text-[11px] font-mono text-[#85858b] block">
+                    System overview
                   </span>
-                  <p className="text-slate-300 leading-relaxed text-xs">
+                  <p className="text-[#a1a1a6] leading-relaxed">
                     {activeModalProject.description}
                   </p>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2">
-                  <span className="text-[10px] text-slate-500 uppercase tracking-wider block font-bold">
-                    ARCHITECTURE & INFERENCE PIPELINE
+                <div className="p-3.5 rounded-lg bg-[#141415] border border-white/[0.06] space-y-2">
+                  <span className="text-[11px] font-mono text-[#85858b] block">
+                    Architecture & inference pipeline
                   </span>
-                  <ul className="space-y-2 text-slate-300">
+                  <ul className="space-y-1.5 text-[#a1a1a6]">
                     {activeModalProject.architectureHighlights.map((hl, i) => (
                       <li key={i} className="flex items-start gap-2">
-                        <span className="text-[#c8f135] font-bold mt-0.5">✦</span>
+                        <span className="text-[#85858b]">•</span>
                         <span>{hl}</span>
                       </li>
                     ))}
@@ -258,29 +251,29 @@ export default function ProjectsPage() {
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono">
                   {activeModalProject.metrics.map((m, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-black/30 border border-white/5 text-center">
-                      <span className="text-[9px] text-slate-500 block uppercase">{m.label}</span>
-                      <span className="text-[#c8f135] font-bold text-sm">{m.value}</span>
+                    <div key={idx} className="p-2.5 rounded bg-[#141415] border border-white/[0.06] text-center">
+                      <span className="text-[10px] text-[#85858b] block">{m.label}</span>
+                      <span className="text-[#ededed] font-medium text-xs">{m.value}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-white/[0.08]">
+              <div className="flex items-center justify-between pt-3 border-t border-white/[0.08]">
                 <a
                   href={activeModalProject.githubUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-xs text-slate-400 hover:text-[#c8f135] flex items-center gap-1.5"
+                  className="text-xs text-[#85858b] hover:text-[#ededed] flex items-center gap-1.5 transition-colors font-mono"
                 >
-                  <Github className="w-4 h-4" />
-                  <span>Inspect Source Code</span>
+                  <Github className="w-3.5 h-3.5" />
+                  <span>Inspect source</span>
                 </a>
                 <button
                   onClick={() => setActiveModalProject(null)}
-                  className="px-4 py-2 rounded-full bg-white/[0.05] hover:bg-white/[0.1] text-slate-300 text-xs font-semibold border border-white/5"
+                  className="btn-secondary"
                 >
-                  Close Blueprint
+                  Close
                 </button>
               </div>
             </motion.div>

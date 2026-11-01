@@ -223,9 +223,9 @@ export default function ShaderCanvas({
 
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(215, 255, 60, ${currentAlpha})`;
-        ctx.shadowColor = "#c8f135";
-        ctx.shadowBlur = 8;
+        ctx.fillStyle = `rgba(76, 195, 138, ${currentAlpha})`;
+        ctx.shadowColor = "#4cc38a";
+        ctx.shadowBlur = 0;
         ctx.fill();
       }
       ctx.restore();
